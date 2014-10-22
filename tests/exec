@@ -1,0 +1,74 @@
+Script started on Tue 21 Oct 2014 11:54:05 PM PDT
+]0;rluk001@rluk001: ~/Documents/CS100/rshell/testsrluk001@rluk001:~/Documents/CS100/rshell/tests$ cd ..
+]0;rluk001@rluk001: ~/Documents/CS100/rshellrluk001@rluk001:~/Documents/CS100/rshell$ cd src
+]0;rluk001@rluk001: ~/Documents/CS100/rshell/srcrluk001@rluk001:~/Documents/CS100/rshell/src$ g++ rshell.cpp
+]0;rluk001@rluk001: ~/Documents/CS100/rshell/srcrluk001@rluk001:~/Documents/CS100/rshell/src$ ./a.out
+rluk001@rluk001$ ls
+a.out  new.cpp	rshell.cpp
+rluk001@rluk001$ ls -a -l
+total 32
+drwxrwxr-x 2 rluk001 rluk001  4096 Oct 21 23:54 .
+drwxrwxr-x 5 rluk001 rluk001  4096 Oct 21 23:53 ..
+-rwxrwxr-x 1 rluk001 rluk001 14249 Oct 21 23:54 a.out
+-rw-rw-r-- 1 rluk001 rluk001  3561 Oct 21 23:45 new.cpp
+-rw-rw-r-- 1 rluk001 rluk001  3027 Oct 21 23:45 rshell.cpp
+rluk001@rluk001$ pwd
+/home/rluk001/Documents/CS100/rshell/src
+rluk001@rluk001$ ls -a -l; ls  
+ls: invalid option -- ';'
+Try 'ls --help' for more information.
+rluk001@rluk001$ ls -a   ; ls ; ;  ; ls #t This is gon ing to fail
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ pwd ; e    ; fail #  
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ , ./a.out
+rluk001@rluk001$ tesgin      pwd || ls
+pwd: ignoring non-option arguments
+/home/rluk001/Documents/CS100/rshell/src
+rluk001@rluk001$ pwd && ls  
+pwd: ignoring non-option arguments
+/home/rluk001/Documents/CS100/rshell/src
+rluk001@rluk001$ ls % && pwd 
+ls: cannot access &&: No such file or directory
+ls: cannot access pwd: No such file or directory
+rluk001@rluk001$ ls    ls && echo hello && hi
+ls: cannot access &&: No such file or directory
+ls: cannot access echo: No such file or directory
+ls: cannot access hello: No such file or directory
+ls: cannot access &&: No such file or directory
+ls: cannot access hi: No such file or directory
+rluk001@rluk001$ p pwd || ls     ls
+pwd: ignoring non-option arguments
+/home/rluk001/Documents/CS100/rshell/src
+rluk001@rluk001$ ; ; ; ; ;; ;    ; ; pwd
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ bin/rshell
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ echo this hi
+this hi
+rluk001@rluk001$ ls -he
+ls: invalid option -- 'e'
+Try 'ls --help' for more information.
+rluk001@rluk001$ echo no hello      hello
+no hello
+rluk001@rluk001$ ; pwd
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ cs d cs100
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ gbbb ls || hi
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ pwd  * &&ls
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ ls  &&pwd
+Error: execvp failed: No such file or directory
+rluk001@rluk001$ #testing
+rluk001@rluk001$ exit
+Exiting the Shell... 
+
+rluk001@rluk001$ exit
+Exiting the Shell... 
+
+]0;rluk001@rluk001: ~/Documents/CS100/rshell/srcrluk001@rluk001:~/Documents/CS100/rshell/src$ exit
+exit
+
+Script done on Tue 21 Oct 2014 11:59:10 PM PDT

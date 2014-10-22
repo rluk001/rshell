@@ -39,12 +39,29 @@ rshell.cpp
 ```
 ./tests:
 
+Using RShell	
+---------
+```
+Multiple commands can be used together on the same line using ; , &&  or || as connectors.
 
-Problems:
+Connecting multiple commands with ; will execute every command on their own regardless of the prior command's success or failure.
 
-*When running the shell, it is unable to use connectors and take in more than one command.
-*
+Connecting multiple commands with && will execute every command in order until one fails.
 
+Does NOT support multiple types of connectors on one line.
 
+Extra connectors in front of and after commands do nothing.
+
+Anything after a # will be ignored.
+
+To exit RShell, use the command exit.
+
+Bugs/Limitations
+---------
+```
+
+*When running the shell, it is unable to take in more than one command.
+*Does not support multiple types of connectors on one line.
+*& and | are not intrepreted by the program and cause a fail.
 
 
