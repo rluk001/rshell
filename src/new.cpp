@@ -10,17 +10,19 @@
 #include <pwd.h>
 #include <vector>
 using namespace std;
-void parse(char * line, char ** argv, int &argNum, char * delim)
-{
+void parse(char * line, char ** argv, char * delim)
+{	
+	int i = 0;
 	char *parsedWord;
 	parsedWord = strtok(line, delim);
 	while(parsedWord != NULL)
 	{
-		argv[argNum] = parsedWord;
-		argNum++;
+		argv[i] = parsedWord;
+		i++;
 		parsedWord = strtok(NULL, delim);
 	}
-	argv[argNum] = NULL;
+	cout << i << endl;
+	argv[i] = NULL;
 }
 
 void execute(char ** argv)
@@ -94,44 +96,67 @@ int main()
 		printUserInfo();	
 		char line[1024] = {0};
 		char ** argv;
-		int argNum = 0;
 		char delimSpace[] = " ";
 		char delimORs[] = "||";
 		char delimANDs[] = "&&";
-		char delimSEMis[] = ";";
+		char delimSEMIs[] = ";";
 		vector <char **> cArray;
 		cin.getline(line, 1024);
 		commentCheck(line);	
 		argv = new char *[1024];
-		char * orFind, semiFind, andFind;
+		char * orFind, * semiFind, * andFind;
 		orFind = strchr(line, '|');
 		semiFind = strchr(line, ';');
 		andFind = strchr(line, '&');
-		int compOR = orFind - line + 1;
-		int compSEMI = semiFind - line + 1;
-		int compAND = andFind - line + 1;
-		while(orFind != NULL)
+		bool orTF = false, semiTF = false, andTF = false;
+		int compOR = 0, compSEMI = 0, compAND = 0;
+		if(orFind != NULL)
 		{
-			if(strchr(orFind+1, '|')-line+1 < compSEMI && strchr(orFind+1, '|')-line+1 < compAND)
-			{
-				parse(line, cArray.at(cArray.size()), cArray.size(); delimORs);
-			}
-			else if(strchr(semiFind+1, ';')-line+1 < compOR && strchr(semiFind+1, ';')-line+1 < compAND)
-			{
-				parse(line, cArray.at(cArray.size()), cArray.size(); delimSEMIs);
-			}
-			else if(strchr(andFind+1, '&')-line+1 < compOR && strchr(andFind+1, '&')-line+1 < compSEMI)
-			{
-				parse(line, cArray.at(cArray.size()), cArray.size(); delimANDs);
-			}
-		}	
-		for(int i = 0; i < cArray.size(); i++)
-		{
-			parse(*cArray.at(i), cArray.at(i), argNum, delimSpace);
+			compOR = orFind - line + 1;
+			orTF = true;
 		}
+		cout << orTF << endl;
+		if(semiFind != NULL)
+		{
+			compSEMI = semiFind - line + 1;
+			semiTF = true;
+		}
+		cout << semiTF << endl;
+		if(andFind != NULL)
+		{
+			compAND = andFind - line + 1;
+			andTF = true;
+		}
+		cout << andTF << endl;
+		while(orFind != NULL || semiFind != NULL || andFind != NULL)
+		{
+			if(strchr(orFind+1, '|')-line+1 < compSEMI && strchr(orFind+1, '|')-line+1 < compAND && orFind)
+			{
+				parse(line, cArray.at(cArray.size()), delimORs);
+				orTF = false;
+			}
+			else if(strchr(semiFind+1, ';')-line+1 < compOR && strchr(semiFind+1, ';')-line+1 < compAND && semiFind)
+			{
+				parse(line, cArray.at(cArray.size()), delimSEMIs);
+				semiTF = false;
+			}
+			else if(strchr(andFind+1, '&')-line+1 < compOR && strchr(andFind+1, '&')-line+1 < compSEMI && andFind)
+			{
+				parse(line, cArray.at(cArray.size()), delimANDs);
+				andTF = false;
+			}
+		}
+		cout << "Passed Through the AND/OR/SEMIS" << endl;	
+		for(int i = 0; i < 2 ; i++)
+		{	
+			
+			cout << "out range" << endl;
+			parse(*cArray.at(i), cArray.at(i), delimSpace);
+		}
+		cout << "Out of range" << endl;
 		for(int j = 0; j < cArray.size(); j++)
 		{
-			if(cArray.at(0) != NULL && strcmp(cArray.at(0), "exit") == 0)
+			if(*cArray.at(0) != NULL && strcmp(*cArray.at(0), "exit") == 0)
 			{
 				cout << "Exiting the Shell... " << endl << endl;
 				exit(1);
@@ -141,6 +166,7 @@ int main()
 		{
 			execute(cArray.at(i));
 		}
+		cout << "Went through entire code" << endl;
 		delete [] argv;
 	}
 

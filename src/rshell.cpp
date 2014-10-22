@@ -13,20 +13,20 @@ using namespace std;
 void parse(char * line, char ** argv, int &argNum, char * delim)
 {
 	char *parsedWord;
-	parsedWord = strtok(line, delim);
+	parsedWord = strtok(line, delim); // parses to first delimiter
 	while(parsedWord != NULL)
 	{
 		argv[argNum] = parsedWord;
 		argNum++;
-		parsedWord = strtok(NULL, delim);
+		parsedWord = strtok(NULL, delim); // parses from then on
 	}
-	argv[argNum] = NULL;
+	argv[argNum] = NULL; // makes the last NULL
 }
 
 void execute(char ** argv)
 {
 	int pid = fork();
-	if(pid == -1)
+	if(pid == -1) // If fork fails
 	{
 		perror("Error: fork failed");
 		exit(1);
@@ -51,9 +51,9 @@ void execute(char ** argv)
 
 void printUserInfo()
 {
-	char *login = getpwuid(getuid())->pw_name;
+	char *login = getpwuid(getuid())->pw_name; // Get login with pwd.h
 	char hostname[1024];
-	int gethost = gethostname(hostname, sizeof(hostname)-1);
+	int gethost = gethostname(hostname, sizeof(hostname)-1); // Get host
 	if(login != NULL && gethost == 0)
 	{
 		cout << login << "@" << hostname << "$ ";
@@ -70,26 +70,23 @@ void commentCheck(char *  line)
 	int commIndex = 0;
 	for(int i = 0; i < strlen(line); i++)
 	{
-		if(line[i] == '#')
+		if(line[i] == '#') // Checks if there is a '#' sign
 		{
 			commIndex = i;
 			commCheck = true;
 		}
 	}
-	if(commCheck)
+	if(commCheck) // Runs if it finds a '#' key
 	{
 		for(int i = commIndex; i < strlen(line) - commIndex; i++)
 		{
 			line[i] = 0;
 		}
-		cout << "Comment Erased" << endl;
 	}
 }
 int main()
 {
-	cout << "Initializing Shell... " << endl << endl;
-		
-	while(1)
+	while(1) //a never-ending loop unless presented with exit and perror cases
 	{
 		printUserInfo();	
 		char line[1024] = {0};
@@ -99,11 +96,11 @@ int main()
 		char delimORs[] = "||";
 		char delimANDs[] = "&&";
 		char delimSEMis[] = ";";
-		vector <char **> cArray;
+		//vector <char **> cArray;
 		cin.getline(line, 1024);
-		commentCheck(line);	
+		commentCheck(line);	// checks for comments before parse
 		argv = new char *[1024];
-		parse(line, argv, argNum, delimSpace);
+		parse(line, argv, argNum, delimSpace); // parses for spaces
 		/*for(int i = 0; i < argNum; i++)
 		{
 			char * pch;
@@ -129,13 +126,13 @@ int main()
 		{
 			parse(*cArray.at(i), cArray.at(i), argNum, delimSpace);
 		}*/
-		if(argv[0] != NULL && strcmp(argv[0], "exit") == 0)
+		if(argv[0] != NULL && strcmp(argv[0], "exit") == 0) // exits only on first key
 		{
 			cout << "Exiting the Shell... " << endl << endl;
 			exit(1);
 		}
-		execute(argv);
-		delete [] argv;
+		execute(argv); // executes the argument
+		delete [] argv; // deletes so there is no memory leak
 	}
 
 	return 0;
