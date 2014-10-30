@@ -1,10 +1,11 @@
-opt = -Wall -Werror -ansi -pedantic
+compiler = g++ -Wall -Werror -ansi -pedantic
 
 all: rshell
 
-rshell:
+rshell: src/rshell.cpp
+	[ ! -d bin ]
+	mkdir -p bin;
 
-	mkdir -p bin
-	g++ $(opt) src/rshell.cpp -o bin/rshell
+	$(compiler) src/rshell.cpp -o bin/rshell
 
 clean:	rm bin/*.o bin/rshell.out
