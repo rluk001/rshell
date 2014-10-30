@@ -2,7 +2,8 @@ opt = -Wall -Werror -ansi -pedantic
 
 all: rshell
 
-rshell: mkdir -p bin
+rshell:
+	mkdir -p bin
 	g++ $(opt) src/rshell.cpp -o bin/rshell
 
-clean:	rm *.o rshell.out
+clean:	rm bin/*.o bin/rshell.out
