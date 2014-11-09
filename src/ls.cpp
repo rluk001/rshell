@@ -15,5 +15,14 @@ using namespace std;
 
 int main()
 {
+	/*char * dirName = ".";
+	DIR * dirp = opendir(dirName);
+	dirent * direntp;
+	while((direntp = readdir(dirp)))
+	{
+		cout << direntp->d_name << endl;
+	}
+	closedir(dirp);*/
+	
 	return 0;
 }

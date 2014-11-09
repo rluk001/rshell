@@ -113,29 +113,44 @@ void parseLogicOps(char * line)
 	char ** parsedTokens = parse(line, "&|");
 	bool orTF = (orFind != NULL);
 	bool andTF = (andFind != NULL);
+	int orIndex = orFind - line + 1;
+	int andIndex = andFind - line + 1;
 	for(int i = 0; parsedTokens[i] != NULL; i++)
 	{
 		if(orTF)
 		{
-			if((parseArgs(parsedTokens[i])) == 0)
+			if(andTF)
 			{
-				return;
+				if((parseArgs(parsedTokens[i])) != 0)
+				{
+					return;
+				}
+			}
+			else if(!andTF)
+			{
+				if(parseArgs(parsedTokens[i]) == 0)
+				{
+					return;	
+				}
 			}
 		}
 		else if(!orTF)
 		{
-			if((parseArgs(parsedTokens[i])) != 0)
+			if(andTF)
 			{
-				return;
+				if(parseArgs(parsedTokens[i]) != 0)
+				{
+					return;
+				}
+			}
+			if(!andTF)
+			{
+				if((parseArgs(parsedTokens[i])) == 0)
+				{
+					return;
+				}
 			}
 		}
-		/*else if(andTF)
-		{
-			if(parseForArgs(parsedTokens[i]) == 0)
-			{
-				return;
-			}
-		}*/
 	}
 	for(int i = 0; parsedTokens[i] != NULL; i++)
 	{
@@ -146,6 +161,8 @@ void parseLogicOps(char * line)
 
 void parseCommands(char * line)
 {
+	char * orFind = strchr(line, '|');
+	char * andFind = strchr(line, '&');
 	char ** parsedSemis = parse(line, ";");
 	for(int i = 0; parsedSemis[i] != NULL; i++)
 	{
