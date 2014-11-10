@@ -168,6 +168,7 @@ void output(vector <string> flags, vector <string> directories, bool a, bool l, 
 		DIR *dirp;
 		dirent *direntp;
 		vector <dirent *> dir;
+		vector <struct stat> statVect;
 		if(!(dirp = opendir(directories.at(i).c_str())))
 		{
 			perror("Error: opendir failed");
@@ -190,9 +191,44 @@ void output(vector <string> flags, vector <string> directories, bool a, bool l, 
 				perror("Error: stat failed");
 				exit(1);
 			}
-			dir.push_back(direntp);
+			//statVect.push_back(stat(currentDirectory, &statbuf));
+			//dir.push_back(direntp);
+			if(!a && l && !R)
+			{
+				print_l(direntp, statbuf);
+			}
+			else if(a && !l && !R)
+			{
+				print_a(direntp, statbuf);
+			}
+			else if(!a && !l && R)
+			{
+				;
+			}
+			else if(a && l && !R)
+			{
+				print_l(direntp, statbuf);
+			}
+			else if(a && !l && R)
+			{
+				;
+			}
+			else if(!a && l && R)
+			{
+				;
+			}
+			else if(a && l && R)
+			{
+				;
+			}
+			else if(!a && !l && !R)
+			{
+				printWithColor(statbuf, direntp);
+			}
 			delete currentDirectory;
 		}
+		/*cout << "Direntp Size: " << dir.size() << endl;
+		cout << "Stat Size: " << statVect.size() << endl;
 		for(int i = 0; i < dir.size()-1; i++)
 		{
 			for(int j = 1; j < dir.size(); j++)
@@ -202,8 +238,19 @@ void output(vector <string> flags, vector <string> directories, bool a, bool l, 
 					dirent * direnta = dir.at(i);
 					dir.at(i) = dir.at(j);
 					dir.at(j) = direnta;
+					struct stat temp = statVect.at(i);
+					statVect.at(i) = statVect.at(j);
+					statVect.at(j) = temp;
 				}
-				
+				else if(strcmp((dir.at(i)->d_name), (dir.at(j)->d_name)) > 0)
+				{
+					dirent * direnta = dir.at(j);
+					dir.at(j) = dir.at(i);
+					dir.at(i) = direnta;
+					struct stat temp = statVect.at(j);
+					statVect.at(j) = statVect.at(i);
+					statVect.at(i) = temp;
+				}
 			}
 		}
 		for(int i = 0; i < dir.size(); i++)
@@ -240,7 +287,7 @@ void output(vector <string> flags, vector <string> directories, bool a, bool l, 
 			{
 				printWithColor(statbuf, dir.at(i));
 			}
-		}
+		}*/
 		cout << endl;
 		if((closedir(dirp) == -1))
 		{
