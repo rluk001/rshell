@@ -147,13 +147,13 @@ void print_l(dirent* dir, struct stat & statbuf)
 		exit(1);
 	}
 	cout << pwd->pw_name << " ";
-	/*if(!(groupID = getgrgid(statbuf.st_gid)))
+	if(!(groupID = getgrgid(statbuf.st_gid)))
 	{
 		perror("Error: getgrgid");
 		exit(1);
 	}
 	cout << groupID->gr_name << " ";
-	*/
+	
 	cout << statbuf.st_size << " ";
 	printTimeCreated(statbuf);
 	printWithColor(statbuf, dir);
