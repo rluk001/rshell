@@ -66,4 +66,5 @@ Bugs/Limitations of ls
 
 4. It doesn't print out nicely in columns. It is printed out two spaces at once for "-a".
 
+5. The total blocks space on -l is not added correctly. It is slightly off the correct amount.
 ```
