@@ -1,43 +1,26 @@
 RSHELL
 =======
 
-Licensing Information: READ LICENSE
 ---
-Project source can be downloaded from https://github.com/rluk001/rshell.git
-----
 
 Author & Contributor List
 -----------
-Mike Izbicki
-
 Ryan Luk
 
 All other known bugs and fixes can be set to rluk001@ucr.edu
 
 Reported bugs/fixes will be submitted to correction.
 
-File List
----------
-```
-.:
+How to run program and install
+----------
 
-Makefile
+1. Open a terminal and clone the repository. *git clone http://github.com/rluk001/rshell.git*
 
-LICENSE
+2. Then cd into the project *cd rshell*
 
-README.md
+3. Create executables with *make*
 
-./src
-
-./tests
-```
-```
-/src:
-
-rshell.cpp
-```
-```
-./tests:
+4. Execute rshell *bin/rshell*
 
 Using RShell	
 ---------
@@ -56,12 +39,20 @@ Anything after a # will be ignored.
 
 To exit RShell, use the command exit.
 
-Bugs/Limitations
+Bugs/Limitations of rshell
 ---------
 ```
+*When running the shell, it is unable to handle the && connector and the || connector together and print it out successfully.*
+*Requires a semi-colon to run the program with the && and || on the same line.*
+*Running multiple & and | can cause the program to crash.*
+*Doesn't check if there is two &'s or |'s when it is used*
 
-*When running the shell, it is unable to take in more than one command.
-*Does not support multiple types of connectors on one line.
-*& and | are not intrepreted by the program and cause a fail.
+---------
 
+Bugs/Limitations of ls
+---------
 
+*1. The recursive case might cause errors when used on really big cases.*
+*2. There are extra newlines after ls output and it depends on what flags are used*
+*3. Files are not sorted.*
+*4. It doesn't print out nicely in columns. It is printed out space by space.*
