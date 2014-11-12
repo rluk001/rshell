@@ -12,16 +12,21 @@
 #include <pwd.h>
 #include <vector>
 #include <grp.h>
+#include <algorithm>
+#include <ctype.h>
 
 #define GREEN "\033[1m\033[32m"
 #define BLUE "\033[1m\033[34m"
-#define GRAY "\033[00m"
-#define GRAYF "\033[47m"
+#define GRAY "\033[37m"
+#define END "\033[00m"
+#define GRAYBG "\033[100m"
 #define CYAN "\033[1m\033[36m"
-#define GRAYGREEN "\033[47m\033[1m\033[32m"
-#define GRAYBLUE "\033[47m\033[1m\033[34m"
+#define GRAYGREEN "\033[100m\033[1m\033[32m"
+#define GRAYBLUE "\033[100m\033[1m\033[34m"
 
 using namespace std;
+
+int oneTime = 1;
 
 void printTimeCreated(struct stat &statbuf)
 {
@@ -38,29 +43,40 @@ void printWithColor(struct stat statbuf, dirent * direntp)
 {
 	if(statbuf.st_mode & S_IFDIR) // directory = blue
 	{
-		cout << BLUE << direntp->d_name << GRAY << " ";
+		printf(BLUE"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
+		cout << " ";
 	}
 	else if(statbuf.st_mode & S_IXUSR) // executable = green
 	{
-		cout << GREEN << direntp->d_name << GRAY << " ";
+		printf(GREEN"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
+		cout << " ";
+	}
+	else if(S_ISLNK(statbuf.st_mode)) // links = cyan
+	{
+		printf(CYAN"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
+		cout << " ";
 	}
 	else if(direntp->d_name[0] == '.') // hidden files = gray
 	{
-		cout << GRAY << direntp->d_name << GRAY << " ";
+		printf(GRAYBG"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
+		cout << " ";
 	}
 	else if(direntp->d_name[0] == '.' && (statbuf.st_mode & S_IFDIR)) // hidden directory = blue with gray bg
 	{
-		cout << GRAYBLUE << direntp->d_name << GRAY << " ";
+		printf(GRAYBLUE"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
+		cout << " ";
 	}
 	else if(direntp->d_name[0] == '.' && (statbuf.st_mode & S_IXUSR)) // hidden executable = green with gray bg
 	{
-		cout << GRAYGREEN << direntp->d_name << GRAY << " ";
+		printf(GRAYGREEN"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
+		cout << " ";
 	}
 	else //everything else
 	{
 		cout << direntp->d_name << " ";
 	}	
 }
+
 void print_l(dirent* dir, struct stat & statbuf)
 {
 	struct passwd *pwd;
@@ -69,7 +85,7 @@ void print_l(dirent* dir, struct stat & statbuf)
 	{
 		cout << 'd';
 	}
-	else if(statbuf.st_mode & S_IFLNK) //link
+	else if(S_ISLNK(statbuf.st_mode)) //link
 	{
 		cout << 'l';
 	}
@@ -155,11 +171,14 @@ void print_l(dirent* dir, struct stat & statbuf)
 	printWithColor(statbuf, dir); 		// output
 	cout << endl;
 }
+
 void output(string directory, bool a, bool l, bool R)
 {
 	struct stat statbuf;
-	
+	vector <string> availableLocation;
+	vector <dirent *> direntPointers;
 	DIR *dirp;
+	int totalBlocks = 0;
 	dirent *direntp;
 	vector <string > dir;
 	if(!(dirp = opendir(directory.c_str())))
@@ -167,17 +186,7 @@ void output(string directory, bool a, bool l, bool R)
 		perror("Error: opendir failed");
 		exit(1);
 	}
-	if(R)
-	{
-		if(strcmp(directory.c_str(), ".") == 0)
-		{
-			cout << ".:" << endl;
-		}
-		else
-		{
-			cout << directory << ":" << endl;
-		}
-	}
+	
 	while((direntp = readdir(dirp)))
 	{
 		if(errno != 0)
@@ -193,89 +202,174 @@ void output(string directory, bool a, bool l, bool R)
 			perror("Error: stat failed");
 			exit(1);
 		}
-		//statVect.push_back(stat(currentDirectory, &statbuf));
+		if(S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.' && a)
+		{
+			totalBlocks += 8;
+		}
+		else if(!S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.' && a)
+		{
+			totalBlocks += statbuf.st_blocks;
+		}
+		else if(S_ISDIR(statbuf.st_mode) && direntp->d_name[0] != '.' && a)
+		{
+			totalBlocks += 2;
+		}
+		else if(!S_ISDIR(statbuf.st_mode) && direntp->d_name[0] != '.' && a)
+		{
+			totalBlocks += statbuf.st_blocks;
+		}
+		else if(!a && !S_ISDIR(statbuf.st_mode) && direntp->d_name[0] != '.')
+		{
+			totalBlocks += statbuf.st_blocks;
+		}
+		else if(!a && S_ISDIR(statbuf.st_mode) && direntp->d_name[0] != '.')
+		{
+			totalBlocks += 2;
+		}
+		else if(!a && S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.')
+		{
+			totalBlocks = totalBlocks;
+		}
+		else if(!a && !S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.')
+		{
+			totalBlocks += statbuf.st_blocks;
+		}
+		availableLocation.push_back(currentDir);
+		direntPointers.push_back(direntp);
+		delete [] currentDirectory;
+	}
+	
+		
+	for(unsigned int i = 0; i < direntPointers.size()-1; i++)
+	{
+		char * temp = new char [availableLocation.at(i).size() + 1];
+		strcpy(temp, availableLocation.at(i).c_str());
+
+		char * temp2 = new char [availableLocation.at(i+1).size() + 1];
+		strcpy(temp2, availableLocation.at(i+1).c_str());
+
+		for(unsigned int j = 0; temp[j]; j++)
+		{
+			temp[j] = tolower(temp[j]);
+		}
+
+		for(unsigned int k = 0; temp2[k]; k++)
+		{
+			temp[k] = tolower(temp[k]);
+		}
+
+		if((strcmp(temp, temp2) == -1) || (strcmp(temp, temp2) == 1))
+		{
+			swap(direntPointers.at(i), direntPointers.at(i+1));
+			swap(availableLocation.at(i), availableLocation.at(i+1));
+		}
+		delete [] temp;
+		delete [] temp2;
+	}
+
+	if(R)
+	{
+		if(strcmp(directory.c_str(), ".") == 0)
+		{
+			cout << ".:" << endl;
+		}
+		else
+		{
+			cout << directory << ":" << endl;
+		}
+	}
+
+	if(l && oneTime != 0)
+	{
+		oneTime--;
+		cout << "total: " << totalBlocks/2  << endl; 
+	}
+	for(unsigned int i = 0; i < direntPointers.size(); i++)
+	{
+		if((stat(availableLocation.at(i).c_str(), &statbuf)) == -1)
+		{
+			perror("Error: stat failed");
+			exit(1);
+		}
 		if(!a && l && !R)	// -l flag
 		{
-			if(direntp->d_name[0] == '.')
+			if(direntPointers.at(i)->d_name[0] == '.')
 			{
 				continue;
 			}
-			print_l(direntp, statbuf);
+			print_l(direntPointers.at(i), statbuf);
 		}
 		else if(a && !l && !R) 	// -a flag
 		{
-			printWithColor(statbuf, direntp);
+			printWithColor(statbuf, direntPointers.at(i));
 		}
 		else if(!a && !l && R) 	// -R flag
 		{
-			if(direntp->d_name[0] == '.')
+			if(direntPointers.at(i)->d_name[0] == '.')
 			{
 				continue;
 			}
 			
-			printWithColor(statbuf, direntp);
+			printWithColor(statbuf, direntPointers.at(i));
 			if(S_ISDIR(statbuf.st_mode))
 			{
-				dir.push_back(direntp->d_name);
+				dir.push_back(direntPointers.at(i)->d_name);
 			}
 		}
 		else if(a && l && !R)  // -al or -la flag
 		{
-			print_l(direntp, statbuf);
+			print_l(direntPointers.at(i), statbuf);
 		}
 		else if(a && !l && R) 	// -aR or -Ra flag
 		{
-			printWithColor(statbuf, direntp);
-			if(direntp->d_name[0] == '.')
+			printWithColor(statbuf, direntPointers.at(i));
+			if(direntPointers.at(i)->d_name[0] == '.')
 			{
-				if(direntp->d_name[1] != '.')
+				if(isalnum(direntPointers.at(i)->d_name[1]) == 0)
 				{
-					;
+					continue;
 				}
-				continue;
 			}
 			if(S_ISDIR(statbuf.st_mode))
 			{
-				dir.push_back(direntp->d_name);
+				dir.push_back(direntPointers.at(i)->d_name);
 			}
 		}
 		else if(!a && l && R) 	// -lR or -Rl flag
 		{
-			if(direntp->d_name[0] == '.')
+			if(direntPointers.at(i)->d_name[0] == '.')
 			{
 				continue;
 			}
-			print_l(direntp, statbuf);
+			print_l(direntPointers.at(i), statbuf);
 		}
 		else if(a && l && R) 	// -alR, -aRl, -laR, -lRa, -Ral, or -Rla flag
 		{
-			print_l(direntp, statbuf);
-			if(direntp->d_name[0] == '.')
+			print_l(direntPointers.at(i), statbuf);
+			if(direntPointers.at(i)->d_name[0] == '.')
 			{
-				if(direntp->d_name[1] != '.')
+				if(isalnum(direntPointers.at(i)->d_name[1]) == 0)
 				{
-					;
+					continue;
 				}
-				continue;
 			}
 			if(S_ISDIR(statbuf.st_mode))
 			{
-				dir.push_back(direntp->d_name);
+				dir.push_back(direntPointers.at(i)->d_name);
 			}
 		}
 		else if(!a && !l && !R)	// no flags
 		{
-			if(direntp->d_name[0] == '.')
+			if(direntPointers.at(i)->d_name[0] == '.')
 			{
 				continue;
 			}
-			printWithColor(statbuf, direntp);
+			printWithColor(statbuf, direntPointers.at(i));
 		}
-		delete currentDirectory;
-	}
+	}	
 	cout << endl << endl;
-	const int size = dir.size();
-	for(int i = 0; i < size; i++)
+	const unsigned int size = dir.size();
+	for(unsigned int i = 0; i < size; i++)
 	{
 		output(directory + "/" + dir.at(i), a, l, R);
 	}
@@ -285,7 +379,6 @@ void output(string directory, bool a, bool l, bool R)
 		perror("Error: closedir failed");
 		exit(1);
 	}
-	return ;
 }
 int main(int argc, char ** argv)
 {
@@ -299,7 +392,7 @@ int main(int argc, char ** argv)
 	vector <int> positions;
 	vector <string> failedCase;
 	vector <int> failedCasePositions;
-	for(int i = 0; i < inputs.size(); i++)
+	for(unsigned int i = 0; i < inputs.size(); i++)
 	{
 		if(inputs.at(i).at(0) == '-')	// this means it's a flag
 		{
@@ -318,9 +411,9 @@ int main(int argc, char ** argv)
 	}
 	
 	bool a = false, l = false , R = false;
-	for(int i = 0; i < flags.size(); i++)
+	for(unsigned int i = 0; i < flags.size(); i++)
 	{
-		for(int j = 1; j < flags.at(i).size(); j++)
+		for(unsigned int j = 1; j < flags.at(i).size(); j++)
 		{
 			if(flags.at(i).at(j) == 'a') // checks if the input has the '-a' flag
 			{
@@ -343,7 +436,7 @@ int main(int argc, char ** argv)
 		positions.push_back(failedCasePositions.size() + 1);
 	}
 
-	for(int i = 0 ; i < directories.size(); i++)
+	for(unsigned int i = 0 ; i < directories.size(); i++)
 	{
 		bool tF = false;
 		if(failedCase.size() == 0)
@@ -351,7 +444,7 @@ int main(int argc, char ** argv)
 			output(directories.at(i), a, l, R);
 			tF = true;
 		}
-		for(int j = 0; j < failedCase.size(); j++)
+		for(unsigned int j = 0; j < failedCase.size(); j++)
 		{
 			cout << "ls: cannot access " << failedCase.at(j) << ": No such file or directory" << endl;
 		}
