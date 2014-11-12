@@ -1,11 +1,22 @@
-compiler = g++ -Wall -Werror -ansi -pedantic
+compiler = "g++"
 
-all: rshell
+flags = -Wall -Werror -ansi -pedantic
 
-rshell: src/rshell.cpp
-	[ ! -d bin ]
+all: bin rshell ls cp
+
+bin:	[ ! -d bin]\
 	mkdir -p bin;
 
-	$(compiler) src/rshell.cpp -o bin/rshell
+rshell: src/new.cpp
 
-clean:	rm bin/*.o bin/rshell.out
+	$(compiler) $(flags) src/new.cpp -o bin/rshell
+
+ls: src/ls.cpp\
+
+	$(compiler) $(flags) src/ls.cpp -o bin/ls
+
+cp: src/cp.cpp\
+
+	$(compiler) $(flags) src/cp.cpp -o bin/cp
+
+clean:	rm -rf bin
