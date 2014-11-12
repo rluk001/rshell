@@ -59,7 +59,7 @@ void commentCheck(string & input)
 {
 	bool commCheck = false;
 	int commIndex = 0;
-	for(int i = 0; i < input.size(); i++)
+	for(unsigned int i = 0; i < input.size(); i++)
 	{
 		if(input[i] == '#')
 		{
@@ -86,7 +86,7 @@ char ** parse(char * line, const char *delim)
 	char **argvCount = new char *[cArray.size()+1];
 	argvCount[cArray.size()] = 0;
 	
-	for(int i = 0; i < cArray.size(); i++)
+	for(unsigned int i = 0; i < cArray.size(); i++)
 	{
 		argvCount[i] = new char[cArray.size() + 1];
 		strcpy(argvCount[i], cArray[i]);
@@ -113,8 +113,6 @@ void parseLogicOps(char * line)
 	char ** parsedTokens = parse(line, "&|");
 	bool orTF = (orFind != NULL);
 	bool andTF = (andFind != NULL);
-	int orIndex = orFind - line + 1;
-	int andIndex = andFind - line + 1;
 	for(int i = 0; parsedTokens[i] != NULL; i++)
 	{
 		if(orTF)
@@ -161,8 +159,6 @@ void parseLogicOps(char * line)
 
 void parseCommands(char * line)
 {
-	char * orFind = strchr(line, '|');
-	char * andFind = strchr(line, '&');
 	char ** parsedSemis = parse(line, ";");
 	for(int i = 0; parsedSemis[i] != NULL; i++)
 	{
