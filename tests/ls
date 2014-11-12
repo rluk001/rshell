@@ -1,0 +1,844 @@
+Script started on Tue 11 Nov 2014 11:49:36 PM PST
+]0;rluk001@rluk001: ~/rshell/testsrluk001@rluk001:~/rshell/tests$ cd ../src
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ls
+[0m[01;32ma.out[0m  cp.cpp  lsbackup.cpp  lsbackup.cpp~  ls.cpp  ls.cpp~  new.cpp  new.cpp~  rshell.cpp  Timer.h
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ g++ ls.c[K[K[K[K-W [Kall -Werror-[K -ansi -pedantic a.o[K[K[Kls.cpp
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out -a # [Ka flag
+[1m[34m.[00m  [1m[34m..[00m  [1m[32ma.out[00m  cp.cpp ls.cpp ls.cpp~ lsbackup.cpp lsbackup.cpp~ new.cpp new.cpp~ rshell.cpp Timer.h 
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out -a #a flag[K[K[K[K[K[Kl flag[K[K[K[K[K[K[K[K[Kl #f[Kl flag
+total: 136
+-rwxrwxr-x 1 rluk001 rluk001 59294 Nov 11 23:50 [1m[32ma.out[00m  
+-rw-rw-r-- 1 rluk001 rluk001 2483 Nov 11 12:43 cp.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10867 Nov 11 23:11 ls.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10869 Nov 11 23:11 ls.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:06 lsbackup.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:05 lsbackup.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3262 Nov 11 20:51 new.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 3335 Nov 11 20:51 new.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3027 Oct 29 18:45 rshell.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 2237 Nov 11 12:43 Timer.h 
+
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out -r[KR #R flag
+.:
+[1m[32ma.out[00m  cp.cpp ls.cpp ls.cpp~ lsbackup.cpp lsbackup.cpp~ new.cpp new.cpp~ rshell.cpp Timer.h 
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out -al # a[K[Kal[K[Kal[K-[K[K -al[K[Kal[K -l flag[K[K[K[K[K[K[K[K[Kal flag
+total: 136
+drwxrwxr-x 2 rluk001 rluk001 4096 Nov 11 23:50 [1m[34m.[00m  
+drwxrwxr-x 6 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m..[00m  
+-rwxrwxr-x 1 rluk001 rluk001 59294 Nov 11 23:50 [1m[32ma.out[00m  
+-rw-rw-r-- 1 rluk001 rluk001 2483 Nov 11 12:43 cp.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10867 Nov 11 23:11 ls.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10869 Nov 11 23:11 ls.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:06 lsbackup.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:05 lsbackup.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3262 Nov 11 20:51 new.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 3335 Nov 11 20:51 new.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3027 Oct 29 18:45 rshell.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 2237 Nov 11 12:43 Timer.h 
+
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #l[K[K./a.out -a -l # al flag separated
+total: 136
+drwxrwxr-x 2 rluk001 rluk001 4096 Nov 11 23:50 [1m[34m.[00m  
+drwxrwxr-x 6 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m..[00m  
+-rwxrwxr-x 1 rluk001 rluk001 59294 Nov 11 23:50 [1m[32ma.out[00m  
+-rw-rw-r-- 1 rluk001 rluk001 2483 Nov 11 12:43 cp.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10867 Nov 11 23:11 ls.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10869 Nov 11 23:11 ls.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:06 lsbackup.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:05 lsbackup.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3262 Nov 11 20:51 new.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 3335 Nov 11 20:51 new.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3027 Oct 29 18:45 rshell.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 2237 Nov 11 12:43 Timer.h 
+
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #a[K[K./a.out -a R[K-R #al[K[KaR [K[K[K -aR flag
+.:
+[1m[34m.[00m  [1m[34m..[00m  [1m[32ma.out[00m  cp.cpp ls.cpp ls.cpp~ lsbackup.cpp lsbackup.cpp~ new.cpp new.cpp~ rshell.cpp Timer.h 
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #[K./a.out -a[K[K.. -a #[K
+[1m[34m.[00m  [1m[34m..[00m  [1m[34m.git[00m  [1m[34mbin[00m  LICENSE ls.cpp Makefile Makefile~ README.md README.md~ [1m[34msrc[00m  [1m[34mtests[00m  
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out .. -aR
+..:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34m.git[00m  [1m[34mbin[00m  LICENSE ls.cpp Makefile Makefile~ README.md README.md~ [1m[34msrc[00m  [1m[34mtests[00m  
+
+../.git:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34mbranches[00m  COMMIT_EDITMSG config description FETCH_HEAD HEAD [1m[34mhooks[00m  index [1m[34minfo[00m  [1m[34mlogs[00m  MERGE_MSG.save [1m[34mobjects[00m  ORIG_HEAD packed-refs [1m[34mrefs[00m  TAG_EDITMSG 
+
+../.git/branches:
+[1m[34m.[00m  [1m[34m..[00m  
+
+../.git/hooks:
+[1m[34m.[00m  [1m[34m..[00m  [1m[32mapplypatch-msg.sample[00m  [1m[32mcommit-msg.sample[00m  [1m[32mpost-update.sample[00m  [1m[32mpre-applypatch.sample[00m  [1m[32mpre-commit.sample[00m  [1m[32mpre-push.sample[00m  [1m[32mpre-rebase.sample[00m  [1m[32mprepare-commit-msg.sample[00m  [1m[32mupdate.sample[00m  
+
+../.git/info:
+[1m[34m.[00m  [1m[34m..[00m  exclude 
+
+../.git/logs:
+[1m[34m.[00m  [1m[34m..[00m  HEAD [1m[34mrefs[00m  
+
+../.git/logs/refs:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34mheads[00m  [1m[34mremotes[00m  
+
+../.git/logs/refs/heads:
+[1m[34m.[00m  [1m[34m..[00m  ls master 
+
+../.git/logs/refs/remotes:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34morigin[00m  
+
+../.git/logs/refs/remotes/origin:
+[1m[34m.[00m  [1m[34m..[00m  HEAD ls master 
+
+../.git/objects:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34m00[00m  [1m[34m02[00m  [1m[34m04[00m  [1m[34m05[00m  [1m[34m06[00m  [1m[34m08[00m  [1m[34m09[00m  [1m[34m0a[00m  [1m[34m0f[00m  [1m[34m12[00m  [1m[34m16[00m  [1m[34m1a[00m  [1m[34m1e[00m  [1m[34m1f[00m  [1m[34m27[00m  [1m[34m28[00m  [1m[34m2d[00m  [1m[34m2e[00m  [1m[34m34[00m  [1m[34m38[00m  [1m[34m39[00m  [1m[34m3a[00m  [1m[34m3c[00m  [1m[34m3d[00m  [1m[34m3e[00m  [1m[34m40[00m  [1m[34m42[00m  [1m[34m46[00m  [1m[34m4e[00m  [1m[34m4f[00m  [1m[34m54[00m  [1m[34m5b[00m  [1m[34m5c[00m  [1m[34m5e[00m  [1m[34m62[00m  [1m[34m65[00m  [1m[34m68[00m  [1m[34m6f[00m  [1m[34m71[00m  [1m[34m72[00m  [1m[34m75[00m  [1m[34m78[00m  [1m[34m7c[00m  [1m[34m7d[00m  [1m[34m7f[00m  [1m[34m83[00m  [1m[34m86[00m  [1m[34m8a[00m  [1m[34m8e[00m  [1m[34m94[00m  [1m[34m95[00m  [1m[34m9e[00m  [1m[34ma1[00m  [1m[34ma2[00m  [1m[34ma3[00m  [1m[34ma4[00m  [1m[34ma6[00m  [1m[34mab[00m  [1m[34mae[00m  [1m[34mb0[00m  [1m[34mb4[00m  [1m[34mb6[00m  [1m[34mb9[00m  [1m[34mc0[00m  [1m[34mc1[00m  [1m[34mc8[00m  [1m[34mc9[00m  [1m[34mcd[00m  [1m[34md0[00m  [1m[34md4[00m  [1m[34md6[00m  [1m[34md7[00m  [1m[34mdc[00m  [1m[34mde[00m  [1m[34mdf[00m  [1m[34me0[00m  [1m[34me2[00m  [1m[34me6[00m  [1m[34mf0[00m  [1m[34mf2[00m  [1m[34mf3[00m  [1m[34mf7[00m  [1m[34mf8[00m  [1m[34mf9[00m  [1m[34mfa[00m  [1m[34mfc[00m  [1m[34minfo[00m  [1m[34mpack[00m  
+
+../.git/objects/00:
+[1m[34m.[00m  [1m[34m..[00m  153a1c7393816d381877ccf08576d80fa38312 
+
+../.git/objects/02:
+[1m[34m.[00m  [1m[34m..[00m  00c9afe8d43155468afc027607284c778f1e11 9f38aa5d118236bdbb1ee86693d54667467605 
+
+../.git/objects/04:
+[1m[34m.[00m  [1m[34m..[00m  326bc62c226f398ebc9a71a5f29076b13812ba 
+
+../.git/objects/05:
+[1m[34m.[00m  [1m[34m..[00m  a2f69daaf86be5b11d767dee56d43bbe766717 
+
+../.git/objects/06:
+[1m[34m.[00m  [1m[34m..[00m  40dff523b9e475bab2409c6272304cc24cc769 
+
+../.git/objects/08:
+[1m[34m.[00m  [1m[34m..[00m  54be81b066c015e0c5f4928daf60c93f996438 
+
+../.git/objects/09:
+[1m[34m.[00m  [1m[34m..[00m  4001d0948df9e737997299d7cfd225a27d74af 
+
+../.git/objects/0a:
+[1m[34m.[00m  [1m[34m..[00m  b7b99e5360e3e0b976edfb624744d24b51673b 
+
+../.git/objects/0f:
+[1m[34m.[00m  [1m[34m..[00m  e10772e27dddffbea7799884f134f352fdc7be 
+
+../.git/objects/12:
+[1m[34m.[00m  [1m[34m..[00m  30bc70c12b09e00272f8b7bd58693be5afbb0e 
+
+../.git/objects/16:
+[1m[34m.[00m  [1m[34m..[00m  35018ae71e55939efdc66bcfa37d06c6e999d3 
+
+../.git/objects/1a:
+[1m[34m.[00m  [1m[34m..[00m  1c029dab8b2d81f639f48ca6fe24638049da91 c234eb968881ca2a730182a1c3c5e1612db478 
+
+../.git/objects/1e:
+[1m[34m.[00m  [1m[34m..[00m  9ccd27e6dfcfa4a66164cc978d72d0759a0318 e94bb08c265dfa01a8abaa0b64679967a1e476 
+
+../.git/objects/1f:
+[1m[34m.[00m  [1m[34m..[00m  a7313c4f43fe273efb53728dff7fa790379349 
+
+../.git/objects/27:
+[1m[34m.[00m  [1m[34m..[00m  ef732b248f3ca3c68760ada5f5ae5b3a0e3bf5 
+
+../.git/objects/28:
+[1m[34m.[00m  [1m[34m..[00m  cc61c487500516277beac0562ac2aebd283d13 
+
+../.git/objects/2d:
+[1m[34m.[00m  [1m[34m..[00m  11a05c192dd5cd6d8b9c73d8d05aa5ff7e625b 4099b7d73f587546efe456f4886a66beba9d6f f04ecb653b341b26727596f1fab7fd5f7db495 
+
+../.git/objects/2e:
+[1m[34m.[00m  [1m[34m..[00m  eaed8c2d4370ba94c7e253a2ca0b1597db29ab 
+
+../.git/objects/34:
+[1m[34m.[00m  [1m[34m..[00m  3c526548fa452474b7c01dac1c75d905a506e5 
+
+../.git/objects/38:
+[1m[34m.[00m  [1m[34m..[00m  919f63dbebd52b42f546deb3b8a97aa44cb401 
+
+../.git/objects/39:
+[1m[34m.[00m  [1m[34m..[00m  6cfda4748fdcdb85ff8ddb66ad386f3cc8ea0f 
+
+../.git/objects/3a:
+[1m[34m.[00m  [1m[34m..[00m  b28b77d60cdde0849b914ef41f4000c79c9c3c 
+
+../.git/objects/3c:
+[1m[34m.[00m  [1m[34m..[00m  62f14f428ee477fa39f2839fd03c03a74feaff 
+
+../.git/objects/3d:
+[1m[34m.[00m  [1m[34m..[00m  ac4bf70bf90a8f4a3ed0c914bb08b6623706e9 
+
+../.git/objects/3e:
+[1m[34m.[00m  [1m[34m..[00m  49d9fbe49d23b256cd35c1ca49475482ddecca 
+
+../.git/objects/40:
+[1m[34m.[00m  [1m[34m..[00m  5f0ac1616dc519fca0d4acf6f033f5b483dda4 
+
+../.git/objects/42:
+[1m[34m.[00m  [1m[34m..[00m  22c8578e5ac28a018d81eab200b87a5dc5e483 
+
+../.git/objects/46:
+[1m[34m.[00m  [1m[34m..[00m  cb31bf1f701b3f1919faccaf78a029bc2d35a8 
+
+../.git/objects/4e:
+[1m[34m.[00m  [1m[34m..[00m  5e3be6a95a247a9d994e96a322c4e30b5c22ca 
+
+../.git/objects/4f:
+[1m[34m.[00m  [1m[34m..[00m  5abeaf75b9c10eb6bcfecd8c720a7d94d5a459 806704c60ed1baaabf9362302e025cfb42cf32 8be18920ab4faa9e5d9ccd8d4d2faa19a67b1d 
+
+../.git/objects/54:
+[1m[34m.[00m  [1m[34m..[00m  c16d53c7a4439141e2ece9ea0ec071977e6c82 
+
+../.git/objects/5b:
+[1m[34m.[00m  [1m[34m..[00m  047db65097b7f2853a6952df6e10bc51eb99ab c899f0a82ee552c345393d06cc67462f47784b 
+
+../.git/objects/5c:
+[1m[34m.[00m  [1m[34m..[00m  6cc93cad5b6ab308d0060a35a32db5ebaffca8 
+
+../.git/objects/5e:
+[1m[34m.[00m  [1m[34m..[00m  bbd7bb9284d37826e6e320d9f66748c8488a53 
+
+../.git/objects/62:
+[1m[34m.[00m  [1m[34m..[00m  760c47745a82a13efc89566bdab0e65fa3e943 
+
+../.git/objects/65:
+[1m[34m.[00m  [1m[34m..[00m  f24083923cac4fe0fd64a8fa3419e56cbb6cf8 
+
+../.git/objects/68:
+[1m[34m.[00m  [1m[34m..[00m  744a7ab824da0da2bb33de2a0ac3057d9373f1 8cc51a8cf1662dc634c19771e23c3b13dc5325 e9bc715d6255a8ae40d78163cd676694dea0aa 
+
+../.git/objects/6f:
+[1m[34m.[00m  [1m[34m..[00m  16941b7e1b771b57c41a6af493bc65a7a47fe3 664b72b7422871d6093db06bbf84e82a646aea 
+
+../.git/objects/71:
+[1m[34m.[00m  [1m[34m..[00m  cc6a1d1cd9b2a08735de17b245a71359248dd1 
+
+../.git/objects/72:
+[1m[34m.[00m  [1m[34m..[00m  27d56ac31fc6127c7ddb4560063433946170f0 
+
+../.git/objects/75:
+[1m[34m.[00m  [1m[34m..[00m  711185b5bdaa306fa6ae8b42ba1f9bf31c7e12 d62421915dd0add4effa217ec44e3746dd6e2d d74c63ac3448ace240f5ce0a0eea3e9ad2998d 
+
+../.git/objects/78:
+[1m[34m.[00m  [1m[34m..[00m  24c78a073dfccf1fdc8f422155b33d6c093d1a 
+
+../.git/objects/7c:
+[1m[34m.[00m  [1m[34m..[00m  fb820494ff3494de49b952757fd96018b2f2e6 
+
+../.git/objects/7d:
+[1m[34m.[00m  [1m[34m..[00m  e68afe8693554a9649ac8a7b47e89ee0c3fb05 
+
+../.git/objects/7f:
+[1m[34m.[00m  [1m[34m..[00m  18614a5f25c5e88007f0e7f9edbd5e328fa4f0 413dec5f1ba12ad090256d86c29c24d4a6349b 
+
+../.git/objects/83:
+[1m[34m.[00m  [1m[34m..[00m  9a74ad6b3b1888e8d8f6a6a1a5d58851d9f70e 
+
+../.git/objects/86:
+[1m[34m.[00m  [1m[34m..[00m  1211db6fd9f2c72d6733d436e18fbbbd831bab bf1962e60dd9c18cd44e6966ab076bdb7f7418 
+
+../.git/objects/8a:
+[1m[34m.[00m  [1m[34m..[00m  a843a39559fe4367545a1fc64543daebb55c75 
+
+../.git/objects/8e:
+[1m[34m.[00m  [1m[34m..[00m  8c145647a11b52bbfc5e09fc01a61aa4c50006 
+
+../.git/objects/94:
+[1m[34m.[00m  [1m[34m..[00m  1ec31c6fc655f6bc678a7f1917368055daa70e 56a7b6c6a573bf54dbd0fbd370dc50c07da4ad fafff63dd817dcc7b3e7bec9d6ab79e745e997 
+
+../.git/objects/95:
+[1m[34m.[00m  [1m[34m..[00m  20a7b7848fe45658ed7a6acc8519e5dee5025f 8393857e4004e3793c551fc0dc442b01d1bb98 
+
+../.git/objects/9e:
+[1m[34m.[00m  [1m[34m..[00m  f7ce695751b575ae6bd1f54e37b26154d3ee58 
+
+../.git/objects/a1:
+[1m[34m.[00m  [1m[34m..[00m  bc4423f7c8fdfdf11c0545d602a66ba4188d51 
+
+../.git/objects/a2:
+[1m[34m.[00m  [1m[34m..[00m  05f9c51eac61b9288e4b2380519249d5b2e7a9 
+
+../.git/objects/a3:
+[1m[34m.[00m  [1m[34m..[00m  03fa4a9dbca3faa5119466de982acff96f51fa 
+
+../.git/objects/a4:
+[1m[34m.[00m  [1m[34m..[00m  1d6dcdee87e13ea8a868285a0a911651ce8c19 
+
+../.git/objects/a6:
+[1m[34m.[00m  [1m[34m..[00m  304b0848864a843481c0cac9ebe25dcf953b27 
+
+../.git/objects/ab:
+[1m[34m.[00m  [1m[34m..[00m  7934dc3bede9a6db568c0e7b0cd5125e96a56b 
+
+../.git/objects/ae:
+[1m[34m.[00m  [1m[34m..[00m  0627672605539609db47b4de2aec9ac310e0bb 
+
+../.git/objects/b0:
+[1m[34m.[00m  [1m[34m..[00m  a41d868fc7666e43eb6727085f1dce6de42d51 
+
+../.git/objects/b4:
+[1m[34m.[00m  [1m[34m..[00m  1c4c9fe18bbb9689f883da121c19d920fd79d7 e188dfe1a96a6a802a60a2fb2bd9e3229799c2 
+
+../.git/objects/b6:
+[1m[34m.[00m  [1m[34m..[00m  d2625d4697f6b8cc77475f918d6fb4b1ccab79 
+
+../.git/objects/b9:
+[1m[34m.[00m  [1m[34m..[00m  9e90ff37595a3766737360b17cb0ff1de2ae3b 
+
+../.git/objects/c0:
+[1m[34m.[00m  [1m[34m..[00m  182b2b1ce324fe7dc328343817ff9bc402ff33 
+
+../.git/objects/c1:
+[1m[34m.[00m  [1m[34m..[00m  d5710cab4504555d57a33e90e9c0cf9cc7799d 
+
+../.git/objects/c8:
+[1m[34m.[00m  [1m[34m..[00m  1b1885e89c2601c5384be51889150401a27f60 
+
+../.git/objects/c9:
+[1m[34m.[00m  [1m[34m..[00m  890903cd719a994108337688273a88777d6c6a 
+
+../.git/objects/cd:
+[1m[34m.[00m  [1m[34m..[00m  e4bc0e29c09250ee4a75cfca7b1699c55126d6 
+
+../.git/objects/d0:
+[1m[34m.[00m  [1m[34m..[00m  3c177d0e9ada1ee030e5fcddda313752ca844d 6a5df8eaaf1df4f9887c85f56ced2eabd4654a 
+
+../.git/objects/d4:
+[1m[34m.[00m  [1m[34m..[00m  b0130fa6de73e8a11a7eae46c577b54a198201 bf64528d7844b8e701060d1dece2901db9fbd9 
+
+../.git/objects/d6:
+[1m[34m.[00m  [1m[34m..[00m  a93266f748d606b884f9434ff662fe80b9dc21 
+
+../.git/objects/d7:
+[1m[34m.[00m  [1m[34m..[00m  fa31d35d90bb3ec611363d44aed8d72da74eda 
+
+../.git/objects/dc:
+[1m[34m.[00m  [1m[34m..[00m  c56b75af59395fb152579b4fd036ed50a1ad14 
+
+../.git/objects/de:
+[1m[34m.[00m  [1m[34m..[00m  7c7197a013ba68b30e4805afdf536e389840f7 
+
+../.git/objects/df:
+[1m[34m.[00m  [1m[34m..[00m  d86a8c60e438dbb516587a78450065b5cc3cba 
+
+../.git/objects/e0:
+[1m[34m.[00m  [1m[34m..[00m  7e8b5bbf8ad6f1cfd964ca7b19d1e49b80c7b4 
+
+../.git/objects/e2:
+[1m[34m.[00m  [1m[34m..[00m  413c6b41b67c1a2af9b3dab3d4c46f3e680050 
+
+../.git/objects/e6:
+[1m[34m.[00m  [1m[34m..[00m  5ff3e7536a48c579c901bc1afaf9559dd76d94 9de29bb2d1d6434b8b29ae775ad8c2e48c5391 
+
+../.git/objects/f0:
+[1m[34m.[00m  [1m[34m..[00m  c8f204a0e96c42547f8a753bf7c8ee4ef79d62 
+
+../.git/objects/f2:
+[1m[34m.[00m  [1m[34m..[00m  d07b5ebccdc8ac3349b8f30e5ff77bca7bae05 
+
+../.git/objects/f3:
+[1m[34m.[00m  [1m[34m..[00m  99a2f0d14976987fdd8e91fa6d8918ee0af7ad cc0232905fc3a77336cfd5548e694475b456e0 
+
+../.git/objects/f7:
+[1m[34m.[00m  [1m[34m..[00m  6479ffa973ffe48f64cfd1baf12dd0ee6571dd 
+
+../.git/objects/f8:
+[1m[34m.[00m  [1m[34m..[00m  a4cdcc8eee6088ccb03b64b07dc0a50b92ed0a 
+
+../.git/objects/f9:
+[1m[34m.[00m  [1m[34m..[00m  ed084f4054ae484b55bcf165a9c460ae978eb9 
+
+../.git/objects/fa:
+[1m[34m.[00m  [1m[34m..[00m  1d8ea65f854f1f56d5ea9964d16b74f7612433 
+
+../.git/objects/fc:
+[1m[34m.[00m  [1m[34m..[00m  010f408d6a6bece93d73a05508c719a493479e 23750b80b49c1f3dea0809b3f787d1c9c080c5 962e9b3301befe12417714cc2b6313db2502c5 
+
+../.git/objects/info:
+[1m[34m.[00m  [1m[34m..[00m  
+
+../.git/objects/pack:
+[1m[34m.[00m  [1m[34m..[00m  
+
+../.git/refs:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34mheads[00m  [1m[34mremotes[00m  [1m[34mtags[00m  
+
+../.git/refs/heads:
+[1m[34m.[00m  [1m[34m..[00m  ls master 
+
+../.git/refs/remotes:
+[1m[34m.[00m  [1m[34m..[00m  [1m[34morigin[00m  
+
+../.git/refs/remotes/origin:
+[1m[34m.[00m  [1m[34m..[00m  HEAD ls master 
+
+../.git/refs/tags:
+[1m[34m.[00m  [1m[34m..[00m  help 
+
+../bin:
+[1m[34m.[00m  [1m[34m..[00m  [1m[32mcp[00m  [1m[32mls[00m  [1m[32mrshell[00m  
+
+../src:
+[1m[34m.[00m  [1m[34m..[00m  [1m[32ma.out[00m  cp.cpp ls.cpp ls.cpp~ lsbackup.cpp lsbackup.cpp~ new.cpp new.cpp~ rshell.cpp Timer.h 
+
+../tests:
+[1m[34m.[00m  [1m[34m..[00m  exec ls 
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out /home/rluk001/
+[1m[34mDesktop[00m  [1m[34mDocuments[00m  [1m[34mDownloads[00m  examples.desktop [1m[34mMusic[00m  [1m[34mPictures[00m  [1m[34mPublic[00m  [1m[34mRepos[00m  [1m[34mrshell[00m  [1m[34mTemplates[00m  [1m[34mVideos[00m  
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out /home/rluk001/ -a[KaR[KlR
+/home/rluk001/:
+total: 158
+drwxr-xr-x 23 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m.[00m  
+drwxr-xr-x 3 root root 4096 Oct 16 15:53 [1m[34m..[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.adobe[00m  
+-rw------- 1 rluk001 rluk001 22096 Nov 11 23:23 [100m.bash_history[00m  
+-rw-r--r-- 1 rluk001 rluk001 220 Oct 16 15:53 [100m.bash_logout[00m  
+-rw-r--r-- 1 rluk001 rluk001 3637 Oct 16 15:53 [100m.bashrc[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m.cache[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 00:30 [1m[34m.compiz[00m  
+drwx------ 18 rluk001 rluk001 4096 Nov 11 21:06 [1m[34m.config[00m  
+-rw-r--r-- 1 rluk001 rluk001 25 Oct 21 21:24 [100m.dmrc[00m  
+drwx------ 3 rluk001 rluk001 4096 Nov 11 12:42 [1m[34m.gconf[00m  
+-rw-rw-r-- 1 rluk001 rluk001 49 Oct 21 21:31 [100m.gitconfig[00m  
+-rw------- 1 rluk001 rluk001 5152 Nov 11 12:42 [100m.ICEauthority[00m  
+drwxr-xr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.local[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.macromedia[00m  
+drwx------ 4 rluk001 rluk001 4096 Oct 16 16:21 [1m[34m.mozilla[00m  
+-rw-r--r-- 1 rluk001 rluk001 675 Oct 16 15:53 [100m.profile[00m  
+drwx------ 6 rluk001 rluk001 4096 Oct 19 20:19 [1m[34m.Skype[00m  
+drwx------ 2 rluk001 rluk001 4096 Oct 18 16:27 [1m[34m.ssh[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 11 23:19 [1m[34m.vim[00m  
+-rw------- 1 rluk001 rluk001 16229 Nov 11 23:48 [100m.viminfo[00m  
+-rw-rw-r-- 1 rluk001 rluk001 167 Nov 09 22:15 [100m.vimrc[00m  
+-rw------- 1 rluk001 rluk001 52 Nov 11 12:42 [100m.Xauthority[00m  
+-rw------- 1 rluk001 rluk001 108 Nov 11 12:42 [100m.xsession-errors[00m  
+-rw------- 1 rluk001 rluk001 924 Nov 11 01:45 [100m.xsession-errors.old[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mDesktop[00m  
+drwxr-xr-x 4 rluk001 rluk001 4096 Nov 03 20:27 [1m[34mDocuments[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 11 18:20 [1m[34mDownloads[00m  
+-rw-r--r-- 1 rluk001 rluk001 8980 Oct 16 15:53 examples.desktop 
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mMusic[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mPictures[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mPublic[00m  
+drwxrwxr-x 5 rluk001 rluk001 4096 Nov 11 18:22 [1m[34mRepos[00m  
+drwxrwxr-x 6 rluk001 rluk001 4096 Nov 11 23:48 [1m[34mrshell[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mTemplates[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mVideos[00m  
+
+
+/home/rluk001//.adobe:
+total: 9
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.[00m  
+drwxr-xr-x 23 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m..[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34mFlash_Player[00m  
+
+
+/home/rluk001//.adobe/Flash_Player:
+total: 9
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m..[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34mAssetCache[00m  
+
+
+/home/rluk001//.adobe/Flash_Player/AssetCache:
+total: 9
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m..[00m  
+drwx------ 2 rluk001 rluk001 4096 Oct 17 20:26 [1m[34mV58PXV8D[00m  
+
+
+/home/rluk001//.adobe/Flash_Player/AssetCache/V58PXV8D:
+total: 8
+drwx------ 2 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m..[00m  
+
+
+/home/rluk001//.cache:
+total: 42
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m.[00m  
+drwxr-xr-x 23 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m..[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 21:16 [1m[34m.fr-lyKSkz[00m  
+drwx------ 2 rluk001 rluk001 4096 Nov 11 12:42 [1m[34mcompizconfig-1[00m  
+-rw-r--r-- 1 rluk001 rluk001 12288 Oct 20 16:27 event-sound-cache.tdb.fdcb0a188b7a8ff8d415762d5440529e.x86_64-pc-linux-gnu 
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mevolution[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 10 16:52 [1m[34mfontconfig[00m  
+drwx------ 2 rluk001 rluk001 4096 Oct 20 16:27 [1m[34mgnome-screenshot[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 21 11:08 [1m[34mgstreamer-1.0[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mibus[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Nov 11 12:43 [1m[34mlogrotate[00m  
+drwx------ 2 rluk001 rluk001 4096 Nov 10 15:23 [1m[34mmedia-art[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 16 16:21 [1m[34mmozilla[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:30 [1m[34moneconf[00m  
+drwxrwxr-x 8 rluk001 rluk001 4096 Oct 18 18:34 [1m[34msoftware-center[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:31 [1m[34msso[00m  
+drwx------ 7 rluk001 rluk001 4096 Nov 10 15:23 [1m[34mthumbnails[00m  
+drwx------ 2 rluk001 rluk001 4096 Oct 16 16:21 [1m[34munity[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 18 13:23 [1m[34mupdate-manager-core[00m  
+drwx------ 2 rluk001 rluk001 12288 Nov 11 18:55 [1m[34mupstart[00m  
+drwx------ 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mwallpaper[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 18 16:31 [1m[34mwebkit[00m  
+
+
+/home/rluk001//.cache/.fr-lyKSkz:
+total: 9
+drwx------ 3 rluk001 rluk001 4096 Oct 17 21:16 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 17 21:16 [1m[34msimpl-3.3.8[00m  
+
+
+/home/rluk001//.cache/.fr-lyKSkz/simpl-3.3.8:
+total: 12
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 17 21:16 [1m[34m.[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 21:16 [1m[34m..[00m  
+-rw-r--r-- 1 rluk001 rluk001 3314 Mar 27 03:50 INSTALL.simpl 
+
+
+/home/rluk001//.cache/compizconfig-1:
+total: 120
+drwx------ 2 rluk001 rluk001 4096 Nov 11 12:42 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+-rw-rw-r-- 1 rluk001 rluk001 4830 Oct 16 16:20 animation.pb 
+-rw-rw-r-- 1 rluk001 rluk001 3635 Oct 16 16:20 commands.pb 
+-rw-rw-r-- 1 rluk001 rluk001 92 Oct 16 16:20 compiztoolbox.pb 
+-rw-rw-r-- 1 rluk001 rluk001 507 Oct 16 16:20 composite.pb 
+-rw-rw-r-- 1 rluk001 rluk001 63 Oct 16 16:20 copytex.pb 
+-rw-rw-r-- 1 rluk001 rluk001 2411 Oct 16 16:20 core.pb 
+-rw-rw-r-- 1 rluk001 rluk001 108 Nov 11 12:42 decor.pb 
+-rw-rw-r-- 1 rluk001 rluk001 1527 Oct 16 16:20 expo.pb 
+-rw-rw-r-- 1 rluk001 rluk001 2087 Oct 16 16:20 ezoom.pb 
+-rw-rw-r-- 1 rluk001 rluk001 551 Oct 16 16:20 fade.pb 
+-rw-rw-r-- 1 rluk001 rluk001 646 Oct 16 16:20 gnomecompat.pb 
+-rw-rw-r-- 1 rluk001 rluk001 2010 Oct 16 16:20 grid.pb 
+-rw-rw-r-- 1 rluk001 rluk001 113 Oct 16 16:20 imgpng.pb 
+-rw-rw-r-- 1 rluk001 rluk001 146 Oct 16 16:20 mousepoll.pb 
+-rw-rw-r-- 1 rluk001 rluk001 552 Oct 16 16:20 move.pb 
+-rw-rw-r-- 1 rluk001 rluk001 481 Oct 16 16:20 opengl.pb 
+-rw-rw-r-- 1 rluk001 rluk001 662 Oct 16 16:20 place.pb 
+-rw-rw-r-- 1 rluk001 rluk001 75 Oct 16 16:20 regex.pb 
+-rw-rw-r-- 1 rluk001 rluk001 854 Oct 16 16:20 resize.pb 
+-rw-rw-r-- 1 rluk001 rluk001 1462 Oct 16 16:20 scale.pb 
+-rw-rw-r-- 1 rluk001 rluk001 160 Oct 16 16:20 session.pb 
+-rw-rw-r-- 1 rluk001 rluk001 335 Oct 16 16:20 snap.pb 
+-rw-rw-r-- 1 rluk001 rluk001 348 Oct 18 13:33 unitymtgrabhandles.pb 
+-rw-rw-r-- 1 rluk001 rluk001 3571 Oct 18 13:33 unityshell.pb 
+-rw-rw-r-- 1 rluk001 rluk001 956 Oct 16 16:20 vpswitch.pb 
+-rw-rw-r-- 1 rluk001 rluk001 2646 Oct 16 16:20 wall.pb 
+-rw-rw-r-- 1 rluk001 rluk001 916 Oct 16 16:20 workarounds.pb 
+
+
+/home/rluk001//.cache/evolution:
+total: 14
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34maddressbook[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mcalendar[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mmail[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mmemos[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34msources[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtasks[00m  
+
+
+/home/rluk001//.cache/evolution/addressbook:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtrash[00m  
+
+
+/home/rluk001//.cache/evolution/addressbook/trash:
+total: 8
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/evolution/calendar:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtrash[00m  
+
+
+/home/rluk001//.cache/evolution/calendar/trash:
+total: 8
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/evolution/mail:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtrash[00m  
+
+
+/home/rluk001//.cache/evolution/mail/trash:
+total: 8
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/evolution/memos:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtrash[00m  
+
+
+/home/rluk001//.cache/evolution/memos/trash:
+total: 8
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/evolution/sources:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtrash[00m  
+
+
+/home/rluk001//.cache/evolution/sources/trash:
+total: 8
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/evolution/tasks:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 8 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mtrash[00m  
+
+
+/home/rluk001//.cache/evolution/tasks/trash:
+total: 8
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/fontconfig:
+total: 544
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 10 16:52 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+-rw-rw-r-- 1 rluk001 rluk001 59104 Oct 18 16:35 04aabc0a78ac019cf9454389977116d2-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 1976 Oct 18 16:35 0c9eb80ebd1c36541ebe2852d3bb0c49-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 2640 Oct 18 16:35 0d8c3b2ac0904cb8a57a757ad11a4a08-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 120 Nov 10 16:52 158c65c810c0d352a587f5be66058e87-le64.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 88 Oct 18 16:35 188ac73a183f12857f63bb60a4a6d603-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 2528 Oct 18 16:35 1ac9eb803944fde146138c791f5cc56a-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 15616 Oct 18 16:35 2cd17615ca594fa2959ae173292e504c-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 18864 Oct 18 16:35 3047814df9a2f067bd2d96a2b9c36e5a-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 192 Oct 18 16:35 3830d5c3ddfd5cd38a049b759396e72e-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 10960 Oct 18 16:35 385c0604a188198f04d133e54aba7fe7-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 25144 Oct 18 16:35 3f7329c5293ffd510edef78f73874cfd-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 32928 Oct 18 13:30 3f7329c5293ffd510edef78f73874cfd-le64.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 1928 Oct 18 16:35 4794a0821666d79190d59a36cb4f44b5-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 2408 Oct 18 13:31 4794a0821666d79190d59a36cb4f44b5-le64.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 72 Oct 18 16:35 4c599c202bc5c08e2d34565a40eac3b2-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 1408 Oct 18 16:35 56cf4f4769d0f4abc89a4895d7bd3ae1-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 288 Oct 18 16:35 57e423e26b20ab21d0f2f29c145174c3-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 88 Oct 18 16:35 6333f38776742d18e214673cd2c24e34-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 128 Oct 18 16:35 707971e003b4ae6c8121c3a920e507f5-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 5760 Oct 18 16:35 767a8244fc0220cfb567a839d0392e0b-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 11792 Oct 18 16:35 7ef2298fde41cc6eeb7af42e48b7d293-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 13488 Oct 18 16:35 8801497958630a81b71ace7c5f9b32a8-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 30832 Oct 18 16:35 945677eb7aeaf62f1d50efc3fb3ec7d8-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 80 Oct 18 16:35 95530828ff6c81d309f8258d8d02a23e-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 20032 Oct 18 16:35 a755afe4a08bf5b97852ceb7400b47bc-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 16112 Oct 18 16:35 b47c4e1ecd0709278f4910c18777a504-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 2432 Oct 18 16:35 b9d506c9ac06c20b433354fa67a72993-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 1288 Oct 18 16:35 c05880de57d1f5e948fdfacc138775d9-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 216 Oct 18 16:35 c855463f699352c367813e37f3f70ea7-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 74648 Oct 18 16:35 cabbd14511b9e8a55e92af97fb3a0461-le32d4.cache-4 
+-rw-r--r-- 1 rluk001 rluk001 200 Oct 18 13:30 CACHEDIR.TAG 
+-rw-rw-r-- 1 rluk001 rluk001 88 Oct 18 16:35 d3e5c4ee2ceb1fc347f91d4cefc53bc0-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 62520 Oct 18 16:35 d52a8644073d54c13679302ca1180695-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 11904 Oct 18 16:35 d589a48862398ed80a3d6066f4f56f4c-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 144 Oct 18 16:35 d82eb4fd963d448e2fcb7d7b793b5df3-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 1240 Oct 18 16:35 dc05db6664285cc2f12bf69c139ae4c3-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 8104 Oct 18 16:35 e13b20fdb08344e0e664864cc2ede53d-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 88 Oct 18 16:35 e52a45a1c8c8fe895fc0fc8c4e6999b8-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 2616 Oct 18 16:35 e7071f4a29fa870f4323321c154eba04-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 88 Oct 18 16:35 f1f2465696798768e9653f19e17ccdc8-le32d4.cache-4 
+-rw-rw-r-- 1 rluk001 rluk001 80 Oct 18 16:35 fe547fea3a41b43a38975d292a2b19c7-le32d4.cache-4 
+
+
+/home/rluk001//.cache/gnome-screenshot:
+total: 8
+drwx------ 2 rluk001 rluk001 4096 Oct 20 16:27 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/gstreamer-1.0:
+total: 680
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 21 11:08 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+-rw------- 1 rluk001 rluk001 685784 Oct 21 11:08 registry.x86_64.bin 
+
+
+/home/rluk001//.cache/ibus:
+total: 9
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mbus[00m  
+
+
+/home/rluk001//.cache/ibus/bus:
+total: 24
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.[00m  
+drwxrwxr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m..[00m  
+-rw-r--r-- 1 rluk001 rluk001 13058 Oct 16 16:20 registry 
+
+
+/home/rluk001//.cache/logrotate:
+total: 12
+drwxrwxr-x 2 rluk001 rluk001 4096 Nov 11 12:43 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+-rw-rw-r-- 1 rluk001 rluk001 1561 Nov 11 12:43 status 
+
+
+/home/rluk001//.cache/media-art:
+total: 8
+drwx------ 2 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+
+
+/home/rluk001//.cache/mozilla:
+total: 9
+drwx------ 3 rluk001 rluk001 4096 Oct 16 16:21 [1m[34m.[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m..[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 16 16:21 [1m[34mfirefox[00m  
+
+
+/home/rluk001//.cache/mozilla/firefox:
+total: 9
+drwx------ 3 rluk001 rluk001 4096 Oct 16 16:21 [1m[34m.[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 16 16:21 [1m[34m..[00m  
+drwx------ 6 rluk001 rluk001 4096 Nov 11 23:32 [1m[34mpjpof5hr.default[00m  
+
+
+/home/rluk001//.cache/mozilla/firefox/pjpof5hr.default:
+total: 20
+drwx------ 6 rluk001 rluk001 4096 Nov 11 23:32 [1m[34m.[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 16 16:21 [1m[34m..[00m  
+-rw------- 1 rluk001 rluk001 1 Oct 18 13:28 _CACHE_CLEAN_ 
+drwx------ 4 rluk001 rluk001 4096 Nov 11 23:47 [1m[34mcache2[00m  
+-rw------- 1 rluk001 rluk001 2 Nov 11 18:09 directoryLinks.json 
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 11 23:32 [1m[34msafebrowsing[00m  
+drwxrwxr-x 2 rluk001 rluk001 4096 Oct 19 13:47 [1m[34mstartupCache[00m  
+drwx------ 2 rluk001 rluk001 4096 Nov 11 23:24 [1m[34mthumbnails[00m  
+
+
+/home/rluk001//.cache/mozilla/firefox/pjpof5hr.default/cache2:
+total: 130
+drwx------ 4 rluk001 rluk001 4096 Nov 11 23:47 [1m[34m.[00m  
+drwx------ 6 rluk001 rluk001 4096 Nov 11 23:32 [1m[34m..[00m  
+drwx------ 2 rluk001 rluk001 4096 Nov 11 23:51 [1m[34mdoomed[00m  
+drwx------ 2 rluk001 rluk001 307200 Nov 11 23:51 [1m[34mentries[00m  
+-rw------- 1 rluk001 rluk001 122560 Nov 11 23:47 index 
+
+
+/home/rluk001//.cache/mozilla/firefox/pjpof5hr.default/cache2/doomed:
+total: 8
+drwx------ 2 rluk001 rluk001 4096 Nov 11 23:51 [1m[34m.[00m  
+drwx------ 4 rluk001 rluk001 4096 Nov 11 23:47 [1m[34m..[00m  
+
+
+^C
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #[K# car[K[Kra[K[K[K[K[Khad[K[K[K#went through too many locations and cau[K[K[Kcaused a[K[K[K[K[K[K[K[Kwas seen as error
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ls[K[K./a.out -a[K[K/h[K[K$Home[K[K[KOME
+[1m[34mDesktop[00m  [1m[34mDocuments[00m  [1m[34mDownloads[00m  examples.desktop [1m[34mMusic[00m  [1m[34mPictures[00m  [1m[34mPublic[00m  [1m[34mRepos[00m  [1m[34mrshell[00m  [1m[34mTemplates[00m  [1m[34mVideos[00m  
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out #[K$HOME -L[Kl
+total: 158
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mDesktop[00m  
+drwxr-xr-x 4 rluk001 rluk001 4096 Nov 03 20:27 [1m[34mDocuments[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 11 18:20 [1m[34mDownloads[00m  
+-rw-r--r-- 1 rluk001 rluk001 8980 Oct 16 15:53 examples.desktop 
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mMusic[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mPictures[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mPublic[00m  
+drwxrwxr-x 5 rluk001 rluk001 4096 Nov 11 18:22 [1m[34mRepos[00m  
+drwxrwxr-x 6 rluk001 rluk001 4096 Nov 11 23:48 [1m[34mrshell[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mTemplates[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mVideos[00m  
+
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.ou[K[K[K[K[K[K./a.out a -a //h[K[Khome #prints out the error and then runs -a on /home
+Error: opendir failed: No such file or directory
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out -a /home
+[1m[34m.[00m  [1m[34m..[00m  [1m[34mrluk001[00m  
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out a[K/home -a a 
+[1m[34m.[00m  [1m[34m..[00m  [1m[34mrluk001[00m  
+
+Error: opendir failed: No such file or directory
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out /home/rluk001/ -l[Kal
+total: 158
+drwxr-xr-x 23 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m.[00m  
+drwxr-xr-x 3 root root 4096 Oct 16 15:53 [1m[34m..[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.adobe[00m  
+-rw------- 1 rluk001 rluk001 22096 Nov 11 23:23 [100m.bash_history[00m  
+-rw-r--r-- 1 rluk001 rluk001 220 Oct 16 15:53 [100m.bash_logout[00m  
+-rw-r--r-- 1 rluk001 rluk001 3637 Oct 16 15:53 [100m.bashrc[00m  
+drwx------ 21 rluk001 rluk001 4096 Nov 10 15:23 [1m[34m.cache[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 00:30 [1m[34m.compiz[00m  
+drwx------ 18 rluk001 rluk001 4096 Nov 11 21:06 [1m[34m.config[00m  
+-rw-r--r-- 1 rluk001 rluk001 25 Oct 21 21:24 [100m.dmrc[00m  
+drwx------ 3 rluk001 rluk001 4096 Nov 11 12:42 [1m[34m.gconf[00m  
+-rw-rw-r-- 1 rluk001 rluk001 49 Oct 21 21:31 [100m.gitconfig[00m  
+-rw------- 1 rluk001 rluk001 5152 Nov 11 12:42 [100m.ICEauthority[00m  
+drwxr-xr-x 3 rluk001 rluk001 4096 Oct 16 16:20 [1m[34m.local[00m  
+drwx------ 3 rluk001 rluk001 4096 Oct 17 20:26 [1m[34m.macromedia[00m  
+drwx------ 4 rluk001 rluk001 4096 Oct 16 16:21 [1m[34m.mozilla[00m  
+-rw-r--r-- 1 rluk001 rluk001 675 Oct 16 15:53 [100m.profile[00m  
+drwx------ 6 rluk001 rluk001 4096 Oct 19 20:19 [1m[34m.Skype[00m  
+drwx------ 2 rluk001 rluk001 4096 Oct 18 16:27 [1m[34m.ssh[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 11 23:19 [1m[34m.vim[00m  
+-rw------- 1 rluk001 rluk001 16229 Nov 11 23:48 [100m.viminfo[00m  
+-rw-rw-r-- 1 rluk001 rluk001 167 Nov 09 22:15 [100m.vimrc[00m  
+-rw------- 1 rluk001 rluk001 52 Nov 11 12:42 [100m.Xauthority[00m  
+-rw------- 1 rluk001 rluk001 108 Nov 11 12:42 [100m.xsession-errors[00m  
+-rw------- 1 rluk001 rluk001 924 Nov 11 01:45 [100m.xsession-errors.old[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mDesktop[00m  
+drwxr-xr-x 4 rluk001 rluk001 4096 Nov 03 20:27 [1m[34mDocuments[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Nov 11 18:20 [1m[34mDownloads[00m  
+-rw-r--r-- 1 rluk001 rluk001 8980 Oct 16 15:53 examples.desktop 
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mMusic[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mPictures[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mPublic[00m  
+drwxrwxr-x 5 rluk001 rluk001 4096 Nov 11 18:22 [1m[34mRepos[00m  
+drwxrwxr-x 6 rluk001 rluk001 4096 Nov 11 23:48 [1m[34mrshell[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mTemplates[00m  
+drwxr-xr-x 2 rluk001 rluk001 4096 Oct 16 16:20 [1m[34mVideos[00m  
+
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #files [K[K[K[K[K[Khidden files are prinited in[K[K[K[K[K[K[Kted in gray[K[K[Ka[K[Ka gray background
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.o[Kout /home/rluk001 -a
+[1m[34m.[00m  [1m[34m..[00m  [1m[34m.adobe[00m  [100m.bash_history[00m  [100m.bash_logout[00m  [100m.bashrc[00m  [1m[34m.cache[00m  [1m[34m.compiz[00m  [1m[34m.config[00m  [100m.dmrc[00m  [1m[34m.gconf[00m  [100m.gitconfig[00m  [100m.ICEauthority[00m  [1m[34m.local[00m  [1m[34m.macromedia[00m  [1m[34m.mozilla[00m  [100m.profile[00m  [1m[34m.Skype[00m  [1m[34m.ssh[00m  [1m[34m.vim[00m  [100m.viminfo[00m  [100m.vimrc[00m  [100m.Xauthority[00m  [100m.xsession-errors[00m  [100m.xsession-errors.old[00m  [1m[34mDesktop[00m  [1m[34mDocuments[00m  [1m[34mDownloads[00m  examples.desktop [1m[34mMusic[00m  [1m[34mPictures[00m  [1m[34mPublic[00m  [1m[34mRepos[00m  [1m[34mrshell[00m  [1m[34mTemplates[00m  [1m[34mVideos[00m  
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #not in o[Ka good column sort
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out -al
+total: 136
+drwxrwxr-x 2 rluk001 rluk001 4096 Nov 11 23:50 [1m[34m.[00m  
+drwxrwxr-x 6 rluk001 rluk001 4096 Nov 11 23:48 [1m[34m..[00m  
+-rwxrwxr-x 1 rluk001 rluk001 59294 Nov 11 23:50 [1m[32ma.out[00m  
+-rw-rw-r-- 1 rluk001 rluk001 2483 Nov 11 12:43 cp.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10867 Nov 11 23:11 ls.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10869 Nov 11 23:11 ls.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:06 lsbackup.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 10071 Nov 11 21:05 lsbackup.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3262 Nov 11 20:51 new.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 3335 Nov 11 20:51 new.cpp~ 
+-rw-rw-r-- 1 rluk001 rluk001 3027 Oct 29 18:45 rshell.cpp 
+-rw-rw-r-- 1 rluk001 rluk001 2237 Nov 11 12:43 Timer.h 
+
+
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ #has colors fo[K[Ko[Kfor executables and directories
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ exit
+exit
+
+Script done on Tue 11 Nov 2014 11:54:49 PM PST
