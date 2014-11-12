@@ -12,7 +12,6 @@
 #include <pwd.h>
 #include <vector>
 #include <grp.h>
-#include <algorithm>
 #include <ctype.h>
 
 #define GREEN "\033[1m\033[32m"
@@ -25,8 +24,6 @@
 #define GRAYBLUE "\033[100m\033[1m\033[34m"
 
 using namespace std;
-
-int oneTime = 1;
 
 void printTimeCreated(struct stat &statbuf)
 {
@@ -44,32 +41,32 @@ void printWithColor(struct stat statbuf, dirent * direntp)
 	if(statbuf.st_mode & S_IFDIR) // directory = blue
 	{
 		printf(BLUE"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
-		cout << " ";
+		cout << "  ";
 	}
 	else if(statbuf.st_mode & S_IXUSR) // executable = green
 	{
 		printf(GREEN"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
-		cout << " ";
+		cout << "  ";
 	}
 	else if(S_ISLNK(statbuf.st_mode)) // links = cyan
 	{
 		printf(CYAN"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
-		cout << " ";
+		cout << "  ";
 	}
 	else if(direntp->d_name[0] == '.') // hidden files = gray
 	{
 		printf(GRAYBG"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
-		cout << " ";
+		cout << "  ";
 	}
 	else if(direntp->d_name[0] == '.' && (statbuf.st_mode & S_IFDIR)) // hidden directory = blue with gray bg
 	{
 		printf(GRAYBLUE"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
-		cout << " ";
+		cout << "  ";
 	}
 	else if(direntp->d_name[0] == '.' && (statbuf.st_mode & S_IXUSR)) // hidden executable = green with gray bg
 	{
 		printf(GRAYGREEN"%-*s"END, (int)(strlen(direntp->d_name)), direntp->d_name); 
-		cout << " ";
+		cout << "  ";
 	}
 	else //everything else
 	{
@@ -202,11 +199,7 @@ void output(string directory, bool a, bool l, bool R)
 			perror("Error: stat failed");
 			exit(1);
 		}
-		if(S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.' && a)
-		{
-			totalBlocks += 8;
-		}
-		else if(!S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.' && a)
+		if(!S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.' && a)
 		{
 			totalBlocks += statbuf.st_blocks;
 		}
@@ -228,11 +221,15 @@ void output(string directory, bool a, bool l, bool R)
 		}
 		else if(!a && S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.')
 		{
-			totalBlocks = totalBlocks;
+			totalBlocks += 8;
 		}
 		else if(!a && !S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.')
 		{
 			totalBlocks += statbuf.st_blocks;
+		}
+		else if(S_ISDIR(statbuf.st_mode) && direntp->d_name[0] == '.' && a)
+		{
+			totalBlocks += 8;
 		}
 		availableLocation.push_back(currentDir);
 		direntPointers.push_back(direntp);
@@ -240,33 +237,55 @@ void output(string directory, bool a, bool l, bool R)
 	}
 	
 		
-	for(unsigned int i = 0; i < direntPointers.size()-1; i++)
+	for(unsigned int i = 0; i < direntPointers.size(); i++)
 	{
-		char * temp = new char [availableLocation.at(i).size() + 1];
-		strcpy(temp, availableLocation.at(i).c_str());
-
-		char * temp2 = new char [availableLocation.at(i+1).size() + 1];
-		strcpy(temp2, availableLocation.at(i+1).c_str());
-
-		for(unsigned int j = 0; temp[j]; j++)
+		for(unsigned int a = 0; a < direntPointers.size()-1; a++)
 		{
-			temp[j] = tolower(temp[j]);
-		}
+			char * temp = new char [availableLocation.at(a).size() + 1];
+			strcpy(temp, availableLocation.at(a).c_str());
 
-		for(unsigned int k = 0; temp2[k]; k++)
-		{
-			temp[k] = tolower(temp[k]);
-		}
+			char * temp2 = new char [availableLocation.at(a+1).size() + 1];
+			strcpy(temp2, availableLocation.at(a+1).c_str());
 
-		if((strcmp(temp, temp2) == -1) || (strcmp(temp, temp2) == 1))
-		{
-			swap(direntPointers.at(i), direntPointers.at(i+1));
-			swap(availableLocation.at(i), availableLocation.at(i+1));
+			for(unsigned int j = 0; temp[j]; j++)
+			{
+				temp[j] = tolower(temp[j]);
+			}
+			for(unsigned int k = 0; temp2[k]; k++)
+			{
+				temp2[k] = tolower(temp2[k]);
+			}
+			for(unsigned int h = 0; temp[h] && temp2[h]; h++)
+			{
+				if(temp[h] > temp2[h])
+				{
+					dirent * swap = direntPointers.at(a+1);
+					direntPointers.at(a+1) = direntPointers.at(a);
+					direntPointers.at(a) = swap;
+					string stringSwap = availableLocation.at(a+1);
+					availableLocation.at(a+1) = availableLocation.at(a);
+					availableLocation.at(a) = stringSwap;
+					break;
+				}
+				else if(temp[h+1] && !temp2[h+1])
+				{
+					dirent * swap = direntPointers.at(a+1);
+					direntPointers.at(a+1) = direntPointers.at(a);
+					direntPointers.at(a) = swap;
+					string stringSwap = availableLocation.at(a+1);
+					availableLocation.at(a+1) = availableLocation.at(a);
+					availableLocation.at(a) = stringSwap;
+					break;
+				}
+				else if(temp[h] < temp2[h])
+				{
+					break;
+				}
+			}
+			delete [] temp;
+			delete [] temp2;
 		}
-		delete [] temp;
-		delete [] temp2;
 	}
-
 	if(R)
 	{
 		if(strcmp(directory.c_str(), ".") == 0)
@@ -279,9 +298,8 @@ void output(string directory, bool a, bool l, bool R)
 		}
 	}
 
-	if(l && oneTime != 0)
+	if(l)
 	{
-		oneTime--;
 		cout << "total: " << totalBlocks/2  << endl; 
 	}
 	for(unsigned int i = 0; i < direntPointers.size(); i++)
@@ -368,10 +386,10 @@ void output(string directory, bool a, bool l, bool R)
 		}
 	}	
 	cout << endl << endl;
-	const unsigned int size = dir.size();
+	unsigned int size = dir.size();
 	for(unsigned int i = 0; i < size; i++)
 	{
-		output(directory + "/" + dir.at(i), a, l, R);
+		output((directory + "/" + dir.at(i)), a, l, R);
 	}
 
 	if((closedir(dirp) == -1))
@@ -398,7 +416,7 @@ int main(int argc, char ** argv)
 		{
 			flags.push_back(inputs.at(i));
 		}
-		else if(inputs.at(i).at(0) == '/' || inputs.at(i) == "." || inputs.at(i) == "..")
+		else if(inputs.at(i).at(0) == '/' || inputs.at(i) == "." || inputs.at(i) == ".." || inputs.at(i).find(".."))
 		{
 			directories.push_back(inputs.at(i));
 			positions.push_back(i);
@@ -426,6 +444,11 @@ int main(int argc, char ** argv)
 			else if(flags.at(i).at(j) == 'R') // checks if the input has the '-R' flag
 			{
 				R = true;
+			}
+			else
+			{
+				cout << "ls: invalid option -- '" << flags.at(i).at(j) << "'" << endl;
+				exit(1);
 			}
 		}
 	}
