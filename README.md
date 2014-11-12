@@ -39,20 +39,32 @@ Anything after a # will be ignored.
 
 To exit RShell, use the command exit.
 
+```
+
 Bugs/Limitations of rshell
 ---------
 ```
-*When running the shell, it is unable to handle the && connector and the || connector together and print it out successfully.*
-*Requires a semi-colon to run the program with the && and || on the same line.*
-*Running multiple & and | can cause the program to crash.*
-*Doesn't check if there is two &'s or |'s when it is used*
 
----------
+1. When running the shell, it is unable to handle the && connector and the || connector together and print it out successfully.
+
+2. Requires a semi-colon to run the program with the && and || on the same line.
+
+3. Running multiple & and | can cause the program to crash.
+
+4. Doesn't check if there is two &'s or |'s when it is used
+
+```
 
 Bugs/Limitations of ls
 ---------
 
-*1. The recursive case might cause errors when used on really big cases.*
-*2. There are extra newlines after ls output and it depends on what flags are used*
-*3. Files are not sorted.*
-*4. It doesn't print out nicely in columns. It is printed out space by space.*
+1. The recursive case might cause errors when used on really big cases.
+
+2. There are extra newlines after ls output and it depends on what flags are used
+
+3. Files are not sorted.
+
+4. It doesn't print out nicely in columns. It is printed out space by space.
+
+
+```
