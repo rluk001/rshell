@@ -58,13 +58,12 @@ Bugs/Limitations of rshell
 Bugs/Limitations of ls
 ---------
 
-1. The recursive case might cause errors when used on really big cases.
+1. The recursive case might cause errors when used on really big cases from symbolic link issues.
 
-2. There are extra newlines after ls output and it depends on what flags are used
+2. There are extra newlines after ls output and it depends on what flags are used.
 
-3. Files are not sorted.
+3. Files are not sorted the same way as the ls used in bash.
 
-4. It doesn't print out nicely in columns. It is printed out space by space.
-
+4. It doesn't print out nicely in columns. It is printed out two spaces at once for "-a".
 
 ```
