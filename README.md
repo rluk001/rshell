@@ -62,6 +62,7 @@ together and print it out successfully.
 
 8. Having more than two inputs or two outputs will result in an error.
 
+9. When running with multiple pipes, it might segmentation fault.
 ```
 
 Bugs/Limitations of ls
