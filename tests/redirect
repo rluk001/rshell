@@ -1,0 +1,168 @@
+Script started on Thu 20 Nov 2014 10:18:41 PM PST
+]0;rluk001@rluk001: ~/rshell/testsrluk001@rluk001:~/rshell/tests$ cd ../src
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ g+++ a.o[K[K[Knew.co[Kpp
+.]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out
+Initializing Shell... 
+
+rluk001@rluk001$ echo this is the script > testScript
+rluk001@rluk001$ cat < testScript
+this is the script
+rluk001@rluk001$ echo t the nx extLine > testScrip          > testScript
+rluk001@rluk001$ caat  t < tes   tests Script
+this is the script
+the nextLine
+rluk001@rluk001$ l catt    < testScript > testScript2
+rluk001@rluk001$ cat < test S  Script
+this is the script
+the nextLine
+rluk001@rluk001$ cat 2 < testScript2
+this is the script
+the nextLine
+rluk001@rluk001$ ls >> testScript2
+rluk001@rluk001$ cat < testScript2
+this is the script
+the nextLine
+a.cpp
+a.out
+cp.cpp
+ls.cpp
+new_backup.cpp
+new.cpp
+new.cpp~
+rshell.cpp
+testScript
+testScript2
+Timer.h
+rluk001@rluk001$ ca  cat |     testScript <                cat testsScri     Script | tee    r a-z A-Z | tee o1
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ ls
+a.cpp  a.out  cp.cpp  ls.cpp  new_backup.cpp  new.cpp  new.cpp~  o1  rshell.cpp  testScript  testScript2  Timer.h
+rluk001@rluk001$ cat < o1
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ cat o1  <   o1 >  > tests Script2
+rluk001@rluk001$ cat < testScript2
+this is the script
+the nextLine
+a.cpp
+a.out
+cp.cpp
+ls.cpp
+new_backup.cpp
+new.cpp
+new.cpp~
+rshell.cpp
+testScript
+testScript2
+Timer.h
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ car t < testScript | tr a-z     A-z Z a-z | tee tests  t1 | tr A-  a-z A-Z > test2 &
+rluk001@rluk001$ cat < testScript
+this is the script
+the nextLine
+rluk001@rluk001$ cat <   < test1
+this is the script
+the nextline
+rluk001@rluk001$ cat <test2      test2
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ cat < testScript                cat test2       < test2 >> t testScript2
+rluk001@rluk001$ cat < testScript2
+this is the script
+the nextLine
+a.cpp
+a.out
+cp.cpp
+ls.cpp
+new_backup.cpp
+new.cpp
+new.cpp~
+rshell.cpp
+testScript
+testScript2
+Timer.h
+THIS IS THE SCRIPT
+THE NEXTLINE
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ cat     cat < testScrit pt2 | grep new.cpp
+Segmentation fault (core dumped)
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ exit[K[K[K[K./a.out
+Initializing Shell... 
+
+rluk001@rluk001$ cat < testScript2 | grep a
+a.cpp
+a.out
+new_backup.cpp
+rluk001@rluk001$ cat     #not sure wh           well       cat testScript  2 | grep the
+Segmentation fault (core dumped)
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ ./a.out
+Initializing Shell... 
+
+rluk001@rluk001$ cat < testScript2 | grep the
+this is the script
+the nextLine
+rluk001@rluk001$ cat < testSci ript2
+this is the script
+the nextLine
+a.cpp
+a.out
+cp.cpp
+ls.cpp
+new_backup.cpp
+new.cpp
+new.cpp~
+rshell.cpp
+testScript
+testScript2
+Timer.h
+THIS IS THE SCRIPT
+THE NEXTLINE
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ cat < tes   testSrc c ri   cript2 | tr a-z   A-Z a-z | tee o1  test1     TEST1 | tr A a-z A-Z | > t TEST2 &
+rluk001@rluk001$ cat < TEST1
+this is the script
+the nextline
+a.cpp
+a.out
+cp.cpp
+ls.cpp
+new_backup.cpp
+new.cpp
+new.cpp~
+rshell.cpp
+testscript
+testscript2
+timer.h
+this is the script
+the nextline
+this is the script
+the nextline
+rluk001@rluk001$ cat < TEST2
+THIS IS THE SCRIPT
+THE NEXTLINE
+A.CPP
+A.OUT
+CP.CPP
+LS.CPP
+NEW_BACKUP.CPP
+NEW.CPP
+NEW.CPP~
+RSHELL.CPP
+TESTSCRIPT
+TESTSCRIPT2
+TIMER.H
+THIS IS THE SCRIPT
+THE NEXTLINE
+THIS IS THE SCRIPT
+THE NEXTLINE
+rluk001@rluk001$ #the program sometimes seg faults randomly q with pipe ing    ping
+rluk001@rluk001$ #i d    exit    exit
+Exiting the shell ...
+]0;rluk001@rluk001: ~/rshell/srcrluk001@rluk001:~/rshell/src$ exit
+exit
+
+Script done on Thu 20 Nov 2014 10:30:27 PM PST
