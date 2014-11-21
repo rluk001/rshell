@@ -85,7 +85,7 @@ void checkDup(char ** argv)
 			}
 			return ;
 		}
-		else if(strcmp(argv[i], ">") == 0)
+		if(strcmp(argv[i], ">") == 0)
 		{
 			argv[i] = 0; // to get rid of > sign;
 			int fd = open(argv[i+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -105,9 +105,9 @@ void checkDup(char ** argv)
 				perror("Error: close failed");
 				exit(1);
 			}
-			return;
+			return ;
 		}
-		else if(strcmp(argv[i], ">>") == 0)
+		if(strcmp(argv[i], ">>") == 0)
 		{
 			argv[i] = 0; // to get rid of ">>" sign
 			int fd = open(argv[i+1], O_WRONLY | O_CREAT | O_APPEND, 0666);
@@ -127,7 +127,7 @@ void checkDup(char ** argv)
 				perror("Error: close failed");
 				exit(1);
 			}
-			return;
+			return ;
 		}
 	}
 }
@@ -349,6 +349,29 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 	int fd[2];
 	bool found = false;
 	unsigned int pos;
+	unsigned int last;
+	for(unsigned int i = 0; linep1[i]; i++)
+	{
+		if((strcmp(linep1[i], "<") == 0) || (strcmp(linep1[i], ">") == 0) || (strcmp(linep1[i], ">>") == 0))
+		{
+			linep1[i] = 0;
+			pos = i;
+			found = true;
+		}
+	}
+	if(found)
+	{
+		for(unsigned int i = pos; linep1[i+1]; i++)
+		{
+			linep1[i] = linep1[i+1];
+			last = i+1;
+		}
+		linep1[last] = 0;
+		for(unsigned int i = 0; linep1[i]; i++)
+		{
+			cout << linep1[i] << " ";
+		}
+	}
 	if(pipe(fd) == -1)
 	{
 		perror("Error: pipe failed");
@@ -375,26 +398,6 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			perror("Error: close(1) failed");
 			exit(1);
 		}
-		/*for(unsigned int i = 0; linep1[i]; i++)
-		{
-			if((strcmp(linep1[i], "<") == 0) || (strcmp(linep1[i], ">") == 0) || (strcmp(linep1[i], ">>") == 0))
-			{
-				linep1[i] = 0;
-				pos = i;
-				found = true;
-			}
-		}
-		if(found)
-		{
-			for(unsigned int i = pos; linep1[i+1]; i++)
-			{
-				linep1[i] = linep1[i+1];
-			}
-			for(unsigned int i = 0; linep1[i]; i++)
-			{
-				cout << linep1[i] << " ";
-			}
-		}*/
 		if(execvp(linep1[0], linep1) == -1)
 		{
 			perror("Error: execvp failed");
@@ -475,30 +478,10 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 	}
 	else if(!hasPipe)
 	{
-		if(inputR)
+		if(inputR || outputR || outputRApp)
 		{
 			char ** parsedSpaces = parse(line, " ");
 			executeIO(parsedSpaces, ampersand);	
-			for(int i = 0; parsedSpaces[i] != NULL; i++)
-			{
-				delete parsedSpaces[i];
-			}
-			delete parsedSpaces;
-		}
-		else if(outputR)
-		{
-			char ** parsedSpaces = parse(line, " ");
-			executeIO(parsedSpaces, ampersand);
-			for(int i = 0; parsedSpaces[i] != NULL; i++)
-			{
-				delete parsedSpaces[i];
-			}
-			delete parsedSpaces;
-		}
-		else if(outputRApp)
-		{
-			char ** parsedSpaces = parse(line, " ");
-			executeIO(parsedSpaces, ampersand);
 			for(int i = 0; parsedSpaces[i] != NULL; i++)
 			{
 				delete parsedSpaces[i];
@@ -509,7 +492,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		{
 
 		}*/
-		else
+		if(!inputR && !outputR && !outputRApp)
 		{
 			char ** parsedSemis = parse(line, ";");
 			for(int i = 0; parsedSemis[i] != NULL; i++)
