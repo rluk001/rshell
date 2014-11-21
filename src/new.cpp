@@ -63,7 +63,7 @@ int execute(char ** argv) // Execute for regular commands
 
 void checkDup(char ** argv)
 {
-	int inputLocation = 0, outputLocation = 0, outputoutLocation = 0;
+	unsigned int inputLocation = 0, outputLocation = 0, outputoutLocation = 0;
 	for(unsigned int i = 0; argv[i]; i++) // checks if there are more than one i/o redirection
 	{
 		if(strcmp(argv[i], "<") == 0)
@@ -101,7 +101,28 @@ void checkDup(char ** argv)
 				perror("Error: close failed");
 				exit(1);
 			}
-			if(outputLocation != 0)
+			if(inputLocation != 0 && inputLocation != i)
+			{
+				argv[inputLocation] = 0; // to get rid of '<' sign
+				int fd = open(argv[inputLocation+1], O_RDONLY);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 0);
+				if(errno == -1)
+				{
+					perror("There was an error with dup2");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
+			else if(outputLocation != 0)
 			{
 				argv[outputLocation] = 0; // to get rid of > sign;
 				int fd = open(argv[outputLocation+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
@@ -165,7 +186,7 @@ void checkDup(char ** argv)
 				perror("Error: close failed");
 				exit(1);
 			}
-			else if(inputLocation != 0)
+			if(inputLocation != 0)
 			{
 				argv[inputLocation] = 0; // to get rid of '<' sign
 				int fd = open(argv[inputLocation+1], O_RDONLY);
@@ -178,6 +199,27 @@ void checkDup(char ** argv)
 				if(errno == -1)
 				{
 					perror("There was an error with dup2");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
+			else if(outputLocation != 0 && outputLocation != i)
+			{
+				argv[outputLocation] = 0; // to get rid of > sign;
+				int fd = open(argv[outputLocation+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 1);
+				if(errno == -1)
+				{
+					perror("Error: dup2 failed");
 					exit(1);
 				}
 				if(close(fd) == -1)
@@ -254,6 +296,27 @@ void checkDup(char ** argv)
 			{
 				argv[outputLocation] = 0; // to get rid of > sign;
 				int fd = open(argv[outputLocation+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 1);
+				if(errno == -1)
+				{
+					perror("Error: dup2 failed");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
+			else if(outputoutLocation != 0 && outputoutLocation != i)
+			{
+				argv[outputoutLocation] = 0; // to get rid of ">>" sign
+				int fd = open(argv[outputoutLocation+1], O_WRONLY | O_CREAT | O_APPEND, 0666);
 				if(fd == -1)
 				{
 					perror("Error: open failed");
