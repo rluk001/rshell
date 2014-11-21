@@ -3,7 +3,9 @@
 #include <string>
 #include <unistd.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -11,6 +13,8 @@
 #include <pwd.h>
 #include <vector>
 using namespace std;
+
+void executeForPiping(char ** argv1, char ** argv2, bool ampersand);
 
 void printUserInfo()
 {
@@ -55,9 +59,81 @@ int execute(char ** argv)
 	return stat;
 }
 
-int executeWithIO(char ** argv, char * line)
+void checkDup(char ** argv)
 {
-	int stat = 0;
+	for(unsigned int i = 0; argv[i]; i++)
+	{
+		if(strcmp(argv[i], "<") == 0)
+		{
+			argv[i] = 0; // to get rid of '<' sign
+			int fd = open(argv[i+1], O_RDONLY);
+			if(fd == -1)
+			{
+				perror("Error: open failed");
+				exit(1);
+			}
+			dup2(fd, 0);
+			if(errno == -1)
+			{
+				perror("There was an error with dup2");
+				exit(1);
+			}
+			if(close(fd) == -1)
+			{
+				perror("Error: close failed");
+				exit(1);
+			}
+			return ;
+		}
+		else if(strcmp(argv[i], ">") == 0)
+		{
+			argv[i] = 0; // to get rid of > sign;
+			int fd = open(argv[i+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+			if(fd == -1)
+			{
+				perror("Error: open failed");
+				exit(1);
+			}
+			dup2(fd, 1);
+			if(errno == -1)
+			{
+				perror("Error: dup2 failed");
+				exit(1);
+			}
+			if(close(fd) == -1)
+			{
+				perror("Error: close failed");
+				exit(1);
+			}
+			return;
+		}
+		else if(strcmp(argv[i], ">>") == 0)
+		{
+			argv[i] = 0; // to get rid of ">>" sign
+			int fd = open(argv[i+1], O_WRONLY | O_CREAT | O_APPEND, 0666);
+			if(fd == -1)
+			{
+				perror("Error: open failed");
+				exit(1);
+			}
+			dup2(fd, 1);
+			if(errno == -1)
+			{
+				perror("Error: dup2 failed");
+				exit(1);
+			}
+			if(close(fd) == -1)
+			{
+				perror("Error: close failed");
+				exit(1);
+			}
+			return;
+		}
+	}
+}
+			
+void executeIO(char ** argv, bool ampersand)
+{
 	int pid = fork();
 
 	if(pid == -1)
@@ -67,35 +143,18 @@ int executeWithIO(char ** argv, char * line)
 	}
 	else if(pid > 0)
 	{
-		if(wait(&stat) == -1)
+		if(!ampersand)
 		{
-			perror("Error: wait has failed");
-			exit(1);
+			if(wait(0) == -1)
+			{
+				perror("Error: wait failed");
+				exit(1);
+			}
 		}
 	}
 	else if(pid == 0)
 	{
-		int fd = open(line, O_RDWR, 0666);
-
-		if(fd == -1)
-		{
-			perror("Error: open failed");
-			exit(1);
-		}
-
-		if(close(1) == -1)
-		{
-			perror("Error: close failed");
-			exit(1);
-		}
-
-		dup(fd);
-		if(errno == -1)
-		{
-			perror("Error; dup failed");
-			exit(1);
-		}
-
+		checkDup(argv);
 		if(execvp(argv[0], argv) == -1)
 		{
 			perror("Error: execvp failed");
@@ -103,6 +162,7 @@ int executeWithIO(char ** argv, char * line)
 		}
 	}
 }
+
 void commentCheck(string & input)
 {
 	bool commCheck = false;
@@ -205,272 +265,287 @@ void parseLogicOps(char * line)
 	delete parsedTokens;	
 }
 
-void parseCommands(char * line, int lineSize)
+string separateWithSpaces(string line)
 {
-	int pos1 = -1, pos2 = -1, pos3 = -1, pos4 = -1, pos5 = -1;
-	bool inputR = false, outputR = false, outputRApp = false, pipe = false, inputRString = false;
-	for(unsigned int i = 0; line[i+1]; i++)
+	string newString;
+	for(unsigned int i = 0; i < line.size(); i++)
 	{
-		if(line[i] == '<' && line[i+1] != '<')
+		if(i != 0 && line[i-1] != ' ' && line[i] == '<' && line[i+1] != ' ')
+		{
+			newString += " < ";
+		}
+		else if(i != 0 && line[i-1] != ' ' && line[i] == '>' && line[i+1] != ' ')
+		{
+			newString += " > ";
+		}
+		else if(i != 0 && line[i-1] != ' ' && line[i] == '>' && line[i+1] == '>' && line[i+2] != ' ')
+		{
+			newString += " >> ";
+		}
+		else if(i != 0 && (line[i] == '|' && line[i-1] != ' ' && line[i+1] != ' '))
+		{
+			newString += " | ";
+		}
+		else
+		{
+			newString += line[i];
+		}
+	}
+	return newString;
+}
+
+void checkForPipes(char ** line, bool ampersand)
+{
+	bool hasPipe = false;
+	int pipeLocation = 0;
+
+	char ** linep1;
+	linep1 = new char *[1024];
+
+	char ** linep2;
+	linep2 = new char *[1024];
+
+	for(unsigned int i = 0; line[i]; i++)
+	{
+		if(strcmp(line[i], "|") == 0)
+		{
+			hasPipe = true;
+			pipeLocation = i;
+			break;
+		}
+	}
+	
+	if(!hasPipe)
+	{
+		executeIO(line, ampersand);
+	}
+
+	else if(hasPipe)
+	{
+		for(int i = 0; i < pipeLocation; i++)
+		{
+			linep1[i] = line[i];
+		}
+		
+		linep1[pipeLocation] = NULL;
+	
+		int a = 0;
+		for(int i = pipeLocation+1; line[i]; i++)
+		{
+			linep2[a] = line[i];
+			a++;
+		}
+		linep2[a] = NULL;
+
+		executeForPiping(linep1, linep2, ampersand);
+	}
+
+	delete [] linep1;
+	delete [] linep2;
+}
+		
+void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
+{
+	int fd[2];
+	bool found = false;
+	unsigned int pos;
+	if(pipe(fd) == -1)
+	{
+		perror("Error: pipe failed");
+		exit(1);
+	}
+	
+	int pid = fork();
+	if(pid < 0)
+	{
+		perror("Error: fork failed");
+		exit(1);
+	}
+	else if(pid == 0)
+	{
+		dup2(fd[1], 1);
+		if(errno == -1)
+		{
+			perror("Error: dup2 failed");
+			exit(1);
+		}
+		close(fd[0]);
+		if(errno == -1)
+		{
+			perror("Error: close(1) failed");
+			exit(1);
+		}
+		/*for(unsigned int i = 0; linep1[i]; i++)
+		{
+			if((strcmp(linep1[i], "<") == 0) || (strcmp(linep1[i], ">") == 0) || (strcmp(linep1[i], ">>") == 0))
+			{
+				linep1[i] = 0;
+				pos = i;
+				found = true;
+			}
+		}
+		if(found)
+		{
+			for(unsigned int i = pos; linep1[i+1]; i++)
+			{
+				linep1[i] = linep1[i+1];
+			}
+			for(unsigned int i = 0; linep1[i]; i++)
+			{
+				cout << linep1[i] << " ";
+			}
+		}*/
+		if(execvp(linep1[0], linep1) == -1)
+		{
+			perror("Error: execvp failed");
+			exit(1);
+		}
+	}
+	close(fd[1]);
+	if(errno == -1)
+	{
+		perror("Error: close failed");
+		exit(1);
+	}
+
+	int tempStdIn = dup(0); // save for stdin
+	if(tempStdIn == -1)
+	{
+		perror("Error: dup failed");
+		exit(1);
+	}
+	dup2(fd[0], 0);
+	if(errno == -1)
+	{
+		perror("Error: dup2 #2 failed");
+		exit(1);
+	}
+	if(wait(0) == -1)
+	{
+		perror("Error: wait failed");
+		exit(1);
+	}
+
+	checkForPipes(linep2, ampersand);
+
+	dup2(tempStdIn, 0);
+	if(errno == -1)
+	{
+		perror("Error: dup2 #3 failed");
+		exit(1);
+	}
+}
+
+void parseCommands(char * line, unsigned int lineSize, bool ampersand)
+{
+	bool inputR = false, outputR = false, outputRApp = false, hasPipe = false;
+	for(unsigned int i = 0; i < lineSize; i++)
+	{
+		if(line[i] == '<')  // '<'
 		{
 			inputR = true;
-			pos1 = i;
 		}
-		else if(line[i-1] != '>' && line[i] == '>' && line[i+1] != '>')
+		if(i != 0 && line[i-1] != '>' && line[i] == '>' && line[i+1] != '>') // '>'
 		{
 			outputR = true;
-			pos2 = i;
 		}
-		else if(line[i] == '>' && line[i+1] == '>')
+		if(line[i] == '>' && line[i+1] == '>') // '>>'
 		{
 			outputRApp = true;
-			pos3 = i;
 		}
-		else if(line[i-1] != '|' && line[i] == '|' && line[i+1] != '|')
+		if(line[i] == '|' && line[i+1] != '|')
 		{
-			pipe = true;
-			pos4 = i;
+			hasPipe = true;
 		}
-		else if(line[i-1] == '<' && line[i] == '<' && line[i+1] == '<')
+		/*if(line[i-1] == '<' && line[i] == '<' && line[i+1] == '<') // '<<<'
 		{
 			inputRString = true;
 			pos5 = i;
-		}
+		}*/
 	}
-	if(inputR)
+	if(hasPipe)
 	{
-		char * linep1 = new char [pos1 + 1];
-		char * linep2 = new char [lineSize - pos1 + 1];
-		for(unsigned int i = 0; i < pos1; i++)
+		char ** parsedSpaces = parse(line, " ");
+		checkForPipes(parsedSpaces, ampersand);
+		for(int i = 0; parsedSpaces[i] != NULL; i++)
 		{
-			linep1[i] = line[i];
+			delete parsedSpaces[i];
 		}
-		linep1[pos1] == '\0';
-		int a = 0;
-		for(unsigned int j = pos1 + 1; j < lineSize; j++)
-		{
-			linep2[a] = line[j];
-			a++;
-		}
-		linep2[lineSize - pos1] = '\0';
-		
-		char ** parsedSemis = parse(linep1, ";");
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			parseLogicOps(parsedSemis[i]);
-		}
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			delete parsedSemis[i];
-		}
-		delete [] parsedSemis;
-
-		
-		char ** parsedSemis2 = parse(line, ";");
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			parseLogicOps(parsedSemis2[i]);
-		}
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			delete parsedSemis2[i];
-		}
-		delete [] parsedSemis2;
+		delete parsedSpaces;
 	}
-	else if(outputR)
+	else if(!hasPipe)
 	{
-		char * linep1 = new char [pos2 + 1];
-		char * linep2 = new char [lineSize - pos2 + 1];
-		for(unsigned int i = 0; i < pos2; i++)
+		if(inputR)
 		{
-			linep1[i] = line[i];
+			char ** parsedSpaces = parse(line, " ");
+			executeIO(parsedSpaces, ampersand);	
+			for(int i = 0; parsedSpaces[i] != NULL; i++)
+			{
+				delete parsedSpaces[i];
+			}
+			delete parsedSpaces;
 		}
-		linep1[pos2] == '\0';
-		int a = 0;
-		for(unsigned int j = pos2 + 1; j < lineSize; j++)
+		else if(outputR)
 		{
-			linep2[a] = line[j];
-			a++;
+			char ** parsedSpaces = parse(line, " ");
+			executeIO(parsedSpaces, ampersand);
+			for(int i = 0; parsedSpaces[i] != NULL; i++)
+			{
+				delete parsedSpaces[i];
+			}
+			delete parsedSpaces;
 		}
-		linep2[lineSize - pos2] = '\0';
+		else if(outputRApp)
+		{
+			char ** parsedSpaces = parse(line, " ");
+			executeIO(parsedSpaces, ampersand);
+			for(int i = 0; parsedSpaces[i] != NULL; i++)
+			{
+				delete parsedSpaces[i];
+			}
+			delete parsedSpaces;
+		}
+		/*else if(inputRString)
+		{
 
-		char ** parsedSemis = parse(linep1, ";");
-		for(unsigned int i = 0; parsedSemis[i]; i++)
+		}*/
+		else
 		{
-			parseLogicOps(parsedSemis[i]);
+			char ** parsedSemis = parse(line, ";");
+			for(int i = 0; parsedSemis[i] != NULL; i++)
+			{
+				parseLogicOps(parsedSemis[i]);
+			}
+			for(int i = 0; parsedSemis[i] != NULL; i++)
+			{
+				delete parsedSemis[i];
+			}
+			delete parsedSemis;
 		}
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			delete parsedSemis[i];
-		}
-		delete [] parsedSemis;
-
-		
-		char ** parsedSemis2 = parse(line, ";");
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			parseLogicOps(parsedSemis2[i]);
-		}
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			delete parsedSemis2[i];
-		}
-		delete [] parsedSemis2;
 	}
-	else if(outputRApp)
-	{
-		char * linep1 = new char [pos3 + 1];
-		char * linep2 = new char [lineSize - pos3 + 1];
-		for(unsigned int i = 0; i < pos3; i++)
-		{
-			linep1[i] = line[i];
-		}
-		linep1[pos3] == '\0';
-		int a = 0;
-		for(unsigned int j = pos3 + 1; j < lineSize; j++)
-		{
-			linep2[a] = line[j];
-			a++;
-		}
-		linep2[lineSize - pos3] = '\0';
-		
-		char ** parsedSemis = parse(linep1, ";");
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			parseLogicOps(parsedSemis[i]);
-		}
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			delete parsedSemis[i];
-		}
-		delete [] parsedSemis;
-
-		
-		char ** parsedSemis2 = parse(line, ";");
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			parseLogicOps(parsedSemis2[i]);
-		}
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			delete parsedSemis2[i];
-		}
-		delete [] parsedSemis2;
-	}
-	else if(pipe)
-	{
-		char * linep1 = new char [pos4 + 1];
-		char * linep2 = new char [lineSize - pos4 + 1];
-		for(unsigned int i = 0; i < pos4; i++)
-		{
-			linep1[i] = line[i];
-		}
-		linep1[pos4] == '\0';
-		int a = 0;
-		for(unsigned int j = pos4 + 1; j < lineSize; j++)
-		{
-			linep2[a] = line[j];
-			a++;
-		}
-		linep2[lineSize - pos4] = '\0';	
-		
-		char ** parsedSemis = parse(linep1, ";");
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			parseLogicOps(parsedSemis[i]);
-		}
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			delete parsedSemis[i];
-		}
-		delete [] parsedSemis;
-
-		
-		char ** parsedSemis2 = parse(line, ";");
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			parseLogicOps(parsedSemis2[i]);
-		}
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			delete parsedSemis2[i];
-		}
-		delete [] parsedSemis2;
-	}
-	else if(inputRString)
-	{
-		char * linep1 = new char [pos5 + 1];
-		char * linep2 = new char [lineSize - pos5 + 1];
-		for(unsigned int i = 0; i < pos5; i++)
-		{
-			linep1[i] = line[i];
-		}
-		linep1[pos5] == '\0';
-		int a = 0;
-		for(unsigned int j = pos5 + 1; j < lineSize; j++)
-		{
-			linep2[a] = line[j];
-			a++;
-		}
-		linep2[lineSize - pos5] = '\0';
-
-		char ** parsedSemis = parse(linep1, ";");
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			parseLogicOps(parsedSemis[i]);
-		}
-		for(unsigned int i = 0; parsedSemis[i]; i++)
-		{
-			delete parsedSemis[i];
-		}
-		delete [] parsedSemis;
-
-		
-		char ** parsedSemis2 = parse(line, ";");
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			parseLogicOps(parsedSemis2[i]);
-		}
-		for(unsigned int i = 0; parsedSemis2[i]; i++)
-		{
-			delete parsedSemis2[i];
-		}
-		delete [] parsedSemis2;
-	}
-	char ** parsedSemis = parse(line, ";");
-	for(int i = 0; parsedSemis[i] != NULL; i++)
-	{
-		parseLogicOps(parsedSemis[i]);
-	}
-	for(int i = 0; parsedSemis[i] != NULL; i++)
-	{
-		delete parsedSemis[i];
-	}
-	delete parsedSemis;
 }
-
+	
 int main()
 {
 	cout << "Initializing Shell... " << endl << endl;
 	string input;
-	int lineSize = 0;
 	char * line;
 	do
 	{
+		bool ampersand = false;
 		printUserInfo();	
 		getline(cin, input);
-		commentCheck(input);
+		commentCheck(input);	
+		input = separateWithSpaces(input);
+		cout << input << endl;
 		line = new char[input.size()+1];
 		strcpy(line, input.c_str());
-		lineSize = input.size()+1;
-		
 		if(strcmp(line, "exit") == 0)
 		{
 			cout << "Exiting the shell ..." << endl;
 			exit(1);
 		}
-
-		parseCommands(line, lineSize);
+		parseCommands(line, input.size(), ampersand);
 		delete line;
 	}while(1);	
 	return 0;
