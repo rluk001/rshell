@@ -15,8 +15,10 @@
 using namespace std;
 
 void executeForPiping(char ** argv1, char ** argv2, bool ampersand);
+void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe);
 
-void printUserInfo()
+
+void printUserInfo() // Prints pwname and hostname
 {
 	char *login = getpwuid(getuid())->pw_name;
 	char hostname[1024];
@@ -31,7 +33,7 @@ void printUserInfo()
 	}
 }
 
-int execute(char ** argv)
+int execute(char ** argv) // Execute for regular commands
 {	
 	int stat = 0;
 	int pid = fork();
@@ -61,6 +63,22 @@ int execute(char ** argv)
 
 void checkDup(char ** argv)
 {
+	int inputLocation = 0, outputLocation = 0, outputoutLocation = 0;
+	for(unsigned int i = 0; argv[i]; i++) // checks if there are more than one i/o redirection
+	{
+		if(strcmp(argv[i], "<") == 0)
+		{
+			inputLocation = i;
+		}
+		else if(strcmp(argv[i], ">") == 0)
+		{
+			outputLocation = i;
+		}
+		else if(strcmp(argv[i], ">>") == 0)
+		{
+			outputoutLocation = i;
+		}
+	}
 	for(unsigned int i = 0; argv[i]; i++)
 	{
 		if(strcmp(argv[i], "<") == 0)
@@ -82,6 +100,48 @@ void checkDup(char ** argv)
 			{
 				perror("Error: close failed");
 				exit(1);
+			}
+			if(outputLocation != 0)
+			{
+				argv[outputLocation] = 0; // to get rid of > sign;
+				int fd = open(argv[outputLocation+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 1);
+				if(errno == -1)
+				{
+					perror("Error: dup2 failed");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
+			else if(outputoutLocation != 0)
+			{
+				argv[outputoutLocation] = 0; // to get rid of ">>" sign
+				int fd = open(argv[outputoutLocation+1], O_WRONLY | O_CREAT | O_APPEND, 0666);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 1);
+				if(errno == -1)
+				{
+					perror("Error: dup2 failed");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
 			}
 			return ;
 		}
@@ -105,6 +165,48 @@ void checkDup(char ** argv)
 				perror("Error: close failed");
 				exit(1);
 			}
+			else if(inputLocation != 0)
+			{
+				argv[inputLocation] = 0; // to get rid of '<' sign
+				int fd = open(argv[inputLocation+1], O_RDONLY);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 0);
+				if(errno == -1)
+				{
+					perror("There was an error with dup2");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
+			else if(outputoutLocation != 0)
+			{
+				argv[outputoutLocation] = 0; // to get rid of ">>" sign
+				int fd = open(argv[outputoutLocation+1], O_WRONLY | O_CREAT | O_APPEND, 0666);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 1);
+				if(errno == -1)
+				{
+					perror("Error: dup2 failed");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
 			return ;
 		}
 		if(strcmp(argv[i], ">>") == 0)
@@ -127,6 +229,48 @@ void checkDup(char ** argv)
 				perror("Error: close failed");
 				exit(1);
 			}
+			if(inputLocation != 0)
+			{
+				argv[inputLocation] = 0; // to get rid of '<' sign
+				int fd = open(argv[inputLocation+1], O_RDONLY);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 0);
+				if(errno == -1)
+				{
+					perror("There was an error with dup2");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
+			else if(outputLocation != 0)
+			{
+				argv[outputLocation] = 0; // to get rid of > sign;
+				int fd = open(argv[outputLocation+1], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+				if(fd == -1)
+				{
+					perror("Error: open failed");
+					exit(1);
+				}
+				dup2(fd, 1);
+				if(errno == -1)
+				{
+					perror("Error: dup2 failed");
+					exit(1);
+				}
+				if(close(fd) == -1)
+				{
+					perror("Error: close failed");
+					exit(1);
+				}
+			}
 			return ;
 		}
 	}
@@ -135,7 +279,6 @@ void checkDup(char ** argv)
 void executeIO(char ** argv, bool ampersand)
 {
 	int pid = fork();
-
 	if(pid == -1)
 	{
 		perror("Error: fork failed");
@@ -143,7 +286,7 @@ void executeIO(char ** argv, bool ampersand)
 	}
 	else if(pid > 0)
 	{
-		if(!ampersand)
+		if(!ampersand) // ampersand is for executing background in a subshell
 		{
 			if(wait(0) == -1)
 			{
@@ -154,7 +297,7 @@ void executeIO(char ** argv, bool ampersand)
 	}
 	else if(pid == 0)
 	{
-		checkDup(argv);
+		checkDup(argv); // Dup for i/o redirection
 		if(execvp(argv[0], argv) == -1)
 		{
 			perror("Error: execvp failed");
@@ -163,7 +306,7 @@ void executeIO(char ** argv, bool ampersand)
 	}
 }
 
-void commentCheck(string & input)
+void commentCheck(string & input) // If there is a comment if gets erased
 {
 	bool commCheck = false;
 	int commIndex = 0;
@@ -182,7 +325,7 @@ void commentCheck(string & input)
 	}
 }
 
-char ** parse(char * line, const char *delim)
+char ** parse(char * line, const char *delim) // parse by delimiter
 {
 	vector <char *> cArray;
 	char * del = strtok(line, delim);
@@ -202,7 +345,7 @@ char ** parse(char * line, const char *delim)
 	return argvCount;
 }
 
-int parseArgs(char * line)
+int parseArgs(char * line) // parseSpaces
 {
 	char ** parsedSpaces = parse(line, " ");
 	int executeProgram = execute(parsedSpaces);
@@ -216,8 +359,8 @@ int parseArgs(char * line)
 
 void parseLogicOps(char * line)
 {
-	char * orFind = strchr(line, '|');
-	char * andFind = strchr(line, '&');
+	char * orFind = strchr(line, '|'); // Find ORS
+	char * andFind = strchr(line, '&'); // Find AND
 	char ** parsedTokens = parse(line, "&|");
 	bool orTF = (orFind != NULL);
 	bool andTF = (andFind != NULL);
@@ -265,7 +408,7 @@ void parseLogicOps(char * line)
 	delete parsedTokens;	
 }
 
-string separateWithSpaces(string line)
+string separateWithSpaces(string line) // Separates to make the i/o redirection in its own argv[i]
 {
 	string newString;
 	for(unsigned int i = 0; i < line.size(); i++)
@@ -298,14 +441,8 @@ void checkForPipes(char ** line, bool ampersand)
 {
 	bool hasPipe = false;
 	int pipeLocation = 0;
-
-	char ** linep1;
-	linep1 = new char *[1024];
-
-	char ** linep2;
-	linep2 = new char *[1024];
-
-	for(unsigned int i = 0; line[i]; i++)
+	unsigned int i = 0;
+	while(line[i])
 	{
 		if(strcmp(line[i], "|") == 0)
 		{
@@ -313,33 +450,35 @@ void checkForPipes(char ** line, bool ampersand)
 			pipeLocation = i;
 			break;
 		}
+		i++;
 	}
-	
-	if(!hasPipe)
+	runPipe(line, ampersand, pipeLocation, hasPipe);
+}
+
+void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe)
+{
+	char ** linep1 = new char *[1024];
+	char ** linep2 = new char *[1024];
+	int saveValue = 0;
+	if(!hasPipe) // if it doesnt have pipe
 	{
 		executeIO(line, ampersand);
 	}
-
-	else if(hasPipe)
+	else if(hasPipe) // if it has pipe
 	{
 		for(int i = 0; i < pipeLocation; i++)
 		{
 			linep1[i] = line[i];
 		}
-		
 		linep1[pipeLocation] = NULL;
-	
-		int a = 0;
 		for(int i = pipeLocation+1; line[i]; i++)
 		{
-			linep2[a] = line[i];
-			a++;
+			linep2[i-pipeLocation-1] = line[i];
+			saveValue = i;
 		}
-		linep2[a] = NULL;
-
+		linep2[saveValue+1] = NULL;
 		executeForPiping(linep1, linep2, ampersand);
 	}
-
 	delete [] linep1;
 	delete [] linep2;
 }
@@ -350,7 +489,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 	bool found = false;
 	unsigned int pos;
 	unsigned int last;
-	for(unsigned int i = 0; linep1[i]; i++)
+	for(unsigned int i = 0; linep1[i]; i++) // check for the first part of the pipe
 	{
 		if((strcmp(linep1[i], "<") == 0) || (strcmp(linep1[i], ">") == 0) || (strcmp(linep1[i], ">>") == 0))
 		{
@@ -367,10 +506,6 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			last = i+1;
 		}
 		linep1[last] = 0;
-		for(unsigned int i = 0; linep1[i]; i++)
-		{
-			cout << linep1[i] << " ";
-		}
 	}
 	if(pipe(fd) == -1)
 	{
@@ -392,7 +527,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			perror("Error: dup2 failed");
 			exit(1);
 		}
-		close(fd[0]);
+		close(fd[0]); // close stdin
 		if(errno == -1)
 		{
 			perror("Error: close(1) failed");
@@ -404,7 +539,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			exit(1);
 		}
 	}
-	close(fd[1]);
+	close(fd[1]); // close stdout
 	if(errno == -1)
 	{
 		perror("Error: close failed");
@@ -429,7 +564,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 		exit(1);
 	}
 
-	checkForPipes(linep2, ampersand);
+	checkForPipes(linep2, ampersand); // recursive needed for pipe chaining
 
 	dup2(tempStdIn, 0);
 	if(errno == -1)
@@ -456,17 +591,12 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		{
 			outputRApp = true;
 		}
-		if(line[i] == '|' && line[i+1] != '|')
+		if(line[i] == '|' && line[i+1] != '|') // '|'
 		{
 			hasPipe = true;
 		}
-		/*if(line[i-1] == '<' && line[i] == '<' && line[i+1] == '<') // '<<<'
-		{
-			inputRString = true;
-			pos5 = i;
-		}*/
 	}
-	if(hasPipe)
+	if(hasPipe) // if hasPipe
 	{
 		char ** parsedSpaces = parse(line, " ");
 		checkForPipes(parsedSpaces, ampersand);
@@ -476,9 +606,9 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		}
 		delete parsedSpaces;
 	}
-	else if(!hasPipe)
+	else if(!hasPipe) // if there's no pipe
 	{
-		if(inputR || outputR || outputRApp)
+		if(inputR || outputR || outputRApp) // if its any i/o redirection
 		{
 			char ** parsedSpaces = parse(line, " ");
 			executeIO(parsedSpaces, ampersand);	
@@ -488,11 +618,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			delete parsedSpaces;
 		}
-		/*else if(inputRString)
-		{
-
-		}*/
-		if(!inputR && !outputR && !outputRApp)
+		if(!inputR && !outputR && !outputRApp) // regular commands
 		{
 			char ** parsedSemis = parse(line, ";");
 			for(int i = 0; parsedSemis[i] != NULL; i++)
@@ -520,7 +646,6 @@ int main()
 		getline(cin, input);
 		commentCheck(input);	
 		input = separateWithSpaces(input);
-		cout << input << endl;
 		line = new char[input.size()+1];
 		strcpy(line, input.c_str());
 		if(strcmp(line, "exit") == 0)
