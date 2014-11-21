@@ -503,7 +503,7 @@ string separateWithSpaces(string line) // Separates to make the i/o redirection 
 void checkForPipes(char ** line, bool ampersand)
 {
 	bool hasPipe = false;
-	int pipeLocation = 0;
+	int pipeLocation = -1;
 	unsigned int i = 0;
 	while(line[i])
 	{
@@ -522,24 +522,20 @@ void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe)
 {
 	char ** linep1 = new char *[1024];
 	char ** linep2 = new char *[1024];
-	int saveValue = 0;
-	if(!hasPipe) // if it doesnt have pipe
+	if(!hasPipe && pipeLocation == -1) // if it doesnt have pipe
 	{
 		executeIO(line, ampersand);
 	}
-	else if(hasPipe) // if it has pipe
+	else if(hasPipe && pipeLocation >= 0) // if it has pipe
 	{
 		for(int i = 0; i < pipeLocation; i++)
 		{
 			linep1[i] = line[i];
 		}
-		linep1[pipeLocation] = NULL;
 		for(int i = pipeLocation+1; line[i]; i++)
 		{
 			linep2[i-pipeLocation-1] = line[i];
-			saveValue = i;
 		}
-		linep2[saveValue+1] = NULL;
 		executeForPiping(linep1, linep2, ampersand);
 	}
 	delete [] linep1;

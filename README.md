@@ -45,13 +45,22 @@ Bugs/Limitations of rshell
 ---------
 ```
 
-1. When running the shell, it is unable to handle the && connector and the || connector together and print it out successfully.
+1. When running the shell, it is unable to handle the && connector and the || connector 
+together and print it out successfully.
 
 2. Requires a semi-colon to run the program with the && and || on the same line.
 
 3. Running multiple & and | can cause the program to crash.
 
 4. Doesn't check if there is two &'s or |'s when it is used
+
+5. Does not contain the input redirection with "<<<"
+
+6. Having multiple inputs will result in taking the last one only.
+
+7. When using the || connector, it will consider it a pipe.
+
+8. Having more than two inputs or two outputs will result in an error.
 
 ```
 
