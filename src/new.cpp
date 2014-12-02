@@ -12,17 +12,27 @@
 #include <string.h>
 #include <pwd.h>
 #include <vector>
+#include <signal.h>
 using namespace std;
 
 void executeForPiping(char ** argv1, char ** argv2, bool ampersand);
 void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe);
-
-
+char * findPath(const char * pathName);
+void myExecVp(char ** argv);
 void printUserInfo() // Prints pwname and hostname
 {
 	char *login = getpwuid(getuid())->pw_name;
+	if(login == NULL)
+	{
+		perror("Error: getpwuid failed");
+		exit(1);
+	}
 	char hostname[1024];
 	int gethost = gethostname(hostname, sizeof(hostname)-1);
+	if(gethost == -1)
+	{
+		perror("Error:gethostname failed");
+	}
 	if(login != NULL && gethost == 0)
 	{
 		cout << login << "@" << hostname << "$ ";
@@ -33,6 +43,20 @@ void printUserInfo() // Prints pwname and hostname
 	}
 }
 
+void printCurrentWorkingDirectory()
+{
+	char buf[1024];
+	memset(buf, 0, 1024);
+	if(getcwd(buf, 1024) == NULL)
+	{
+		perror("Error: getcwd failed");
+		exit(1);
+	}
+	else if(getcwd(buf, 1024) != NULL)
+	{
+		cout << buf << endl;
+	}
+}
 int execute(char ** argv) // Execute for regular commands
 {	
 	int stat = 0;
@@ -52,11 +76,7 @@ int execute(char ** argv) // Execute for regular commands
 	}
 	else if(pid == 0)	// Child process (exec)
 	{
-		if(execvp(argv[0], argv) == -1)
-		{
-			perror("Error: execvp failed");
-			exit(1);
-		}
+		myExecVp(argv);
 	}
 	return stat;
 }
@@ -361,11 +381,7 @@ void executeIO(char ** argv, bool ampersand)
 	else if(pid == 0)
 	{
 		checkDup(argv); // Dup for i/o redirection
-		if(execvp(argv[0], argv) == -1)
-		{
-			perror("Error: execvp failed");
-			exit(1);
-		}
+		myExecVp(argv);
 	}
 }
 
@@ -405,6 +421,7 @@ char ** parse(char * line, const char *delim) // parse by delimiter
 		argvCount[i] = new char[cArray.size() + 1];
 		strcpy(argvCount[i], cArray[i]);
 	}
+
 	return argvCount;
 }
 
@@ -468,7 +485,7 @@ void parseLogicOps(char * line)
 	{
 		delete parsedTokens[i];
 	}
-	delete parsedTokens;	
+	delete [] parsedTokens;	
 }
 
 string separateWithSpaces(string line) // Separates to make the i/o redirection in its own argv[i]
@@ -488,7 +505,7 @@ string separateWithSpaces(string line) // Separates to make the i/o redirection 
 		{
 			newString += " >> ";
 		}
-		else if(i != 0 && (line[i] == '|' && line[i-1] != ' ' && line[i+1] != ' '))
+		else if(i != 0 && (line[i] == '|' && (line[i-1] != ' ' && line[i-1] != '|') && (line[i+1] != ' ' && line[i+1] != '|')))
 		{
 			newString += " | ";
 		}
@@ -522,6 +539,8 @@ void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe)
 {
 	char ** linep1 = new char *[1024];
 	char ** linep2 = new char *[1024];
+	memset(linep1, 0, 1024);
+	memset(linep2, 0, 1024);
 	if(!hasPipe && pipeLocation == -1) // if it doesnt have pipe
 	{
 		executeIO(line, ampersand);
@@ -592,11 +611,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			perror("Error: close(1) failed");
 			exit(1);
 		}
-		if(execvp(linep1[0], linep1) == -1)
-		{
-			perror("Error: execvp failed");
-			exit(1);
-		}
+		myExecVp(linep1);
 	}
 	close(fd[1]); // close stdout
 	if(errno == -1)
@@ -633,6 +648,28 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 	}
 }
 
+void cdFunction(char ** argv, int numberOfArgs)
+{
+	if(numberOfArgs == 1)
+	{
+		char * home = findPath("HOME");
+		if(chdir(home) == -1)
+		{
+			perror("Error: chdir(home) failed");
+			exit(1);
+		}
+	}
+	else
+	{
+		if(chdir(argv[1]) == -1)
+		{
+			perror("Error: chdir(argv[1]) failed");
+			exit(1);
+		}
+	}
+	printCurrentWorkingDirectory();
+}
+
 void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 {
 	bool inputR = false, outputR = false, outputRApp = false, hasPipe = false;
@@ -650,7 +687,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		{
 			outputRApp = true;
 		}
-		if(line[i] == '|' && line[i+1] != '|') // '|'
+		if(line[i-1] != '|' && line[i] == '|' && line[i+1] != '|') // '|'
 		{
 			hasPipe = true;
 		}
@@ -667,7 +704,19 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 	}
 	else if(!hasPipe) // if there's no pipe
 	{
-		if(inputR || outputR || outputRApp) // if its any i/o redirection
+		char * line2 = new char [lineSize];
+		strcpy(line2, line);
+		char ** parsedStuff = parse(line2, " ");
+		int numberOfArgs = 0;
+		if(strcmp(parsedStuff[0], "cd") == 0)
+		{
+			for(unsigned int i = 0; parsedStuff[i]; i++)
+			{
+				numberOfArgs++;
+			}	
+			cdFunction(parsedStuff, numberOfArgs);
+		}
+		else if(inputR || outputR || outputRApp) // if its any i/o redirection
 		{
 			char ** parsedSpaces = parse(line, " ");
 			executeIO(parsedSpaces, ampersand);	
@@ -677,7 +726,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			delete parsedSpaces;
 		}
-		if(!inputR && !outputR && !outputRApp) // regular commands
+		else if(!inputR && !outputR && !outputRApp) // regular commands
 		{
 			char ** parsedSemis = parse(line, ";");
 			for(int i = 0; parsedSemis[i] != NULL; i++)
@@ -690,18 +739,111 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			delete parsedSemis;
 		}
+		delete [] line2;
 	}
 }
-	
+
+char ** parsePath(char * paths, const char *delim) // parse path by delimiter
+{
+	char ** finalPaths = new char * [1024];
+	int i = 0;
+	finalPaths[i] = strtok(paths, delim);
+	for( ; paths[i]; i++)
+	{
+		finalPaths[i] = strtok(NULL, delim);
+	}
+	return finalPaths;
+}
+
+void myExecVp(char ** argv)
+{
+	char * allPaths = findPath("PATH");
+	char ** parsedPaths = parse(allPaths, ":");
+	for(unsigned int i = 0; parsedPaths[i]; i++)
+	{
+		if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
+		{
+			strcat(parsedPaths[i], "/");
+		}
+		strcat(parsedPaths[i], argv[0]);
+		//cout << parsedPaths[i] << endl;
+		
+		char * argv2[1024] = {0};
+		argv2[0] = parsedPaths[i];
+		for(unsigned int j = 1; argv[j]; j++)
+		{
+			argv2[j] = argv[j];
+		}
+		
+		if(execv(argv2[0], argv2) == -1)
+		{
+			//perror("Error: execv failed");
+			//exit(1);
+		}
+		/*else
+		{
+			return;
+		}*/
+	}
+	if(errno == -1)
+	{
+		perror("Error: execv failed");
+		exit(1);
+	}
+	delete allPaths;
+	delete [] parsedPaths;
+}
+
+void printC(int sig)
+{
+	if(signal(SIGINT, SIG_IGN) == SIG_ERR)
+	{
+		perror("Error: signal failed");
+		cout << sig << endl;
+		exit(1);
+	}
+}
+
+void printZ(int sig)
+{
+	int pid = getpid();
+	if(kill(pid, SIGSTOP) == -1)
+	{
+		perror("Error: kill failed");
+		cout << sig << endl;
+		exit(1);
+	}
+}
+
+char * findPath(const char * pathName)
+{
+	char * path = getenv(pathName);
+	if(path == NULL)
+	{
+		perror("Error: getenv failed");
+		exit(1);
+	}
+	return path;
+}
 int main()
 {
-	cout << "Initializing Shell... " << endl << endl;
+	cout << "Initializing Shell... " << endl;
 	string input;
 	char * line;
-	do
+	while(1)
 	{
 		bool ampersand = false;
 		printUserInfo();	
+		if(signal(SIGINT, printC) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-C failed");
+			exit(1);
+		}
+		if(signal(SIGTSTP, printZ) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-Z failed");
+			exit(1);
+		}
 		getline(cin, input);
 		commentCheck(input);	
 		input = separateWithSpaces(input);
@@ -713,7 +855,7 @@ int main()
 			exit(1);
 		}
 		parseCommands(line, input.size(), ampersand);
-		delete line;
-	}while(1);	
+		delete [] line;
+	}
 	return 0;
 }
