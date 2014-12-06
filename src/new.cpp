@@ -631,11 +631,11 @@ void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe)
 	}
 	else if(hasPipe && pipeLocation >= 0) // if it has pipe
 	{
-		for(unsigned int i = 0; i < pipeLocation; i++)
+		for(int i = 0; i < pipeLocation; i++)
 		{
 			linep1[i] = line[i];
 		}
-		for(unsigned int i = pipeLocation+1; line[i]; i++)
+		for(int i = pipeLocation+1; line[i]; i++)
 		{
 			linep2[i-pipeLocation-1] = line[i];
 		}
@@ -883,7 +883,7 @@ char ** parsePath(char * paths, const char *delim) // parse path by delimiter
 void myExecVp(char ** argv)
 {
 	char * allPaths = findPath("PATH");
-	char ** parsedPaths = parse(allPaths, ":");
+	char ** parsedPaths = parsePath(allPaths, ":");
 	for(unsigned int i = 0; parsedPaths[i] != NULL; i++)
 	{
 		if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
@@ -895,14 +895,12 @@ void myExecVp(char ** argv)
 		char * argv2[1024] = {0};
 		memset(argv2, 0, 1024);
 		argv2[0] = parsedPaths[i];
-		int j = 1;
-		for(; argv[j]; j++)
+
+		for(unsigned int j = 1; argv[j]; j++)
 		{
 			argv2[j] = argv[j];
-			j++;
 		}
-		argv2[j] = NULL;
-		
+	
 		if(execv(argv2[0], argv2) == -1)
 		{
 			//perror("Error: execv failed");
