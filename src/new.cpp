@@ -126,7 +126,8 @@ int execute(char ** argv) // Execute for regular commands
 			perror("Error: signal CTRL-Z failed");
 			exit(1);
 		}
-		myExecVp(argv);
+		execvp(argv[0], argv);
+		//myExecVp(argv);
 	}
 	return stat;
 }
@@ -452,7 +453,8 @@ void executeIO(char ** argv, bool ampersand)
 			exit(1);
 		}
 		checkDup(argv); // Dup for i/o redirection
-		myExecVp(argv);
+		execvp(argv[0], argv);
+		//myExecVp(argv);
 	}
 }
 
@@ -490,6 +492,7 @@ char ** parse(char * line, const char *delim) // parse by delimiter
 	for(unsigned int i = 0; i < cArray.size(); i++)
 	{
 		argvCount[i] = new char[cArray.size() + 1];
+		memset(argvCount[i], 0, cArray.size() + 1);
 		strcpy(argvCount[i], cArray[i]);
 	}
 
@@ -711,7 +714,8 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			perror("Error: close(1) failed");
 			exit(1);
 		}
-		myExecVp(linep1);
+		execvp(linep1[0], linep1);
+		//myExecVp(linep1);
 	}
 	close(fd[1]); // close stdout
 	if(errno == -1)
@@ -909,7 +913,7 @@ void myExecVp(char ** argv)
 		perror("Error: execv failed");
 		exit(1);
 	}
-	delete [] parsedPaths;
+	//delete [] parsedPaths;
 }
 
 char * findPath(const char * pathName)
