@@ -477,8 +477,7 @@ void commentCheck(string & input) // If there is a comment if gets erased
 
 char ** parse(char * line, const char *delim) // parse by delimiter
 {
-	vector <char *> cArray;
-	cArray.clear();
+	/*vector <char *> cArray;
 	char * del = strtok(line, delim);
 	while(del != NULL)
 	{
@@ -487,14 +486,25 @@ char ** parse(char * line, const char *delim) // parse by delimiter
 	}
 	char **argvCount = new char *[cArray.size()+1];
 	memset(argvCount, 0, cArray.size()+1);
-	argvCount[cArray.size()] = 0;
-	
+	argvCount[cArray.size()] = 0;	
 	for(unsigned int i = 0; i < cArray.size(); i++)
 	{
 		argvCount[i] = new char[cArray.size() + 1];
 		memset(argvCount[i], 0, cArray.size() + 1);
 		strcpy(argvCount[i], cArray[i]);
+	}*/
+	char ** argvCount = new char * [1024];
+	memset(argvCount, 0, 1024);
+	
+	char * tokens = strtok(line, delim);
+	int i = 0;
+	while(tokens != NULL)
+	{
+		argvCount[i] = tokens;
+		i++;
+		tokens = strtok(NULL, delim);
 	}
+	argvCount[i] = NULL;
 
 	return argvCount;
 }
@@ -507,7 +517,7 @@ int parseArgs(char * line) // parseSpaces
 	{
 		delete parsedSpaces[i];
 	}
-	delete parsedSpaces;
+	delete [] parsedSpaces;
 	return executeProgram;
 }
 
@@ -803,17 +813,17 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		{
 			delete parsedSpaces[i];
 		}
-		delete parsedSpaces;
+		delete [] parsedSpaces;
 	}
 	else if(!hasPipe) // if there's no pipe
 	{
-		char * line2 = new char [lineSize];
+		char line2[lineSize+1];
 		strcpy(line2, line);
 		char ** parsedStuff = parse(line2, " ");
 		int numberOfArgs = 0;
 		if(strcmp(parsedStuff[0], "cd") == 0)
 		{
-			for(unsigned int i = 0; parsedStuff[i]; i++)
+			for(unsigned int i = 0; parsedStuff[i] != NULL; i++)
 			{
 				numberOfArgs++;
 			}	
@@ -827,7 +837,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			{
 				delete parsedSpaces[i];
 			}
-			delete parsedSpaces;
+			delete [] parsedSpaces;
 		}
 		else if(strcmp(parsedStuff[0], "fg") == 0)
 		{
@@ -863,10 +873,9 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			{
 				delete parsedSemis[i];
 			}
-			delete parsedSemis;
+			delete [] parsedSemis;
 		}
-
-		delete [] line2;
+		delete [] parsedStuff;
 	}
 }
 
@@ -918,7 +927,6 @@ void myExecVp(char ** argv)
 	{
 		delete parsedPaths[i];
 	}
-	delete [] allPaths;
 	delete [] parsedPaths;
 }
 
