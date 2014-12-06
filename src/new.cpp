@@ -809,10 +809,6 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 	{
 		char ** parsedSpaces = parse(line, " ");
 		checkForPipes(parsedSpaces, ampersand);
-		for(int i = 0; parsedSpaces[i] != NULL; i++)
-		{
-			delete [] parsedSpaces[i];
-		}
 		delete [] parsedSpaces;
 	}
 	else if(!hasPipe) // if there's no pipe
@@ -834,10 +830,6 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		{
 			char ** parsedSpaces = parse(line, " ");
 			executeIO(parsedSpaces, ampersand);	
-			for(int i = 0; parsedSpaces[i] != NULL; i++)
-			{
-				delete [] parsedSpaces[i];
-			}
 			delete [] parsedSpaces;
 		}
 		else if(strcmp(parsedStuff[0], "fg") == 0)
@@ -870,10 +862,6 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			{
 				parseLogicOps(parsedSemis[i]);
 			}
-			/*for(int i = 0; parsedSemis[i] != NULL; i++)
-			{
-				delete [] parsedSemis[i];
-			}*/
 			delete [] parsedSemis;
 		}
 		delete [] parsedStuff;
