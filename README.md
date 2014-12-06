@@ -78,3 +78,15 @@ Bugs/Limitations of ls
 
 5. The total blocks space on -l is not added correctly. It is slightly off the correct amount.
 ```
+
+Bugs/Limitations of Signals
+---------
+```
+
+1. The Ctrl-Z command does not work as its suppose to.
+
+2. Some of the functions like piping do not completely work with execv.
+
+```
+
+

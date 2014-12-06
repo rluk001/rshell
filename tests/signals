@@ -1,0 +1,994 @@
+Script started on Fri 05 Dec 2014 09:16:22 PM PST
+~
+rluk001@hammer $ cs100
+[0;91m
+===============================================================================
+|                                                                             |
+| You have enabled settings specific for cs100.                               |
+|                                                                             |
+===============================================================================
+[0m
+[s%%%%%%%%%%[u[0;32mrluk001[0;36m@[0;32mcs100[0;36m:[0;32m~[0;95m [0;36m$[0m cd rshell
+[s%%%%%%%%%%[u[0;32mrluk001[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m make
+"g++" -Wall -Werror -ansi -pedantic src/new.cpp -o bin/rshell
+"g++" -Wall -Werror -ansi -pedantic src/ls.cpp -o bin/ls
+"g++" -Wall -Werror -ansi -pedantic src/cp.cpp -o bin/cp
+[s%%%%%%%%%%[u[0;32mrluk001[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m bin/rshell
+Initializing Shell... 
+rluk001@hammer.cs.ucr.edu$ #testing commands with P exec and      v and PATH
+rluk001@hammer.cs.ucr.edu$ ls -la
+total 40
+drwx------  6 rluk001 csmajs 4096 Dec  5 20:58 .
+drwx------ 42 rluk001 csmajs 8192 Dec  5 21:13 ..
+drwx------  2 rluk001 csmajs 4096 Dec  5 21:14 bin
+drwx------  8 rluk001 csmajs 4096 Dec  5 21:14 .git
+-rw-------  1 rluk001 csmajs   89 Nov 20 22:53 LICENSE
+-rw-------  1 rluk001 csmajs  327 Dec  1 11:28 Makefile
+-rw-------  1 rluk001 csmajs 2146 Dec  3 11:41 README.md
+drwx------  2 rluk001 csmajs 4096 Dec  5 21:13 src
+drwx------  2 rluk001 csmajs 4096 Dec  5 21:14 tests
+rluk001@hammer.cs.ucr.edu$ ls -a -l
+total 40
+drwx------  6 rluk001 csmajs 4096 Dec  5 20:58 .
+drwx------ 42 rluk001 csmajs 8192 Dec  5 21:13 ..
+drwx------  2 rluk001 csmajs 4096 Dec  5 21:14 bin
+drwx------  8 rluk001 csmajs 4096 Dec  5 21:14 .git
+-rw-------  1 rluk001 csmajs   89 Nov 20 22:53 LICENSE
+-rw-------  1 rluk001 csmajs  327 Dec  1 11:28 Makefile
+-rw-------  1 rluk001 csmajs 2146 Dec  3 11:41 README.md
+drwx------  2 rluk001 csmajs 4096 Dec  5 21:13 src
+drwx------  2 rluk001 csmajs 4096 Dec  5 21:14 tests
+rluk001@hammer.cs.ucr.edu$ echo hello world
+hello world
+rluk001@hammer.cs.ucr.edu$ cat     cat LICENSE       LICENSE
+Copyright (c) 2014, Ryan Luk
+All rights reserved.
+
+All bash scripts licensed under BSD3.
+rluk001@hammer.cs.ucr.edu$ cd ..
+/home/csmajs/rluk001
+rluk001@hammer.cs.ucr.edu$ cd src   rshell/src
+/home/csmajs/rluk001/rshell/src
+rluk001@hammer.cs.ucr.edu$ cd
+/home/csmajs/rluk001
+rluk001@hammer.cs.ucr.edu$ ls
+a.out  assignments-backupuwFpu4  CS61  Desktop	Documents  Downloads  firstrepo  Music	Pictures  Public  rshell  Templates  tmpjKNqGH	Videos
+rluk001@hammer.cs.ucr.edu$ cd Desktop
+/home/csmajs/rluk001/Desktop
+rluk001@hammer.cs.ucr.edu$ ls
+rluk001@hammer.cs.ucr.edu$ cd
+/home/csmajs/rluk001
+rluk001@hammer.cs.ucr.edu$ cd rshell/src
+/home/csmajs/rluk001/rshell/src
+rluk001@hammer.cs.ucr.edu$ ls > text
+rluk001@hammer.cs.ucr.edu$ cat < text
+a.out
+cp.cpp
+ls.cpp
+new.cpp
+rshell.cpp
+text
+Timer.h
+rluk001@hammer.cs.ucr.edu$ echo hllo   ello > text
+rluk001@hammer.cs.ucr.edu$ l cat < text
+hello
+rluk001@hammer.cs.ucr.edu$ echo world >> text
+rluk001@hammer.cs.ucr.edu$ cat < text
+hello
+world
+rluk001@hammer.cs.ucr.edu$ ps aux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0  23596  1604 ?        Ss   Nov12   0:06 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/0]
+root         4  0.0  0.0      0     0 ?        S    Nov12   0:01 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/0]
+root         6  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/0]
+root         7  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/1]
+root         8  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/1]
+root         9  0.0  0.0      0     0 ?        S    Nov12   0:03 [ksoftirqd/1]
+root        10  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/1]
+root        11  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/2]
+root        12  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/2]
+root        13  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/2]
+root        14  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/2]
+root        15  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/3]
+root        16  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/3]
+root        17  0.0  0.0      0     0 ?        S    Nov12   0:01 [ksoftirqd/3]
+root        18  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/3]
+root        19  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/4]
+root        20  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/4]
+root        21  0.0  0.0      0     0 ?        S    Nov12   0:01 [ksoftirqd/4]
+root        22  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/4]
+root        23  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/5]
+root        24  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/5]
+root        25  0.0  0.0      0     0 ?        S    Nov12   0:02 [ksoftirqd/5]
+root        26  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/5]
+root        27  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/6]
+root        28  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/6]
+root        29  0.0  0.0      0     0 ?        S    Nov12   0:07 [ksoftirqd/6]
+root        30  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/6]
+root        31  0.0  0.0      0     0 ?        S    Nov12   0:02 [migration/7]
+root        32  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/7]
+root        33  0.0  0.0      0     0 ?        S    Nov12   0:06 [ksoftirqd/7]
+root        34  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/7]
+root        35  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/8]
+root        36  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/8]
+root        37  0.0  0.0      0     0 ?        S    Nov12   0:02 [ksoftirqd/8]
+root        38  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/8]
+root        39  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/9]
+root        40  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/9]
+root        41  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/9]
+root        42  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/9]
+root        43  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/10]
+root        44  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/10]
+root        45  0.0  0.0      0     0 ?        S    Nov12   0:01 [ksoftirqd/10]
+root        46  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/10]
+root        47  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/11]
+root        48  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/11]
+root        49  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/11]
+root        50  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/11]
+root        51  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/12]
+root        52  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/12]
+root        53  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/12]
+root        54  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/12]
+root        55  0.0  0.0      0     0 ?        S    Nov12   0:02 [migration/13]
+root        56  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/13]
+root        57  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/13]
+root        58  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/13]
+root        59  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/14]
+root        60  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/14]
+root        61  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/14]
+root        62  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/14]
+root        63  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/15]
+root        64  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/15]
+root        65  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/15]
+root        66  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/15]
+root        67  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/16]
+root        68  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/16]
+root        69  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/16]
+root        70  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/16]
+root        71  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/17]
+root        72  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/17]
+root        73  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/17]
+root        74  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/17]
+root        75  0.0  0.0      0     0 ?        S    Nov12   0:02 [migration/18]
+root        76  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/18]
+root        77  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/18]
+root        78  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/18]
+root        79  0.0  0.0      0     0 ?        S    Nov12   0:02 [migration/19]
+root        80  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/19]
+root        81  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/19]
+root        82  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/19]
+root        83  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/20]
+root        84  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/20]
+root        85  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/20]
+root        86  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/20]
+root        87  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/21]
+root        88  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/21]
+root        89  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/21]
+root        90  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/21]
+root        91  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/22]
+root        92  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/22]
+root        93  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/22]
+root        94  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/22]
+root        95  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/23]
+root        96  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/23]
+root        97  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/23]
+root        98  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/23]
+root        99  0.0  0.0      0     0 ?        S    Nov12   0:01 [migration/24]
+root       100  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/24]
+root       101  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/24]
+root       102  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/24]
+root       103  0.0  0.0      0     0 ?        S    Nov12   0:01 [migration/25]
+root       104  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/25]
+root       105  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/25]
+root       106  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/25]
+root       107  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/26]
+root       108  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/26]
+root       109  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/26]
+root       110  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/26]
+root       111  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/27]
+root       112  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/27]
+root       113  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/27]
+root       114  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/27]
+root       115  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/28]
+root       116  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/28]
+root       117  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/28]
+root       118  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/28]
+root       119  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/29]
+root       120  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/29]
+root       121  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/29]
+root       122  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/29]
+root       123  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/30]
+root       124  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/30]
+root       125  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/30]
+root       126  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/30]
+root       127  0.0  0.0      0     0 ?        S    Nov12   0:01 [migration/31]
+root       128  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/31]
+root       129  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/31]
+root       130  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/31]
+root       131  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/32]
+root       132  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/32]
+root       133  0.0  0.0      0     0 ?        S    Nov12   0:05 [ksoftirqd/32]
+root       134  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/32]
+root       135  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/33]
+root       136  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/33]
+root       137  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/33]
+root       138  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/33]
+root       139  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/34]
+root       140  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/34]
+root       141  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/34]
+root       142  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/34]
+root       143  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/35]
+root       144  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/35]
+root       145  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/35]
+root       146  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/35]
+root       147  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/36]
+root       148  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/36]
+root       149  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/36]
+root       150  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/36]
+root       151  0.0  0.0      0     0 ?        S    Nov12   0:01 [migration/37]
+root       152  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/37]
+root       153  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/37]
+root       154  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/37]
+root       155  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/38]
+root       156  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/38]
+root       157  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/38]
+root       158  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/38]
+root       159  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/39]
+root       160  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/39]
+root       161  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/39]
+root       162  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/39]
+root       163  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/40]
+root       164  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/40]
+root       165  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/40]
+root       166  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/40]
+root       167  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/41]
+root       168  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/41]
+root       169  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/41]
+root       170  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/41]
+root       171  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/42]
+root       172  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/42]
+root       173  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/42]
+root       174  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/42]
+root       175  0.0  0.0      0     0 ?        S    Nov12   0:01 [migration/43]
+root       176  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/43]
+root       177  0.0  0.0      0     0 ?        S    Nov12   0:04 [ksoftirqd/43]
+root       178  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/43]
+root       179  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/44]
+root       180  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/44]
+root       181  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/44]
+root       182  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/44]
+root       183  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/45]
+root       184  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/45]
+root       185  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/45]
+root       186  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/45]
+root       187  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/46]
+root       188  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/46]
+root       189  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/46]
+root       190  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/46]
+root       191  0.0  0.0      0     0 ?        S    Nov12   0:00 [migration/47]
+root       192  0.0  0.0      0     0 ?        S    Nov12   0:00 [stopper/47]
+root       193  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksoftirqd/47]
+root       194  0.0  0.0      0     0 ?        S    Nov12   0:01 [watchdog/47]
+root       195  0.0  0.0      0     0 ?        S    Nov12   6:36 [events/0]
+root       196  0.0  0.0      0     0 ?        S    Nov12   1:59 [events/1]
+root       197  0.0  0.0      0     0 ?        S    Nov12   1:36 [events/2]
+root       198  0.0  0.0      0     0 ?        S    Nov12   1:14 [events/3]
+root       199  0.0  0.0      0     0 ?        S    Nov12   1:12 [events/4]
+root       200  0.0  0.0      0     0 ?        S    Nov12   1:16 [events/5]
+root       201  0.0  0.0      0     0 ?        S    Nov12   1:35 [events/6]
+root       202  0.0  0.0      0     0 ?        S    Nov12   1:34 [events/7]
+root       203  0.0  0.0      0     0 ?        S    Nov12   1:21 [events/8]
+root       204  0.0  0.0      0     0 ?        S    Nov12   0:49 [events/9]
+root       205  0.0  0.0      0     0 ?        S    Nov12   1:05 [events/10]
+root       206  0.0  0.0      0     0 ?        S    Nov12   1:08 [events/11]
+root       207  0.0  0.0      0     0 ?        S    Nov12   1:18 [events/12]
+root       208  0.0  0.0      0     0 ?        S    Nov12   1:11 [events/13]
+root       209  0.0  0.0      0     0 ?        S    Nov12   1:03 [events/14]
+root       210  0.0  0.0      0     0 ?        S    Nov12   0:47 [events/15]
+root       211  0.0  0.0      0     0 ?        S    Nov12   0:41 [events/16]
+root       212  0.0  0.0      0     0 ?        S    Nov12   1:01 [events/17]
+root       213  0.0  0.0      0     0 ?        S    Nov12   1:01 [events/18]
+root       214  0.0  0.0      0     0 ?        S    Nov12   1:03 [events/19]
+root       215  0.0  0.0      0     0 ?        S    Nov12   0:50 [events/20]
+root       216  0.0  0.0      0     0 ?        S    Nov12   0:48 [events/21]
+root       217  0.0  0.0      0     0 ?        S    Nov12   0:50 [events/22]
+root       218  0.0  0.0      0     0 ?        S    Nov12   1:09 [events/23]
+root       219  0.0  0.0      0     0 ?        S    Nov12   1:01 [events/24]
+root       220  0.0  0.0      0     0 ?        S    Nov12   0:57 [events/25]
+root       221  0.0  0.0      0     0 ?        S    Nov12   0:48 [events/26]
+root       222  0.0  0.0      0     0 ?        S    Nov12   0:46 [events/27]
+root       223  0.0  0.0      0     0 ?        S    Nov12   0:45 [events/28]
+root       224  0.0  0.0      0     0 ?        S    Nov12   1:02 [events/29]
+root       225  0.0  0.0      0     0 ?        S    Nov12   1:09 [events/30]
+root       226  0.0  0.0      0     0 ?        S    Nov12   1:03 [events/31]
+root       227  0.0  0.0      0     0 ?        S    Nov12   0:57 [events/32]
+root       228  0.0  0.0      0     0 ?        S    Nov12   0:47 [events/33]
+root       229  0.0  0.0      0     0 ?        S    Nov12   0:49 [events/34]
+root       230  0.0  0.0      0     0 ?        S    Nov12   1:08 [events/35]
+root       231  0.0  0.0      0     0 ?        S    Nov12   0:55 [events/36]
+root       232  0.0  0.0      0     0 ?        S    Nov12   0:56 [events/37]
+root       233  0.0  0.0      0     0 ?        S    Nov12   0:48 [events/38]
+root       234  0.0  0.0      0     0 ?        S    Nov12   0:48 [events/39]
+root       235  0.0  0.0      0     0 ?        S    Nov12   0:46 [events/40]
+root       236  0.0  0.0      0     0 ?        S    Nov12   1:03 [events/41]
+root       237  0.0  0.0      0     0 ?        S    Nov12   0:58 [events/42]
+root       238  0.0  0.0      0     0 ?        S    Nov12   1:18 [events/43]
+root       239  0.0  0.0      0     0 ?        S    Nov12   0:48 [events/44]
+root       240  0.0  0.0      0     0 ?        S    Nov12   0:47 [events/45]
+root       241  0.0  0.0      0     0 ?        S    Nov12   0:48 [events/46]
+root       242  0.0  0.0      0     0 ?        S    Nov12   1:07 [events/47]
+root       243  0.0  0.0      0     0 ?        S    Nov12   0:00 [cgroup]
+root       244  0.0  0.0      0     0 ?        S    Nov12   0:00 [khelper]
+root       245  0.0  0.0      0     0 ?        S    Nov12   0:00 [netns]
+root       246  0.0  0.0      0     0 ?        S    Nov12   0:00 [async/mgr]
+root       247  0.0  0.0      0     0 ?        S    Nov12   0:00 [pm]
+root       248  0.0  0.0      0     0 ?        S    Nov12   0:07 [sync_supers]
+root       249  0.0  0.0      0     0 ?        S    Nov12   0:06 [bdi-default]
+root       250  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/0]
+root       251  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/1]
+root       252  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/2]
+root       253  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/3]
+root       254  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/4]
+root       255  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/5]
+root       256  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/6]
+root       257  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/7]
+root       258  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/8]
+root       259  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/9]
+root       260  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/10]
+root       261  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/11]
+root       262  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/12]
+root       263  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/13]
+root       264  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/14]
+root       265  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/15]
+root       266  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/16]
+root       267  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/17]
+root       268  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/18]
+root       269  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/19]
+root       270  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/20]
+root       271  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/21]
+root       272  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/22]
+root       273  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/23]
+root       274  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/24]
+root       275  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/25]
+root       276  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/26]
+root       277  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/27]
+root       278  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/28]
+root       279  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/29]
+root       280  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/30]
+root       281  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/31]
+root       282  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/32]
+root       283  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/33]
+root       284  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/34]
+root       285  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/35]
+root       286  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/36]
+root       287  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/37]
+root       288  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/38]
+root       289  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/39]
+root       290  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/40]
+root       291  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/41]
+root       292  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/42]
+root       293  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/43]
+root       294  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/44]
+root       295  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/45]
+root       296  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/46]
+root       297  0.0  0.0      0     0 ?        S    Nov12   0:00 [kintegrityd/47]
+root       298  0.0  0.0      0     0 ?        S    Nov12   0:02 [kblockd/0]
+root       299  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/1]
+root       300  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/2]
+root       301  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/3]
+root       302  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/4]
+root       303  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/5]
+root       304  0.0  0.0      0     0 ?        S    Nov12   0:22 [kblockd/6]
+root       305  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/7]
+root       306  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/8]
+root       307  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/9]
+root       308  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/10]
+root       309  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/11]
+root       310  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/12]
+root       311  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/13]
+root       312  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/14]
+root       313  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/15]
+root       314  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/16]
+root       315  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/17]
+root       316  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/18]
+root       317  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/19]
+root       318  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/20]
+root       319  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/21]
+root       320  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/22]
+root       321  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/23]
+root       322  0.0  0.0      0     0 ?        S    Nov12   0:02 [kblockd/24]
+root       323  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/25]
+root       324  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/26]
+root       325  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/27]
+root       326  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/28]
+root       327  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/29]
+root       328  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/30]
+root       329  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/31]
+root       330  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/32]
+root       331  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/33]
+root       332  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/34]
+root       333  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/35]
+root       334  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/36]
+root       335  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/37]
+root       336  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/38]
+root       337  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/39]
+root       338  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/40]
+root       339  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/41]
+root       340  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/42]
+root       341  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/43]
+root       342  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/44]
+root       343  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/45]
+root       344  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/46]
+root       345  0.0  0.0      0     0 ?        S    Nov12   0:00 [kblockd/47]
+root       346  0.0  0.0      0     0 ?        S    Nov12   0:00 [kacpid]
+root       347  0.0  0.0      0     0 ?        S    Nov12   0:00 [kacpi_notify]
+root       348  0.0  0.0      0     0 ?        S    Nov12   0:00 [kacpi_hotplug]
+root       349  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_aux]
+root       350  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/0]
+root       351  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/1]
+root       352  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/2]
+root       353  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/3]
+root       354  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/4]
+root       355  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/5]
+root       356  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/6]
+root       357  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/7]
+root       358  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/8]
+root       359  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/9]
+root       360  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/10]
+root       361  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/11]
+root       362  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/12]
+root       363  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/13]
+root       364  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/14]
+root       365  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/15]
+root       366  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/16]
+root       367  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/17]
+root       368  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/18]
+root       369  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/19]
+root       370  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/20]
+root       371  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/21]
+root       372  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/22]
+root       373  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/23]
+root       374  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/24]
+root       375  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/25]
+root       376  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/26]
+root       377  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/27]
+root       378  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/28]
+root       379  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/29]
+root       380  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/30]
+root       381  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/31]
+root       382  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/32]
+root       383  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/33]
+root       384  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/34]
+root       385  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/35]
+root       386  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/36]
+root       387  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/37]
+root       388  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/38]
+root       389  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/39]
+root       390  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/40]
+root       391  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/41]
+root       392  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/42]
+root       393  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/43]
+root       394  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/44]
+root       395  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/45]
+root       396  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/46]
+root       397  0.0  0.0      0     0 ?        S    Nov12   0:00 [ata_sff/47]
+root       398  0.0  0.0      0     0 ?        S    Nov12   0:00 [ksuspend_usbd]
+root       399  0.0  0.0      0     0 ?        S    Nov12   0:00 [khubd]
+root       400  0.0  0.0      0     0 ?        S    Nov12   0:00 [kseriod]
+root       401  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/0]
+root       402  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/1]
+root       403  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/2]
+root       404  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/3]
+root       405  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/4]
+root       406  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/5]
+root       407  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/6]
+root       408  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/7]
+root       409  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/8]
+root       410  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/9]
+root       411  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/10]
+root       412  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/11]
+root       413  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/12]
+root       414  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/13]
+root       415  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/14]
+root       416  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/15]
+root       417  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/16]
+root       418  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/17]
+root       419  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/18]
+root       420  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/19]
+root       421  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/20]
+root       422  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/21]
+root       423  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/22]
+root       424  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/23]
+root       425  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/24]
+root       426  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/25]
+root       427  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/26]
+root       428  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/27]
+root       429  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/28]
+root       430  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/29]
+root       431  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/30]
+root       432  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/31]
+root       433  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/32]
+root       434  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/33]
+root       435  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/34]
+root       436  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/35]
+root       437  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/36]
+root       438  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/37]
+root       439  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/38]
+root       440  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/39]
+root       441  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/40]
+root       442  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/41]
+root       443  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/42]
+root       444  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/43]
+root       445  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/44]
+root       446  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/45]
+root       447  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/46]
+root       448  0.0  0.0      0     0 ?        S    Nov12   0:00 [md/47]
+root       449  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/0]
+root       450  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/1]
+root       451  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/2]
+root       452  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/3]
+root       453  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/4]
+root       454  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/5]
+root       455  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/6]
+root       456  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/7]
+root       457  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/8]
+root       458  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/9]
+root       459  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/10]
+root       460  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/11]
+root       461  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/12]
+root       462  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/13]
+root       463  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/14]
+root       464  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/15]
+root       465  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/16]
+root       466  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/17]
+root       467  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/18]
+root       468  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/19]
+root       469  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/20]
+root       470  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/21]
+root       471  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/22]
+root       472  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/23]
+root       473  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/24]
+root       474  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/25]
+root       475  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/26]
+root       476  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/27]
+root       477  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/28]
+root       478  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/29]
+root       479  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/30]
+root       480  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/31]
+root       481  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/32]
+root       482  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/33]
+root       483  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/34]
+root       484  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/35]
+root       485  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/36]
+root       486  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/37]
+root       487  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/38]
+root       488  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/39]
+root       489  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/40]
+root       490  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/41]
+root       491  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/42]
+root       492  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/43]
+root       493  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/44]
+root       494  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/45]
+root       495  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/46]
+root       496  0.0  0.0      0     0 ?        S    Nov12   0:00 [md_misc/47]
+root       497  0.0  0.0      0     0 ?        S    Nov12   0:00 [linkwatch]
+root       558  0.0  0.0      0     0 ?        S    Nov12   0:01 [khungtaskd]
+root       559  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd0]
+root       560  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd1]
+root       561  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd2]
+root       562  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd3]
+root       563  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd4]
+root       564  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd5]
+root       565  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd6]
+root       566  0.0  0.0      0     0 ?        S    Nov12   0:00 [kswapd7]
+root       567  0.0  0.0      0     0 ?        SN   Nov12   0:00 [ksmd]
+root       568  0.0  0.0      0     0 ?        SN   Nov12   0:20 [khugepaged]
+root       569  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/0]
+root       570  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/1]
+root       571  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/2]
+root       572  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/3]
+root       573  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/4]
+root       574  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/5]
+root       575  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/6]
+root       576  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/7]
+root       577  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/8]
+root       578  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/9]
+root       579  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/10]
+root       580  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/11]
+root       581  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/12]
+root       582  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/13]
+root       583  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/14]
+root       584  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/15]
+root       585  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/16]
+root       586  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/17]
+root       587  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/18]
+root       588  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/19]
+root       589  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/20]
+root       590  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/21]
+root       591  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/22]
+root       592  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/23]
+root       593  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/24]
+root       594  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/25]
+root       595  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/26]
+root       596  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/27]
+root       597  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/28]
+root       598  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/29]
+root       599  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/30]
+root       600  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/31]
+root       601  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/32]
+root       602  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/33]
+root       603  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/34]
+root       604  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/35]
+root       605  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/36]
+root       606  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/37]
+root       607  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/38]
+root       608  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/39]
+root       609  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/40]
+root       610  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/41]
+root       611  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/42]
+root       612  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/43]
+root       613  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/44]
+root       614  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/45]
+root       615  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/46]
+root       616  0.0  0.0      0     0 ?        S    Nov12   0:00 [aio/47]
+root       617  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/0]
+root       618  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/1]
+root       619  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/2]
+root       620  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/3]
+root       621  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/4]
+root       622  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/5]
+root       623  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/6]
+root       624  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/7]
+root       625  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/8]
+root       626  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/9]
+root       627  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/10]
+root       628  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/11]
+root       629  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/12]
+root       630  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/13]
+root       631  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/14]
+root       632  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/15]
+root       633  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/16]
+root       634  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/17]
+root       635  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/18]
+root       636  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/19]
+root       637  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/20]
+root       638  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/21]
+root       639  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/22]
+root       640  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/23]
+root       641  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/24]
+root       642  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/25]
+root       643  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/26]
+root       644  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/27]
+root       645  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/28]
+root       646  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/29]
+root       647  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/30]
+root       648  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/31]
+root       649  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/32]
+root       650  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/33]
+root       651  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/34]
+root       652  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/35]
+root       653  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/36]
+root       654  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/37]
+root       655  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/38]
+root       656  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/39]
+root       657  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/40]
+root       658  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/41]
+root       659  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/42]
+root       660  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/43]
+root       661  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/44]
+root       662  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/45]
+root       663  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/46]
+root       664  0.0  0.0      0     0 ?        S    Nov12   0:00 [crypto/47]
+root       672  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/0]
+root       673  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/1]
+root       674  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/2]
+root       675  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/3]
+root       676  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/4]
+root       677  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/5]
+root       678  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/6]
+root       679  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/7]
+root       680  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/8]
+root       681  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/9]
+root       682  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/10]
+root       683  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/11]
+root       684  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/12]
+root       685  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/13]
+root       686  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/14]
+root       687  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/15]
+root       688  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/16]
+root       689  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/17]
+root       690  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/18]
+root       691  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/19]
+root       692  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/20]
+root       693  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/21]
+root       694  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/22]
+root       695  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/23]
+root       696  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/24]
+root       697  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/25]
+root       698  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/26]
+root       699  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/27]
+root       700  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/28]
+root       701  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/29]
+root       702  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/30]
+root       703  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/31]
+root       704  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/32]
+root       705  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/33]
+root       706  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/34]
+root       707  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/35]
+root       708  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/36]
+root       709  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/37]
+root       710  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/38]
+root       711  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/39]
+root       712  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/40]
+root       713  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/41]
+root       714  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/42]
+root       715  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/43]
+root       716  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/44]
+root       717  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/45]
+root       718  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/46]
+root       719  0.0  0.0      0     0 ?        S    Nov12   0:00 [kthrotld/47]
+root       730  0.0  0.0      0     0 ?        S    Nov12   0:00 [kpsmoused]
+root       731  0.0  0.0      0     0 ?        S    Nov12   0:00 [usbhid_resumer]
+root       732  0.0  0.0      0     0 ?        S    Nov12   0:00 [deferwq]
+root       764  0.0  0.0      0     0 ?        S    Nov12   0:00 [kdmremove]
+root       765  0.0  0.0      0     0 ?        S    Nov12   0:00 [kstriped]
+root       801  0.0  0.0      0     0 ?        S    Nov12   0:00 [scsi_eh_0]
+root       802  0.0  0.0      0     0 ?        S    Nov12   0:00 [usb-storage]
+root       969  0.0  0.0      0     0 ?        S    Nov12   0:00 [scsi_eh_1]
+root       970  0.0  0.0      0     0 ?        S    Nov12  15:39 [scsi_eh_2]
+root       971  0.0  0.0      0     0 ?        D    Nov12  17:04 [scsi_eh_3]
+root       972  0.0  0.0      0     0 ?        S    Nov12   0:00 [scsi_eh_4]
+root      1009  0.0  0.0      0     0 ?        S    Nov12   0:00 [scsi_eh_5]
+root      1010  0.0  0.0      0     0 ?        S    Nov12   0:00 [scsi_eh_6]
+root      1052  0.0  0.0      0     0 ?        S    Nov12   0:00 [scsi_eh_7]
+root      1053  0.0  0.0      0     0 ?        S    Nov12   0:00 [fw_event0]
+root      1055  0.0  0.0      0     0 ?        S    Nov12   0:25 [poll_0_status]
+root      1166  0.0  0.0      0     0 ?        S    Nov12   0:27 [flush-8:0]
+root      1176  0.0  0.0      0     0 ?        S    Nov12   0:52 [jbd2/sda1-8]
+root      1177  0.0  0.0      0     0 ?        S    Nov12   0:00 [ext4-dio-unwrit]
+root      1261  0.0  0.0  10864  1072 ?        S<s  Nov12   0:00 /sbin/udevd -d
+root      1526  0.0  0.0      0     0 ?        S    Nov12   0:21 [edac-poller]
+root      1902  0.0  0.0  10860   908 ?        S<   Dec01   0:00 /sbin/udevd -d
+root      1964  0.0  0.0      0     0 ?        S    Nov12   0:21 [kauditd]
+root      2123  0.0  0.0 104788  5088 ?        Ss   18:44   0:00 sshd: dnguy078 [priv]
+jholl013  2140  0.0  0.0  26632  2148 ?        Ss   18:44   0:03 tmux new -s cs100
+jholl013  2141  0.0  0.0 112576  1920 pts/28   Ss   18:44   0:00 -bash
+dnguy078  2190  0.0  0.0 104788  2368 ?        S    18:44   0:00 sshd: dnguy078@pts/38
+dnguy078  2192  0.0  0.0 112576  1944 pts/38   Ss   18:44   0:00 -bash
+root      2193  0.0  0.0   9120   980 ?        Ss   Nov12   0:05 /sbin/dhclient -1 -q -cf /etc/dhcp/dhclient-eth0.conf -lf /var/lib/dhclient/dhclient-eth0.leases -pf /var/run/dhclient-eth0.pid eth0
+root      2242  0.0  0.0  93156   864 ?        S<sl Nov12   1:01 auditd
+root      2264  0.0  0.0   6160   560 ?        Ss   Nov12   0:00 /sbin/portreserve
+root      2272  0.0  0.0 249868  6312 ?        Sl   Nov12   7:07 /sbin/rsyslogd -i /var/run/syslogd.pid -c 5
+root      2285  0.0  0.0  18372   720 ?        Ss   Nov12   4:27 irqbalance --pid=/var/run/irqbalance.pid
+rpc       2301  0.0  0.0  19044   992 ?        Ss   Nov12   0:16 rpcbind
+rpcuser   2321  0.0  0.0  27572  1496 ?        Ss   Nov12   0:00 rpc.statd
+dbus      2333  0.0  0.0  25816  1368 ?        Ss   Nov12   0:09 dbus-daemon --system
+avahi     2345  0.0  0.0  32036  1660 ?        S    Nov12   0:01 avahi-daemon: running [hammer.local]
+avahi     2346  0.0  0.0  31912   408 ?        Ss   Nov12   0:00 avahi-daemon: chroot helper
+root      2432  0.0  0.0 882308  6348 ?        Ssl  Nov12   1:06 automount --pid-file /var/run/autofs.pid
+root      2489  0.0  0.0 117364  1272 ?        Ss   Nov12   0:19 crond
+root      2502  0.0  0.0   4064   532 tty1     Ss+  Nov12   0:00 /sbin/mingetty /dev/tty1
+root      2504  0.0  0.0   4064   532 tty2     Ss+  Nov12   0:00 /sbin/mingetty /dev/tty2
+root      2506  0.0  0.0   4064   532 tty3     Ss+  Nov12   0:00 /sbin/mingetty /dev/tty3
+root      2508  0.0  0.0   4064   528 tty4     Ss+  Nov12   0:00 /sbin/mingetty /dev/tty4
+root      2510  0.0  0.0   4064   524 tty5     Ss+  Nov12   0:00 /sbin/mingetty /dev/tty5
+root      2512  0.0  0.0   4064   532 tty6     Ss+  Nov12   0:00 /sbin/mingetty /dev/tty6
+root      2527  0.0  0.0      0     0 ?        S    Nov12   0:02 [rpciod/0]
+root      2528  0.0  0.0      0     0 ?        S    Nov12   0:23 [rpciod/1]
+root      2529  0.0  0.0      0     0 ?        S    Nov12   0:04 [rpciod/2]
+root      2530  0.0  0.0      0     0 ?        S    Nov12   0:07 [rpciod/3]
+root      2531  0.0  0.0      0     0 ?        S    Nov12   0:13 [rpciod/4]
+root      2532  0.0  0.0      0     0 ?        S    Nov12   0:10 [rpciod/5]
+root      2533  0.0  0.0      0     0 ?        S    Nov12   0:02 [rpciod/6]
+root      2534  0.0  0.0      0     0 ?        S    Nov12   0:01 [rpciod/7]
+root      2535  0.0  0.0      0     0 ?        S    Nov12   0:27 [rpciod/8]
+root      2536  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/9]
+root      2537  0.0  0.0      0     0 ?        S    Nov12   0:10 [rpciod/10]
+root      2538  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/11]
+root      2539  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/12]
+root      2540  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/13]
+root      2541  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/14]
+root      2542  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/15]
+root      2543  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/16]
+root      2544  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/17]
+root      2545  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/18]
+root      2546  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/19]
+root      2547  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/20]
+root      2548  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/21]
+root      2549  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/22]
+root      2550  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/23]
+root      2551  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/24]
+root      2552  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/25]
+root      2553  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/26]
+root      2554  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/27]
+root      2555  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/28]
+root      2556  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/29]
+root      2557  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/30]
+root      2558  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/31]
+root      2559  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/32]
+root      2560  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/33]
+root      2561  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/34]
+root      2562  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/35]
+root      2563  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/36]
+root      2564  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/37]
+root      2565  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/38]
+root      2566  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/39]
+root      2567  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/40]
+root      2568  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/41]
+root      2569  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/42]
+root      2570  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/43]
+root      2571  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/44]
+root      2572  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/45]
+root      2573  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/46]
+root      2574  0.0  0.0      0     0 ?        S    Nov12   0:00 [rpciod/47]
+root      2576  0.0  0.0      0     0 ?        S<   Nov12   0:00 [kslowd000]
+root      2577  0.0  0.0      0     0 ?        S<   Nov12   0:00 [kslowd001]
+root      2578  0.0  0.0      0     0 ?        S    Nov12   0:59 [nfsiod]
+root      3104  0.0  0.0  66688  1248 ?        Ss   Nov14   0:02 /usr/sbin/sshd
+root      4176  0.0  0.0 189408  3772 ?        Ss   18:50   0:00 cupsd -C /etc/cups/cupsd.conf
+root      5972  0.0  0.0 104784  4764 ?        Ss   18:55   0:00 sshd: jholl013 [priv]
+jholl013  5975  0.0  0.0 104784  2132 ?        S    18:55   0:00 sshd: jholl013@pts/0
+jholl013  5976  0.0  0.0 112576  1900 pts/0    Ss   18:55   0:00 -bash
+jholl013  6012  0.0  0.0  23712  1116 pts/0    S+   18:55   0:00 tmux attach
+root      7570  0.0  0.0 104784  5072 ?        Ss   19:04   0:00 sshd: atost001 [priv]
+atost001  7589  0.0  0.0 104784  2364 ?        S    19:04   0:00 sshd: atost001@pts/17
+atost001  7590  0.0  0.0 112576  1908 pts/17   Ss   19:04   0:00 -bash
+atost001  7625  0.0  0.0 107124   752 pts/17   S+   19:04   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+atost001  7640  0.0  0.0 107128   444 pts/17   S+   19:04   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+atost001  7641  0.0  0.0 112584  1872 pts/18   Ss+  19:04   0:00 bash --norc -i
+dnguy078  9644  0.0  0.0 146648  4596 pts/8    S+   19:17   0:00 vim makefile
+dnguy078  9743  0.0  0.0 146712  4680 pts/38   S+   19:18   0:00 vim Devices.cc
+bleon001 11273  0.0  0.0 112580   936 pts/15   S    Dec02   0:00 -bash
+bleon001 11274  0.0  0.0 112688  1932 pts/15   S+   Dec02   0:00 bash --norc -i
+root     11924  0.0  0.0  50000  2620 ?        S    Dec01   0:00 /usr/libexec/devkit-power-daemon
+root     12001  0.0  0.0 104784  5068 ?        Ss   19:35   0:00 sshd: hray001 [priv]
+hray001  12017  0.0  0.0 104784  2404 ?        S    19:35   0:00 sshd: hray001@pts/20
+hray001  12018  0.0  0.0 112576  1908 pts/20   Ss   19:35   0:00 -bash
+hray001  12051  0.0  0.0 107124   756 pts/20   S+   19:35   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+hray001  12066  0.0  0.0 107128   448 pts/20   S+   19:35   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+hray001  12067  0.0  0.0 112688  1896 pts/27   Ss+  19:35   0:00 bash --norc -i
+root     12123  0.0  0.0 104784  5072 ?        Ss   19:35   0:00 sshd: hray001 [priv]
+hray001  12145  0.0  0.0 104784  2392 ?        S    19:35   0:00 sshd: hray001@pts/29
+hray001  12146  0.0  0.0 112576  1944 pts/29   Ss   19:35   0:00 -bash
+jholl013 12894  0.0  0.0 107128   752 pts/28   S+   19:41   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+jholl013 12910  0.0  0.0 107132   444 pts/28   S+   19:41   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+jholl013 12911  0.0  0.0 112688  1944 pts/6    Ss+  19:41   0:00 bash --norc -i
+root     13178  0.0  0.0 104784  5068 ?        Ss   19:43   0:00 sshd: ogonz007 [priv]
+ogonz007 13194  0.0  0.0 104784  2360 ?        S    19:43   0:00 sshd: ogonz007@pts/2
+ogonz007 13195  0.0  0.0 112576  1908 pts/2    Ss   19:43   0:00 -bash
+ogonz007 13224  0.0  0.0 107124   752 pts/2    S+   19:43   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+ogonz007 13239  0.0  0.0 107128   444 pts/2    S+   19:43   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+ogonz007 13240  0.0  0.0 112832  2100 pts/3    Ss   19:43   0:00 bash --norc -i
+ogonz007 13257  0.0  0.0 145916  4140 pts/3    T    19:43   0:00 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-ogonz007-2014-12-05-19-43-35.EITUrJnay rshell.cpp
+root     13316  0.0  0.0 104788  5080 ?        Ss   19:44   0:00 sshd: hray001 [priv]
+hray001  13332  0.0  0.0 104788  2412 ?        S    19:44   0:00 sshd: hray001@pts/4
+hray001  13333  0.0  0.0 112608  1952 pts/4    Ss   19:44   0:00 -bash
+ogonz007 15905  0.0  0.0 145880  3948 pts/3    T    20:01   0:00 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-ogonz007-2014-12-05-20-01-37.eK0T7dKxC Makefile
+jholl013 15921  0.0  0.0 112576  1908 pts/9    Ss   20:01   0:00 -bash
+jholl013 15949  0.0  0.0 107128   756 pts/9    S+   20:02   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+jholl013 15964  0.0  0.0 107132   448 pts/9    S+   20:02   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+jholl013 15965  0.0  0.0 112684  1904 pts/14   Ss   20:02   0:00 bash --norc -i
+jholl013 16010  0.0  0.0 145892  4076 pts/14   S+   20:02   0:00 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-jholl013-2014-12-05-20-02-12.k3QMtXqmA src/rshell.cpp
+root     16202  0.0  0.0 104788  5092 ?        Ss   20:04   0:00 sshd: ogonz007 [priv]
+ogonz007 16229  0.0  0.0 104788  2356 ?        S    20:04   0:00 sshd: ogonz007@pts/12
+ogonz007 16230  0.0  0.0 112576  1912 pts/12   Ss   20:04   0:00 -bash
+ogonz007 16273  0.0  0.0 107124   756 pts/12   S+   20:04   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+ogonz007 16288  0.0  0.0 107128   448 pts/12   S+   20:04   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+ogonz007 16289  0.0  0.0 112692  1948 pts/30   Ss   20:04   0:00 bash --norc -i
+ogonz007 16337  0.0  0.0 145992  4120 pts/30   S+   20:04   0:03 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-ogonz007-2014-12-05-20-04-36.cbt1RBwMG rshell.cpp
+root     16834  0.0  0.0 104784  5076 ?        Ss   13:01   0:00 sshd: asand017 [priv]
+asand017 16853  0.0  0.0 104920  2544 ?        S    13:01   0:01 sshd: asand017@pts/24
+asand017 16854  0.0  0.0 112576  1912 pts/24   Ss   13:01   0:00 -bash
+asand017 16887  0.0  0.0 107128   756 pts/24   S+   13:01   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+asand017 16902  0.0  0.0 107132   448 pts/24   S+   13:01   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+asand017 16903  0.0  0.0 112588  1920 pts/25   Ss   13:01   0:00 bash --norc -i
+hray001  17145  0.0  0.0 107124   752 pts/4    S+   20:09   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+hray001  17160  0.0  0.0 107128   444 pts/4    S+   20:09   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+hray001  17161  0.0  0.0 112684  1932 pts/16   Ss+  20:09   0:00 bash --norc -i
+root     17301  0.0  0.0 104788  5172 ?        Ss   20:11   0:00 sshd: bleon001 [priv]
+bleon001 17317  0.0  0.0 104788  2476 ?        S    20:11   0:00 sshd: bleon001@pts/31
+bleon001 17318  0.0  0.0 112576  1904 pts/31   Ss   20:11   0:00 -bash
+bleon001 17350  0.0  0.0  23716  1128 pts/31   S+   20:11   0:00 tmux attach
+root     19333  0.0  0.0 104784  5068 ?        Ss   20:31   0:00 sshd: cmanj001 [priv]
+cmanj001 19348  0.0  0.0 104784  2396 ?        S    20:31   0:00 sshd: cmanj001@pts/32
+cmanj001 19349  0.0  0.0 112576  1904 pts/32   Ss   20:31   0:00 -bash
+cmanj001 19377  0.0  0.0 107124   756 pts/32   S+   20:31   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+cmanj001 19392  0.0  0.0 107128   448 pts/32   S+   20:31   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+cmanj001 19393  0.0  0.0 112688  1916 pts/33   Ss   20:31   0:00 bash --norc -i
+ogonz007 20249  0.0  0.0 146012  4188 pts/3    T    20:35   0:00 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-ogonz007-2014-12-05-20-35-04.s4zWAuRE0 rshell.cpp
+root     20722  0.0  0.0 104784  5068 ?        Ss   Dec04   0:00 sshd: asand017 [priv]
+asand017 20739  0.0  0.0 104920  2540 ?        S    Dec04   0:00 sshd: asand017@pts/1
+asand017 20740  0.0  0.0 112576  1908 pts/1    Ss   Dec04   0:00 -bash
+asand017 20769  0.0  0.0 107128   760 pts/1    S+   Dec04   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+asand017 20784  0.0  0.0 107132   452 pts/1    S+   Dec04   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+asand017 20785  0.0  0.0 112584  1892 pts/7    Ss+  Dec04   0:00 bash --norc -i
+hray001  21123  0.2  0.0 146120  4296 pts/29   S+   20:37   0:05 vim main.cpp
+root     21906  0.0  0.0 104784  5072 ?        Ss   20:43   0:00 sshd: cmanj001 [priv]
+cmanj001 21929  0.0  0.0 104784  2400 ?        S    20:43   0:00 sshd: cmanj001@pts/36
+cmanj001 21930  0.0  0.0 112576  1908 pts/36   Ss   20:43   0:00 -bash
+cmanj001 22200  0.0  0.0 107124   752 pts/36   S+   20:45   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+cmanj001 22216  0.0  0.0 107128   444 pts/36   S+   20:45   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+cmanj001 22217  0.0  0.0 112688  1940 pts/35   Ss+  20:45   0:00 bash --norc -i
+root     22850  0.0  0.0 104784  5076 ?        Ss   20:52   0:00 sshd: rluk001 [priv]
+rluk001  22869  0.0  0.0 104944  2584 ?        S    20:53   0:00 sshd: rluk001@pts/5
+rluk001  22870  0.0  0.0 112576  1912 pts/5    Ss   20:53   0:00 -bash
+rluk001  22907  0.0  0.0 107124   752 pts/5    S+   20:53   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+rluk001  22922  0.0  0.0 107128   444 pts/5    S+   20:53   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+rluk001  22923  0.0  0.0 112688  1912 pts/10   Ss   20:53   0:00 bash --norc -i
+root     23194  0.0  0.0      0     0 ?        S    20:57   0:00 [flush-0:23]
+cmanj001 23223  0.1  0.0 146268  4428 pts/33   S+   20:57   0:02 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-cmanj001-2014-12-05-20-57-55.lH4UK1GV3 src/main.cpp
+bleon001 23318  0.0  0.0 101132   940 pts/13   S+   20:59   0:00 man 7 signal
+bleon001 23321  0.0  0.0 106236  1260 pts/13   S+   20:59   0:00 sh -c (cd "/usr/share/man" && (echo ".ll 10.6i"; echo ".nr LL 10.6i"; echo ".pl 1100i"; /usr/bin/gunzip -c '/usr/share/man/man7/signal.7.gz'
+bleon001 23322  0.0  0.0 106236   668 pts/13   S+   20:59   0:00 sh -c (cd "/usr/share/man" && (echo ".ll 10.6i"; echo ".nr LL 10.6i"; echo ".pl 1100i"; /usr/bin/gunzip -c '/usr/share/man/man7/signal.7.gz'
+bleon001 23327  0.0  0.0 105456   864 pts/13   S+   20:59   0:00 /usr/bin/less -is
+asand017 23539  0.0  0.0 107128   804 pts/25   S+   21:02   0:00 script signals.script
+asand017 23541  0.0  0.0 107160   412 pts/25   S+   21:02   0:00 script signals.script
+asand017 23542  0.0  0.0 112584  1844 pts/11   Ss   21:02   0:00 bash -i
+asand017 23603  0.0  0.0  18284  1432 pts/11   S+   21:02   0:00 bin/rshell
+root     23674  0.0  0.0 104784  5068 ?        Ss   21:03   0:00 sshd: asand017 [priv]
+asand017 23731  0.0  0.0 104784  2396 ?        S    21:03   0:00 sshd: asand017@pts/22
+asand017 23735  0.0  0.0 112576  1912 pts/22   Ss   21:03   0:00 -bash
+asand017 23771  0.0  0.0 107128   752 pts/22   S+   21:03   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+asand017 23786  0.0  0.0 107132   444 pts/22   S+   21:03   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+asand017 23787  0.0  0.0 112584  1892 pts/34   Ss+  21:03   0:00 bash --norc -i
+cmanj001 23877  0.0  0.0  18252  1388 pts/35   T    21:04   0:00 bin/rshell
+bleon001 24375  0.0  0.0  27772  3268 ?        Ss   Dec01   0:59 tmux
+bleon001 24376  0.0  0.0 112580  1916 pts/13   Ss   Dec01   0:00 -bash
+bleon001 24398  0.0  0.0 112580   932 pts/13   S    Dec01   0:00 -bash
+bleon001 24399  0.0  0.0 112692  1928 pts/13   S    Dec01   0:00 bash --norc -i
+root     24430  0.0  0.0 104784  5064 ?        Ss   21:10   0:00 sshd: ogonz007 [priv]
+ogonz007 24462  0.0  0.0 104784  2344 ?        S    21:10   0:00 sshd: ogonz007@pts/37
+ogonz007 24463  0.0  0.0 112576  1908 pts/37   Ss   21:10   0:00 -bash
+ogonz007 24495  0.0  0.0 107124   756 pts/37   S+   21:10   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+ogonz007 24512  0.0  0.0 107128   448 pts/37   S+   21:10   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+ogonz007 24513  0.0  0.0 112688  1888 pts/39   Ss+  21:10   0:00 bash --norc -i
+bleon001 24708  0.0  0.0 112580  1932 pts/15   Ss   Dec01   0:00 -bash
+root     25086  0.0  0.0 215680  1220 ?        Sl   21:15   0:00 /usr/sbin/ypbind
+rluk001  25185  0.0  0.0 107128   804 pts/10   S+   21:16   0:00 script signals
+rluk001  25187  0.0  0.0 107160   436 pts/10   S+   21:16   0:00 script signals
+rluk001  25188  0.0  0.0 112584  1844 pts/40   Ss   21:16   0:00 bash -i
+rluk001  25189  0.0  0.0 107128   756 pts/40   S+   21:16   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+rluk001  25204  0.0  0.0 107132   448 pts/40   S+   21:16   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+rluk001  25205  0.0  0.0 112584  1832 pts/41   Ss   21:16   0:00 bash --norc -i
+rluk001  25232  0.0  0.0  18240  1428 pts/41   S+   21:16   0:00 bin/rshell
+ogonz007 25302  0.0  0.0  11904  1072 pts/3    S+   21:17   0:00 bin/rshell
+rluk001  25361  6.0  0.0 114484  1276 pts/41   R+   21:18   0:00 /bin/ps aux
+root     33157  0.0  0.0 104784  5072 ?        Ss   16:03   0:00 sshd: achao008 [priv]
+achao008 33376  0.0  0.0 104916  3004 ?        S    16:05   0:00 sshd: achao008@pts/21
+achao008 33377  0.0  0.0 112576  1900 pts/21   Ss   16:05   0:00 -bash
+achao008 35501  0.0  0.0 107124   756 pts/21   S+   16:27   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+achao008 35516  0.0  0.0 107128   448 pts/21   S+   16:27   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+achao008 35517  0.0  0.0 112684  1920 pts/23   Ss+  16:27   0:00 bash --norc -i
+root     39226  0.0  0.0      0     0 ?        S    Nov13   0:00 [lockd]
+root     40265  0.0  0.0 104788  5076 ?        Ss   17:27   0:00 sshd: zeman001 [priv]
+zeman001 40295  0.0  0.0 104788  2400 ?        S    17:27   0:00 sshd: zeman001@pts/19
+zeman001 40296  0.0  0.0 112576  1908 pts/19   Ss   17:27   0:00 -bash
+zeman001 40326  0.0  0.0 107124   752 pts/19   S+   17:27   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+zeman001 40341  0.0  0.0 107128   444 pts/19   S+   17:27   0:00 script -q -c env PS1='\[\e[s%%%%%%%%%%\e[u\]\[\e[0;32m\]\u\[\e[0;36m\]@\[\e[0;32m\]cs100\[\e[0;36m\]:\[\e[0;32m\]\w\[\e[0;95m\]$(__git_ps1) 
+zeman001 40342  0.0  0.0 112584  1888 pts/26   Ss   17:27   0:00 bash --norc -i
+zeman001 40438  0.0  0.0 145812  3848 pts/26   S+   17:28   0:00 /usr/bin/vim -w /usr/csshare/cs100/log/vim/vim-zeman001-2014-12-05-17-28-20.cqPIV5gPs handle_signals.cpp
+root     40857  0.0  0.0 4116652 3324 ?        Sl   Dec04   0:00 /usr/sbin/console-kit-daemon --no-daemon
+root     42620  0.0  0.0 104788  5092 ?        Ss   17:55   0:00 sshd: dnguy078 [priv]
+dnguy078 42635  0.0  0.0 104788  2376 ?        S    17:55   0:00 sshd: dnguy078@pts/8
+dnguy078 42636  0.0  0.0 112580  1956 pts/8    Ss   17:55   0:00 -bash
+rluk001@hammer.cs.ucr.edu$ ls | grep a.out
+a.out
+rluk001@hammer.cs.ucr.edu$ pwd ^C ls
+a.out  cp.cpp  ls.cpp  new.cpp	rshell.cpp  text  Timer.h
+rluk001@hammer.cs.ucr.edu$ ls ^C pwd
+/home/csmajs/rluk001/rshell/src
+rluk001@hammer.cs.ucr.edu$ top
+Error: execv failed: No such file or directory
+rluk001@hammer.cs.ucr.edu$ ps aux | grep rluk001
+^Crluk001@hammer.cs.ucr.edu$ exit
+Exiting the shell ...
+[s%%%%%%%%%%[u[0;32mrluk001[0;36m@[0;32mcs100[0;36m:[0;32m~/rshell[0;95m (master) [0;36m$[0m exit
+exit
+~
+rluk001@hammer $ exit
+exit
+
+Script done on Fri 05 Dec 2014 09:19:52 PM PST
