@@ -513,10 +513,10 @@ int parseArgs(char * line) // parseSpaces
 {
 	char ** parsedSpaces = parse(line, " ");
 	int executeProgram = execute(parsedSpaces);
-	for(int i = 0; parsedSpaces[i] != NULL; i++)
+	/*for(int i = 0; parsedSpaces[i] != NULL; i++)
 	{
-		delete parsedSpaces[i];
-	}
+		delete [] parsedSpaces[i];
+	}*/
 	delete [] parsedSpaces;
 	return executeProgram;
 }
@@ -565,10 +565,10 @@ void parseLogicOps(char * line)
 			}
 		}
 	}
-	for(int i = 0; parsedTokens[i] != NULL; i++)
+	/*for(int i = 0; parsedTokens[i] != NULL; i++)
 	{
-		delete parsedTokens[i];
-	}
+		delete [] parsedTokens[i];
+	}*/
 	delete [] parsedTokens;	
 }
 
@@ -631,11 +631,11 @@ void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe)
 	}
 	else if(hasPipe && pipeLocation >= 0) // if it has pipe
 	{
-		for(int i = 0; i < pipeLocation; i++)
+		for(unsigned int i = 0; i < pipeLocation; i++)
 		{
 			linep1[i] = line[i];
 		}
-		for(int i = pipeLocation+1; line[i]; i++)
+		for(unsigned int i = pipeLocation+1; line[i]; i++)
 		{
 			linep2[i-pipeLocation-1] = line[i];
 		}
@@ -811,13 +811,14 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		checkForPipes(parsedSpaces, ampersand);
 		for(int i = 0; parsedSpaces[i] != NULL; i++)
 		{
-			delete parsedSpaces[i];
+			delete [] parsedSpaces[i];
 		}
 		delete [] parsedSpaces;
 	}
 	else if(!hasPipe) // if there's no pipe
 	{
-		char line2[lineSize+1];
+		char line2[1024];
+		memset(line2, 0, 1024);
 		strcpy(line2, line);
 		char ** parsedStuff = parse(line2, " ");
 		int numberOfArgs = 0;
@@ -835,7 +836,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			executeIO(parsedSpaces, ampersand);	
 			for(int i = 0; parsedSpaces[i] != NULL; i++)
 			{
-				delete parsedSpaces[i];
+				delete [] parsedSpaces[i];
 			}
 			delete [] parsedSpaces;
 		}
@@ -869,10 +870,10 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			{
 				parseLogicOps(parsedSemis[i]);
 			}
-			for(int i = 0; parsedSemis[i] != NULL; i++)
+			/*for(int i = 0; parsedSemis[i] != NULL; i++)
 			{
-				delete parsedSemis[i];
-			}
+				delete [] parsedSemis[i];
+			}*/
 			delete [] parsedSemis;
 		}
 		delete [] parsedStuff;
@@ -906,10 +907,13 @@ void myExecVp(char ** argv)
 		char * argv2[1024] = {0};
 		memset(argv2, 0, 1024);
 		argv2[0] = parsedPaths[i];
-		for(unsigned int j = 1; argv[j]; j++)
+		int j = 1;
+		for(; argv[j]; j++)
 		{
 			argv2[j] = argv[j];
+			j++;
 		}
+		argv2[j] = NULL;
 		
 		if(execv(argv2[0], argv2) == -1)
 		{
@@ -923,10 +927,6 @@ void myExecVp(char ** argv)
 		exit(1);
 	}
 	
-	for(unsigned int i = 0; parsedPaths[i]; i++)
-	{
-		delete parsedPaths[i];
-	}
 	delete [] parsedPaths;
 }
 
@@ -944,9 +944,9 @@ int main()
 {
 	cout << "Initializing Shell... " << endl;
 	string input;
-	char * line = {0};
 	while(1)
 	{
+		char * line = {0};
 		if(signal(SIGINT, printC) == SIG_ERR)
 		{
 			perror("Error: signal CTRL-C failed");
