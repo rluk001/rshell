@@ -15,10 +15,42 @@
 #include <signal.h>
 using namespace std;
 
+int processID = 0;
+
 void executeForPiping(char ** argv1, char ** argv2, bool ampersand);
 void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe);
 char * findPath(const char * pathName);
 void myExecVp(char ** argv);
+
+void printC(int sig)
+{
+	if(signal(SIGINT, SIG_IGN) == SIG_ERR)
+	{
+		perror("Error: signal failed");
+		cout << sig << endl;
+		exit(1);
+	}
+}
+
+void printZ(int sig)
+{
+	cout << "hello" << endl;
+	if(signal(SIGTSTP, SIG_DFL) == SIG_ERR)
+	{
+		perror("Error: signal CTRL-Z with SIG_DFL failed");
+		exit(1);
+	}
+	
+	cout << "hi" << endl;
+	if(kill(getpid(), SIGTSTP) == -1)
+	{
+		perror("Error: kill failed");
+		cout << sig << endl;
+		exit(1);
+	}
+	cout << "omy" << endl;
+}
+
 void printUserInfo() // Prints pwname and hostname
 {
 	char *login = getpwuid(getuid())->pw_name;
@@ -61,6 +93,7 @@ int execute(char ** argv) // Execute for regular commands
 {	
 	int stat = 0;
 	int pid = fork();
+	processID = pid;
 	if(pid == -1)
 	{
 		perror("Error: fork failed");
@@ -73,9 +106,29 @@ int execute(char ** argv) // Execute for regular commands
 			perror("Error: wait has failed");
 			exit(1);
 		}
+		if(signal(SIGINT, SIG_IGN) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-C failed");
+			exit(1);
+		}
+		if(signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-Z failed");
+			exit(1);
+		}
 	}
 	else if(pid == 0)	// Child process (exec)
 	{
+		if(signal(SIGINT, printC) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-C failed");
+			exit(1);
+		}
+		if(signal(SIGTSTP, printZ) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-Z failed");
+			exit(1);
+		}
 		myExecVp(argv);
 	}
 	return stat;
@@ -362,6 +415,7 @@ void checkDup(char ** argv)
 void executeIO(char ** argv, bool ampersand)
 {
 	int pid = fork();
+	processID = pid;
 	if(pid == -1)
 	{
 		perror("Error: fork failed");
@@ -376,10 +430,30 @@ void executeIO(char ** argv, bool ampersand)
 				perror("Error: wait failed");
 				exit(1);
 			}
+			if(signal(SIGINT, SIG_IGN) == SIG_ERR)
+			{
+				perror("Error: signal CTRL-C failed");
+				exit(1);
+			}
+			if(signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+			{
+				perror("Error: signal CTRL-Z failed");
+				exit(1);
+			}
 		}
 	}
 	else if(pid == 0)
 	{
+		if(signal(SIGINT, printC) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-C failed");
+			exit(1);
+		}
+		if(signal(SIGTSTP, printZ) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-Z failed");
+			exit(1);
+		}
 		checkDup(argv); // Dup for i/o redirection
 		myExecVp(argv);
 	}
@@ -592,13 +666,42 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 	}
 	
 	int pid = fork();
+	processID = pid;
 	if(pid < 0)
 	{
 		perror("Error: fork failed");
 		exit(1);
 	}
+	else if(pid > 0)
+	{
+		if(wait(0) == -1)
+		{
+			perror("Error: wait piping failed");
+			exit(1);
+		}
+		if(signal(SIGINT, SIG_IGN) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-C failed");
+			exit(1);
+		}
+		if(signal(SIGTSTP, SIG_IGN) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-Z failed");
+			exit(1);
+		}
+	}
 	else if(pid == 0)
 	{
+		if(signal(SIGINT, printC) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-C failed");
+			exit(1);
+		}
+		if(signal(SIGTSTP, printZ) == SIG_ERR)
+		{
+			perror("Error: signal CTRL-Z failed");
+			exit(1);
+		}
 		dup2(fd[1], 1);
 		if(errno == -1)
 		{
@@ -687,7 +790,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 		{
 			outputRApp = true;
 		}
-		if(line[i-1] != '|' && line[i] == '|' && line[i+1] != '|') // '|'
+		if((line[i] == '|' && line[i+1] != '|') || (line[i] != '|' && line[i+1] == '|')) // '|'
 		{
 			hasPipe = true;
 		}
@@ -726,6 +829,29 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			delete parsedSpaces;
 		}
+		else if(strcmp(parsedStuff[0], "fg") == 0)
+		{
+			if(processID == 0)
+			{
+				cout << "fg: current: no such job" << endl;
+			}
+			else
+			{
+				kill(processID, SIGCONT);
+			}
+		}
+		else if(strcmp(parsedStuff[0], "bg") == 0)
+		{
+			if(processID == 0)
+			{
+				cout << "bg: current: no such job" << endl;
+			}
+			else
+			{
+				kill(processID, SIGCONT);
+				processID = 0;
+			}
+		}
 		else if(!inputR && !outputR && !outputRApp) // regular commands
 		{
 			char ** parsedSemis = parse(line, ";");
@@ -739,6 +865,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			delete parsedSemis;
 		}
+
 		delete [] line2;
 	}
 }
@@ -766,7 +893,6 @@ void myExecVp(char ** argv)
 			strcat(parsedPaths[i], "/");
 		}
 		strcat(parsedPaths[i], argv[0]);
-		//cout << parsedPaths[i] << endl;
 		
 		char * argv2[1024] = {0};
 		argv2[0] = parsedPaths[i];
@@ -780,39 +906,14 @@ void myExecVp(char ** argv)
 			//perror("Error: execv failed");
 			//exit(1);
 		}
-		/*else
-		{
-			return;
-		}*/
 	}
-	if(errno == -1)
+	if(errno != 0)
 	{
 		perror("Error: execv failed");
 		exit(1);
 	}
 	delete allPaths;
 	delete [] parsedPaths;
-}
-
-void printC(int sig)
-{
-	if(signal(SIGINT, SIG_IGN) == SIG_ERR)
-	{
-		perror("Error: signal failed");
-		cout << sig << endl;
-		exit(1);
-	}
-}
-
-void printZ(int sig)
-{
-	int pid = getpid();
-	if(kill(pid, SIGSTOP) == -1)
-	{
-		perror("Error: kill failed");
-		cout << sig << endl;
-		exit(1);
-	}
 }
 
 char * findPath(const char * pathName)
@@ -832,8 +933,6 @@ int main()
 	char * line;
 	while(1)
 	{
-		bool ampersand = false;
-		printUserInfo();	
 		if(signal(SIGINT, printC) == SIG_ERR)
 		{
 			perror("Error: signal CTRL-C failed");
@@ -844,8 +943,17 @@ int main()
 			perror("Error: signal CTRL-Z failed");
 			exit(1);
 		}
+		bool ampersand = false;
+		printUserInfo();	
 		getline(cin, input);
 		commentCheck(input);	
+		A:
+		if(input == "")
+		{
+			printUserInfo();
+			getline(cin, input);
+			goto A;
+		}
 		input = separateWithSpaces(input);
 		line = new char[input.size()+1];
 		strcpy(line, input.c_str());
