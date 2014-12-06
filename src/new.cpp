@@ -34,21 +34,18 @@ void printC(int sig)
 
 void printZ(int sig)
 {
-	cout << "hello" << endl;
 	if(signal(SIGTSTP, SIG_DFL) == SIG_ERR)
 	{
 		perror("Error: signal CTRL-Z with SIG_DFL failed");
 		exit(1);
 	}
 	
-	cout << "hi" << endl;
 	if(kill(getpid(), SIGTSTP) == -1)
 	{
 		perror("Error: kill failed");
 		cout << sig << endl;
 		exit(1);
 	}
-	cout << "omy" << endl;
 }
 
 void printUserInfo() // Prints pwname and hostname
@@ -78,6 +75,7 @@ void printUserInfo() // Prints pwname and hostname
 void printCurrentWorkingDirectory()
 {
 	char buf[1024];
+	memset(buf, 0, 1024);
 	if(getcwd(buf, 1024) == NULL)
 	{
 		perror("Error: getcwd failed");
@@ -911,7 +909,6 @@ void myExecVp(char ** argv)
 		perror("Error: execv failed");
 		exit(1);
 	}
-	delete allPaths;
 	delete [] parsedPaths;
 }
 
@@ -929,7 +926,7 @@ int main()
 {
 	cout << "Initializing Shell... " << endl;
 	string input;
-	char * line;
+	char * line = {0};
 	while(1)
 	{
 		if(signal(SIGINT, printC) == SIG_ERR)
@@ -946,12 +943,10 @@ int main()
 		printUserInfo();	
 		getline(cin, input);
 		commentCheck(input);	
-		A:
-		if(input == "")
+		while(input == "")
 		{
 			printUserInfo();
 			getline(cin, input);
-			goto A;
 		}
 		input = separateWithSpaces(input);
 		line = new char[input.size()+1];
