@@ -682,7 +682,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 		perror("Error: fork failed");
 		exit(1);
 	}
-	else if(pid > 0)
+	/*else if(pid > 0)
 	{
 		if(wait(0) == -1)
 		{
@@ -699,7 +699,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			perror("Error: signal CTRL-Z failed");
 			exit(1);
 		}
-	}
+	}*/
 	else if(pid == 0)
 	{
 		if(signal(SIGINT, printC) == SIG_ERR)
