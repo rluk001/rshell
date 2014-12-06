@@ -478,6 +478,7 @@ void commentCheck(string & input) // If there is a comment if gets erased
 char ** parse(char * line, const char *delim) // parse by delimiter
 {
 	vector <char *> cArray;
+	cArray.clear();
 	char * del = strtok(line, delim);
 	while(del != NULL)
 	{
@@ -485,6 +486,7 @@ char ** parse(char * line, const char *delim) // parse by delimiter
 		del = strtok(NULL, delim);
 	}
 	char **argvCount = new char *[cArray.size()+1];
+	memset(argvCount, 0, cArray.size()+1);
 	argvCount[cArray.size()] = 0;
 	
 	for(unsigned int i = 0; i < cArray.size(); i++)
@@ -884,7 +886,7 @@ void myExecVp(char ** argv)
 {
 	char * allPaths = findPath("PATH");
 	char ** parsedPaths = parse(allPaths, ":");
-	for(unsigned int i = 0; parsedPaths[i]; i++)
+	for(unsigned int i = 0; parsedPaths[i] != NULL; i++)
 	{
 		if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
 		{
@@ -893,6 +895,7 @@ void myExecVp(char ** argv)
 		strcat(parsedPaths[i], argv[0]);
 		
 		char * argv2[1024] = {0};
+		memset(argv2, 0, 1024);
 		argv2[0] = parsedPaths[i];
 		for(unsigned int j = 1; argv[j]; j++)
 		{
@@ -910,7 +913,13 @@ void myExecVp(char ** argv)
 		perror("Error: execv failed");
 		exit(1);
 	}
-	//delete [] parsedPaths;
+	
+	for(unsigned int i = 0; parsedPaths[i]; i++)
+	{
+		delete parsedPaths[i];
+	}
+	delete [] allPaths;
+	delete [] parsedPaths;
 }
 
 char * findPath(const char * pathName)
@@ -951,6 +960,7 @@ int main()
 		}
 		input = separateWithSpaces(input);
 		line = new char[input.size()+1];
+		memset(line, 0, input.size()+1);
 		strcpy(line, input.c_str());
 		if(strcmp(line, "exit") == 0)
 		{
@@ -959,6 +969,7 @@ int main()
 		}
 		parseCommands(line, input.size(), ampersand);
 		delete [] line;
+		line = 0;
 	}
 	return 0;
 }
