@@ -126,8 +126,7 @@ int execute(char ** argv) // Execute for regular commands
 			perror("Error: signal CTRL-Z failed");
 			exit(1);
 		}
-		execvp(argv[0], argv);
-		//myExecVp(argv);
+		myExecVp(argv);
 	}
 	return stat;
 }
@@ -453,8 +452,7 @@ void executeIO(char ** argv, bool ampersand)
 			exit(1);
 		}
 		checkDup(argv); // Dup for i/o redirection
-		execvp(argv[0], argv);
-		//myExecVp(argv);
+		myExecVp(argv);
 	}
 }
 
@@ -714,8 +712,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 			perror("Error: close(1) failed");
 			exit(1);
 		}
-		execvp(linep1[0], linep1);
-		//myExecVp(linep1);
+		myExecVp(linep1);
 	}
 	close(fd[1]); // close stdout
 	if(errno == -1)
