@@ -883,7 +883,7 @@ char ** parsePath(char * paths, const char *delim) // parse path by delimiter
 void myExecVp(char ** argv)
 {
 	char * allPaths = findPath("PATH");
-	char ** parsedPaths = parsePath(allPaths, ":");
+	char ** parsedPaths = parse(allPaths, ":");
 	for(unsigned int i = 0; parsedPaths[i] != NULL; i++)
 	{
 		if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
