@@ -78,7 +78,6 @@ void printUserInfo() // Prints pwname and hostname
 void printCurrentWorkingDirectory()
 {
 	char buf[1024];
-	memset(buf, 0, 1024);
 	if(getcwd(buf, 1024) == NULL)
 	{
 		perror("Error: getcwd failed");
