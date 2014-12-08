@@ -67,7 +67,7 @@ together and print it out successfully.
 
 Bugs/Limitations of ls
 ---------
-
+```
 1. The recursive case might cause errors when used on really big cases from symbolic link issues.
 
 2. There are extra newlines after ls output and it depends on what flags are used.
@@ -77,4 +77,16 @@ Bugs/Limitations of ls
 4. It doesn't print out nicely in columns. It is printed out two spaces at once for "-a".
 
 5. The total blocks space on -l is not added correctly. It is slightly off the correct amount.
+
 ```
+
+Bugs/Limitations of Signals
+---------
+```
+1. The Ctrl-Z command does not work as its suppose to.
+
+2. Some of the functions like piping do not completely work with execv.
+
+```
+
+
