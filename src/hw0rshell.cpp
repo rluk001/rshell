@@ -41,7 +41,7 @@ void printUserInfo() // Prints pwname and hostname
 	}
 }
 
-int execute(char ** argv) // Execute for regular commands
+int execute(char ** argv, string OPERATORS) // Execute for regular commands
 {	
 	int stat = 0;
 	int pid = fork();
@@ -55,9 +55,9 @@ int execute(char ** argv) // Execute for regular commands
 		if(execvp(argv[0], argv) == -1)
 		{
 			perror("Error: execvp failed");
+			exitCall = true;
+			return -1;
 		}
-		exitCall = true;
-		return -1;
 	}
 	else if(pid > 0) 	// Parent process
 	{
@@ -66,6 +66,10 @@ int execute(char ** argv) // Execute for regular commands
 			perror("Error: wait has failed");
 			exit(1);
 		}
+	}
+	if(WIFEXITED(stat) && WEXITSTATUS(stat) == 1 && (OPERATORS == "&&" || OPERATORS == "||"))
+	{
+		return -1;
 	}
 	return stat;
 }
@@ -107,10 +111,10 @@ char ** parse(char * line, const char *delim) // parse by delimiter
 	return argvCount;
 }
 
-int parseArgs(char * line) // parseSpaces
+int parseArgs(char * line, string OPERATORS) // parseSpaces
 {
 	char ** parsedSpaces = parse(line, " ");
-	int executeProgram = execute(parsedSpaces);
+	int executeProgram = execute(parsedSpaces, OPERATORS);
 	delete [] parsedSpaces;
 	return executeProgram;
 }
@@ -140,6 +144,10 @@ void parseLogicOps(char * line)
 		{
 			char * orFind = strchr(parsedAnd[i], '|');
 			bool orTF = (orFind != NULL);
+			if(exitCall)
+			{
+				break;
+			}
 			if(orTF && parsedAnd[i][orFind-parsedAnd[i]+1] == '|')
 			{
 				char ** parsedOr = parse(parsedAnd[i], "|");
@@ -150,14 +158,14 @@ void parseLogicOps(char * line)
 					findExit = removeSpaces(findExit);
 					if(findExit == "exit")
 					{
-						//exit(1);
 						exitCall = true;
 						break;
 					}
-					if(parseArgs(parsedOr[j]) == 0)
+					else if(parseArgs(parsedOr[j], "||") == 0)
 					{
 						break;
 					}
+					
 				}
 				delete [] parsedOr;						
 			}
@@ -168,16 +176,17 @@ void parseLogicOps(char * line)
 				findExit = removeSpaces(findExit);
 				if(findExit == "exit")
 				{
-					//exit(1);
 					exitCall = true;
 					break;
 				}
-				if(parseArgs(parsedAnd[i]) != 0)
+				else if(parseArgs(parsedAnd[i], "&&") == -1)
 				{
-					/*delete [] parsedAnd;
-					return -1;*/
-					return ;
+					break;
 				}
+			}
+			if(exitCall)
+			{
+				break;
 			}
 		}
 		delete [] parsedAnd;
@@ -196,11 +205,10 @@ void parseLogicOps(char * line)
 				findExit = removeSpaces(findExit);
 				if(findExit == "exit")
 				{
-					//exit(1);
 					exitCall = true;
 					break;
 				}
-				if(parseArgs(parsedORS[i]) == 0)
+				if(parseArgs(parsedORS[i], "||") == 0)
 				{
 					break;
 				}
@@ -214,10 +222,9 @@ void parseLogicOps(char * line)
 			findExit = removeSpaces(findExit);
 			if(findExit == "exit")
 			{
-				//exit(1);
 				exitCall = true;
 			}
-			if(parseArgs(line) != 0)
+			if(parseArgs(line, "") != 0)
 			{
 				return ;
 			}
@@ -231,6 +238,10 @@ void parseCommands(char * line)
 	for(unsigned int i = 0; parsedSemis[i]; i++)
 	{
 		parseLogicOps(parsedSemis[i]);
+		if(exitCall)
+		{
+			break;
+		}
 	}
 	delete [] parsedSemis;
 }
@@ -256,10 +267,6 @@ int main()
 {
 	while(1)
 	{
-		if(exitCall)
-		{
-			break;
-		}
 		string input = "";
 		printUserInfo();	
 		getline(cin, input);
@@ -279,6 +286,10 @@ int main()
 		strcpy(line, input.c_str());
 		parseCommands(line);
 		delete [] line;
+		if(exitCall)
+		{
+			break;
+		}
 	}
 	return 0;
 }
