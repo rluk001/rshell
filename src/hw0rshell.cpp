@@ -16,6 +16,8 @@
 #include <signal.h>
 using namespace std;
 
+bool exitCall = false;
+
 void printUserInfo() // Prints pwname and hostname
 {
 	char *login = getpwuid(getuid())->pw_name;
@@ -48,6 +50,15 @@ int execute(char ** argv) // Execute for regular commands
 		perror("Error: fork failed");
 		exit(1);
 	}
+	else if(pid == 0)	// Child process (exec)
+	{
+		if(execvp(argv[0], argv) == -1)
+		{
+			perror("Error: execvp failed");
+		}
+		exitCall = true;
+		return -1;
+	}
 	else if(pid > 0) 	// Parent process
 	{
 		if(wait(&stat) == -1)
@@ -55,14 +66,6 @@ int execute(char ** argv) // Execute for regular commands
 			perror("Error: wait has failed");
 			exit(1);
 		}
-	}
-	else if(pid == 0)	// Child process (exec)
-	{
-		if(execvp(argv[0], argv) == -1)
-		{
-			perror("Error: execvp failed");
-		}
-		return -1;	
 	}
 	return stat;
 }
@@ -112,63 +115,74 @@ int parseArgs(char * line) // parseSpaces
 	return executeProgram;
 }
 
-int parseLogicOps(char * line)
+string removeSpaces(string line)
+{
+	string temp;
+	for(unsigned int j = 0; j < line.size(); j++)
+	{
+		if(line[j] != ' ')
+		{
+			temp += line[j];
+		}	
+	}
+	return temp;
+}
+
+void parseLogicOps(char * line)
 {
 	char * andFind = strchr(line, '&');
 	bool andTF = (andFind != NULL);
 
-	if(andTF)
+	if(andTF && line[andFind-line+1] == '&')
 	{
-		if(andTF && line[andFind-line+1] == '&')
+		char ** parsedAnd = parse(line, "&");
+		for(unsigned int i = 0; parsedAnd[i]; i++)
 		{
-			char ** parsedAnd = parse(line, "&");
-			for(unsigned int i = 0; parsedAnd[i]; i++)
+			char * orFind = strchr(parsedAnd[i], '|');
+			bool orTF = (orFind != NULL);
+			if(orTF && parsedAnd[i][orFind-parsedAnd[i]+1] == '|')
 			{
-				char * orFind = strchr(parsedAnd[i], '|');
-				bool orTF = (orFind != NULL);
-				if(orTF && parsedAnd[i][orFind-parsedAnd[i]+1] == '|')
+				char ** parsedOr = parse(parsedAnd[i], "|");
+				for(unsigned int j = 0; parsedOr[j]; j++)
 				{
-					char ** parsedOr = parse(parsedAnd[i], "|");
-					for(unsigned int j = 0; parsedOr[j]; j++)
-					{
-						string findExit;
-						findExit += parsedOr[j];
-						if(findExit.find("exit") != string::npos)
-						{
-							//exit(1);
-							delete [] parsedOr;
-							delete [] parsedAnd;
-							return -1;
-						}
-						if(parseArgs(parsedOr[j]) == 0)
-						{
-							break;
-						}
-					}
-					delete [] parsedOr;						
-				}
-				else
-				{
-					string findExit;
-					findExit += parsedAnd[i];
-					if(findExit.find("exit") != string::npos)
+					string findExit = "";
+					findExit += parsedOr[j];
+					findExit = removeSpaces(findExit);
+					if(findExit == "exit")
 					{
 						//exit(1);
-						delete [] parsedAnd;
-						return -1;
+						exitCall = true;
+						break;
 					}
-					if(parseArgs(parsedAnd[i]) > 0)
+					if(parseArgs(parsedOr[j]) == 0)
 					{
-						return 1;
+						break;
 					}
-					delete [] parsedAnd;
-					return -1;
+				}
+				delete [] parsedOr;						
+			}
+			else
+			{
+				string findExit = "";
+				findExit += parsedAnd[i];
+				findExit = removeSpaces(findExit);
+				if(findExit == "exit")
+				{
+					//exit(1);
+					exitCall = true;
+					break;
+				}
+				if(parseArgs(parsedAnd[i]) != 0)
+				{
+					/*delete [] parsedAnd;
+					return -1;*/
+					return ;
 				}
 			}
-			delete [] parsedAnd;
 		}
+		delete [] parsedAnd;
 	}
-	else if(!andTF)
+	else 
 	{
 		char * orFindThis = strchr(line, '|');
 		bool orTrueFalse = (orFindThis != NULL);
@@ -177,13 +191,14 @@ int parseLogicOps(char * line)
 			char ** parsedORS = parse(line, "|");
 			for(unsigned int i = 0; parsedORS[i]; i++)
 			{
-				string findExit;
+				string findExit = "";
 				findExit += parsedORS[i];
-				if(findExit.find("exit") != string::npos)
+				findExit = removeSpaces(findExit);
+				if(findExit == "exit")
 				{
 					//exit(1);
-					delete [] parsedORS;
-					return -1;
+					exitCall = true;
+					break;
 				}
 				if(parseArgs(parsedORS[i]) == 0)
 				{
@@ -194,36 +209,30 @@ int parseLogicOps(char * line)
 		}
 		else
 		{
-			string findExit;
+			string findExit = "";
 			findExit += line;
-			if(findExit.find("exit") != string::npos)
+			findExit = removeSpaces(findExit);
+			if(findExit == "exit")
 			{
 				//exit(1);
-				return -1;
+				exitCall = true;
 			}
-			if(parseArgs(line) >= 0)
+			if(parseArgs(line) != 0)
 			{
-				return 1;
+				return ;
 			}
-			return -1;
 		}
 	}
-	return 1;
 }
 
-int parseCommands(char * line)
+void parseCommands(char * line)
 {
 	char ** parsedSemis = parse(line, ";");
 	for(unsigned int i = 0; parsedSemis[i]; i++)
 	{
-		if(parseLogicOps(parsedSemis[i]) == -1)
-		{
-			delete [] parsedSemis;
-			return -1;
-		}
+		parseLogicOps(parsedSemis[i]);
 	}
 	delete [] parsedSemis;
-	return 1;
 }
 
 string separateWithSpaces(string line) // Separates to make the i/o redirection in its own argv[i]
@@ -247,6 +256,10 @@ int main()
 {
 	while(1)
 	{
+		if(exitCall)
+		{
+			break;
+		}
 		string input = "";
 		printUserInfo();	
 		getline(cin, input);
@@ -259,16 +272,12 @@ int main()
 		input = separateWithSpaces(input);
 		if(input == "exit")
 		{
-			exit(1);
+			break;
 		}
-		char * line = new char[input.size()];
-		memset(line, 0, input.size());
+		char * line = new char[input.size()+1];
+		memset(line, 0, input.size()+1);
 		strcpy(line, input.c_str());
-		if(parseCommands(line) == -1)
-		{
-			delete [] line;
-			exit(1);
-		}
+		parseCommands(line);
 		delete [] line;
 	}
 	return 0;
