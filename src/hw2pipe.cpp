@@ -18,6 +18,7 @@ using namespace std;
 
 bool exitCall = false;
 void checkForPipes(char ** argv);
+bool tripString = false;
 
 void printUserInfo() // Prints pwname and hostname
 {
@@ -356,6 +357,7 @@ void checkDup(char ** argv)
 				perror("Error: close fd[1] failed");
 				exit(1);
 			}*/
+			tripString = true;
 			delete [] buffer;
 		}
 	}
@@ -380,7 +382,7 @@ void executeIO(char ** argv)
 	else if(pid == 0)
 	{
 		checkDup(argv);
-		if(execvp(argv[0], argv) == -1)
+		if(!tripString && execvp(argv[0], argv) == -1)
 		{
 			perror("Error: execvp failed");
 			exit(1);
@@ -825,6 +827,7 @@ int main()
 		{
 			break;
 		}
+		tripString = false;
 	}
 	return 0;
 }
