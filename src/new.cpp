@@ -840,7 +840,11 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			else
 			{
-				kill(processID, SIGCONT);
+				if(kill(processID, SIGCONT) == -1)
+				{
+					perror("Error: kill failed");
+					exit(1);
+				}
 			}
 		}
 		else if(strcmp(parsedStuff[0], "bg") == 0)
@@ -851,7 +855,11 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			}
 			else
 			{
-				kill(processID, SIGCONT);
+				if(kill(processID, SIGCONT) == -1)
+				{
+					perror("Error: kill failed");
+					exit(1);
+				}
 				processID = 0;
 			}
 		}
@@ -868,52 +876,76 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 	}
 }
 
-char ** parsePath(char * paths, const char *delim) // parse path by delimiter
+char ** parsePath(char * paths ,const char *delim) // parse path by delimiter
 {
 	char ** finalPaths = new char * [1024];
-	int i = 0;
-	finalPaths[i] = strtok(paths, delim);
-	for( ; paths[i]; i++)
+	memset(finalPaths, 0, 1024);
+	char * temp = strtok(paths, delim);
+	
+	for(unsigned int i = 0; temp != NULL; i++)
 	{
-		finalPaths[i] = strtok(NULL, delim);
+		finalPaths[i] = temp;
+		temp = strtok(NULL, delim);
 	}
 	return finalPaths;
 }
 
 void myExecVp(char ** argv)
 {
-	char * allPaths = findPath("PATH");
-	char ** parsedPaths = parse(allPaths, ":");
-	for(unsigned int i = 0; parsedPaths[i] != NULL; i++)
+	if(argv[0][0] == '.' && argv[0][1] == '/')
 	{
-		if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
+		char buf[1024] = {0};
+		if(getcwd(buf, 1024) == NULL)
 		{
-			strcat(parsedPaths[i], "/");
+			perror("Error: getcwd failed");
+			exit(1);
 		}
-		strcat(parsedPaths[i], argv[0]);
-		
-		char * argv2[1024] = {0};
-		memset(argv2, 0, 1024);
-		argv2[0] = parsedPaths[i];
+		strcat(buf, "/");
+		strcat(buf, argv[0] + 2);
+		argv[0] = buf;
 
-		for(unsigned int j = 1; argv[j]; j++)
+		if(execv(argv[0], argv) == -1)
 		{
-			argv2[j] = argv[j];
-		}
-	
-		if(execv(argv2[0], argv2) == -1)
-		{
-			//perror("Error: execv failed");
-			//exit(1);
+			perror("Error: execv failed");
+			exit(1);
 		}
 	}
-	if(errno != 0)
+	else
 	{
-		perror("Error: execv failed");
-		exit(1);
-	}
+		char * allPaths = findPath("PATH");
+		char ** parsedPaths = parsePath(allPaths, ":");
+		for(unsigned int i = 0; parsedPaths[i] != NULL; i++)
+		{
+			char * temp = new char[strlen(parsedPaths[i])];
+			memset(temp, 0, strlen(parsedPaths[i]));
+			strcpy(temp, parsedPaths[i]);
+			if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
+			{
+				strcat(temp, "/");
+			}
+			strcat(temp, argv[0]);
+			
+			char * argv2[1024] = {0};
+			argv2[0] = temp;
 	
-	delete [] parsedPaths;
+			for(unsigned int j = 1; argv[j]; j++)
+			{
+				argv2[j] = argv[j];
+			}
+			if(execv(argv2[0], argv2) == -1)
+			{
+				//perror("Error: execv failed");
+				//exit(1);
+			}
+			delete [] temp;
+		}
+		if(errno != 0)
+		{
+			perror("Error: execv failed");
+			exit(1);
+		}	
+		delete [] parsedPaths;
+	}
 }
 
 char * findPath(const char * pathName)
