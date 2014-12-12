@@ -15,7 +15,7 @@
 #include <signal.h>
 using namespace std;
 
-int processID = 0;
+//int processID = 0;
 
 void executeForPiping(char ** argv1, char ** argv2, bool ampersand);
 void runPipe(char ** line, bool ampersand, int pipeLocation, bool hasPipe);
@@ -90,7 +90,7 @@ int execute(char ** argv) // Execute for regular commands
 {	
 	int stat = 0;
 	int pid = fork();
-	processID = pid;
+	//processID = pid;
 	if(pid == -1)
 	{
 		perror("Error: fork failed");
@@ -412,7 +412,7 @@ void checkDup(char ** argv)
 void executeIO(char ** argv, bool ampersand)
 {
 	int pid = fork();
-	processID = pid;
+	//processID = pid;
 	if(pid == -1)
 	{
 		perror("Error: fork failed");
@@ -477,22 +477,6 @@ void commentCheck(string & input) // If there is a comment if gets erased
 
 char ** parse(char * line, const char *delim) // parse by delimiter
 {
-	/*vector <char *> cArray;
-	char * del = strtok(line, delim);
-	while(del != NULL)
-	{
-		cArray.push_back(del);
-		del = strtok(NULL, delim);
-	}
-	char **argvCount = new char *[cArray.size()+1];
-	memset(argvCount, 0, cArray.size()+1);
-	argvCount[cArray.size()] = 0;	
-	for(unsigned int i = 0; i < cArray.size(); i++)
-	{
-		argvCount[i] = new char[cArray.size() + 1];
-		memset(argvCount[i], 0, cArray.size() + 1);
-		strcpy(argvCount[i], cArray[i]);
-	}*/
 	char ** argvCount = new char * [1024];
 	memset(argvCount, 0, 1024);
 	
@@ -513,10 +497,6 @@ int parseArgs(char * line) // parseSpaces
 {
 	char ** parsedSpaces = parse(line, " ");
 	int executeProgram = execute(parsedSpaces);
-	/*for(int i = 0; parsedSpaces[i] != NULL; i++)
-	{
-		delete [] parsedSpaces[i];
-	}*/
 	delete [] parsedSpaces;
 	return executeProgram;
 }
@@ -565,10 +545,6 @@ void parseLogicOps(char * line)
 			}
 		}
 	}
-	/*for(int i = 0; parsedTokens[i] != NULL; i++)
-	{
-		delete [] parsedTokens[i];
-	}*/
 	delete [] parsedTokens;	
 }
 
@@ -676,7 +652,7 @@ void executeForPiping(char ** linep1, char ** linep2, bool ampersand)
 	}
 	
 	int pid = fork();
-	processID = pid;
+	//processID = pid;
 	if(pid < 0)
 	{
 		perror("Error: fork failed");
@@ -832,7 +808,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 			executeIO(parsedSpaces, ampersand);	
 			delete [] parsedSpaces;
 		}
-		else if(strcmp(parsedStuff[0], "fg") == 0)
+		/*else if(strcmp(parsedStuff[0], "fg") == 0)
 		{
 			if(processID == 0)
 			{
@@ -846,8 +822,8 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 					exit(1);
 				}
 			}
-		}
-		else if(strcmp(parsedStuff[0], "bg") == 0)
+		}*/
+		/*else if(strcmp(parsedStuff[0], "bg") == 0)
 		{
 			if(processID == 0)
 			{
@@ -862,7 +838,7 @@ void parseCommands(char * line, unsigned int lineSize, bool ampersand)
 				}
 				processID = 0;
 			}
-		}
+		}*/
 		else if(!inputR && !outputR && !outputRApp) // regular commands
 		{
 			char ** parsedSemis = parse(line, ";");
@@ -913,11 +889,11 @@ void myExecVp(char ** argv)
 	else
 	{
 		char * allPaths = findPath("PATH");
-		char ** parsedPaths = parsePath(allPaths, ":");
+		char ** parsedPaths = parse(allPaths, ":");
 		for(unsigned int i = 0; parsedPaths[i] != NULL; i++)
 		{
-			char * temp = new char[strlen(parsedPaths[i])];
-			memset(temp, 0, strlen(parsedPaths[i]));
+			char * temp = new char[strlen(parsedPaths[i])+1];
+			memset(temp, 0, strlen(parsedPaths[i])+1);
 			strcpy(temp, parsedPaths[i]);
 			if(parsedPaths[i][strlen(parsedPaths[i])-1] != '/')
 			{
@@ -944,7 +920,6 @@ void myExecVp(char ** argv)
 			perror("Error: execv failed");
 			exit(1);
 		}	
-		delete [] parsedPaths;
 	}
 }
 
